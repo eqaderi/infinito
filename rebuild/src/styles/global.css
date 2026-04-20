@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+ * Design tokens (CSS custom properties)
+ *
+ * Colors, easings, and page-transition tokens extracted from
+ * the legacy Final_Files/scss/base/_variables.scss and the
+ * Final_Files/css/theme--color/gradient--01.css default pair.
+ *
+ * Swappable palettes live under [data-theme="..."] selectors
+ * and replace the legacy 19 parallel gradient CSS files.
+ * ========================================================= */
+
+:root {
+  /* Default accent palette (from legacy gradient--01.css) */
+  --accent-from: #f78569;
+  --accent-to:   #ff337a;
+  --accent-text: #fb5c72;
+
+  /* Easings — from legacy _variables.scss */
+  --ease-in-out-sine:      cubic-bezier(.45, .05, .55, .95);
+  --ease-in-out-quadratic: cubic-bezier(.46, .03, .52, .96);
+  --ease-in-out-cubic:     cubic-bezier(.65, .05, .36, 1);
+  --ease-fast-out-slow-in: cubic-bezier(.4, 0, .2, 1);
+  --ease-in-out-back:      cubic-bezier(.68, -.55, .27, 1.55);
+
+  --ease-in-sine:          cubic-bezier(.47, 0, .75, .72);
+  --ease-in-cubic:         cubic-bezier(.55, .06, .68, .19);
+  --ease-in-back:          cubic-bezier(.6, -.28, .74, .05);
+
+  --ease-out-sine:         cubic-bezier(.39, .58, .57, 1);
+  --ease-out-cubic:        cubic-bezier(.215, .61, .355, 1);
+  --ease-out-back:         cubic-bezier(.18, .89, .32, 1.28);
+  --ease-linear-out-slow-in: cubic-bezier(0, 0, .2, 1);
+
+  /* Page transition (legacy $transition__page-cover) */
+  --ease-page-cover:       cubic-bezier(.55, .31, .15, .93);
+  --page-cover-duration:   400ms;
+}
+
+/* -------------------------------------------------------
+ * Alternate theme palettes
+ * Add more palettes here as we extract them from
+ * Final_Files/css/theme--color/gradient--NN.css
+ * ------------------------------------------------------- */
+[data-theme='blue'] {
+  --accent-from: #0000ff;
+  --accent-to:   #8080ff;
+  --accent-text: #3333ff;
+}
+
+[data-theme='purple-pink'] {
+  --accent-from: #e5b2ca;
+  --accent-to:   #7028e4;
+  --accent-text: #9955c2;
+}
+
+[data-theme='magenta'] {
+  --accent-from: #ed4cb0;
+  --accent-to:   #704cb0;
+  --accent-text: #b04ca8;
+}
+
+/* -------------------------------------------------------
+ * Base element tuning (kept minimal; Tailwind preflight
+ * handles the heavy lifting)
+ * ------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply font-body text-ink bg-paper antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gradient text utility — replaces the legacy .text--gradient */
+.text-gradient {
+  background: linear-gradient(45deg, var(--accent-from), var(--accent-to));
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+
+/* -------------------------------------------------------
+ * Reduced motion
+ *
+ * Global guard: any user with prefers-reduced-motion gets
+ * near-instant animations/transitions. Component-level
+ * code should ALSO check the media query before spinning
+ * up GSAP/ScrollTrigger timelines.
+ * ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

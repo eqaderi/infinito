@@ -1,0 +1,29 @@
+{
+  "name": "infinito-rebuild",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Modern rebuild of the Infinito template — Astro + Tailwind + Alpine + GSAP.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "devDependencies": {
+    "@astrojs/alpinejs": "^0.5.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.18.1",
+    "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@fontsource/josefin-sans": "^5.2.8",
+    "@fontsource/montserrat": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
+    "@fontsource/roboto": "^5.2.10",
+    "alpinejs": "^3.15.11",
+    "gsap": "^3.15.0",
+    "lucide": "^1.8.0"
+  }
+}

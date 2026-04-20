@@ -1,0 +1,26 @@
+/* Self-hosted fonts via @fontsource.
+ * We import only the weights we actually use to keep the bundle small.
+ * Expand weights as components demand them.
+ */
+
+/* Roboto — body */
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+
+/* Montserrat — UI / headings secondary */
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/500.css';
+@import '@fontsource/montserrat/600.css';
+@import '@fontsource/montserrat/700.css';
+
+/* Playfair Display — display / serif headlines */
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/playfair-display/400-italic.css';
+
+/* Josefin Sans — alternate display */
+@import '@fontsource/josefin-sans/300.css';
+@import '@fontsource/josefin-sans/400.css';
+@import '@fontsource/josefin-sans/700.css';

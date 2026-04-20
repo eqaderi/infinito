@@ -57,3 +57,7 @@ pids/
 
 # Cursor
 .cursor/
+
+# Astro (rebuild project)
+rebuild/.astro/
+rebuild/dist/
