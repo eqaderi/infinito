@@ -17,6 +17,71 @@
 
 ---
 
+## 0. Implementation Status (Phase 1A)
+
+> Last updated: **2026-04-20**. Scope of this section: what is actually shipped under `rebuild/`, mapped back to the audit. Companion to [`MODERNIZATION_PLAN.md` §1.5](MODERNIZATION_PLAN.md#15-implementation-progress-live).
+
+### 0.1 Modern animation API
+
+All scroll-triggered behavior in the rebuild flows through one module: **[`rebuild/src/lib/animations.ts`](rebuild/src/lib/animations.ts)**. Components opt in with `data-anim="<name>"` plus optional `data-anim-delay`, `data-anim-strength`, `data-anim-direction` attributes. Boot is wired in `BaseLayout.astro`:
+
+- `<html>` gets the class `has-anim` only when `prefers-reduced-motion: no-preference`.
+- `global.css` ships visibility fallbacks so reduced-motion users (and JS-off users) always see all content.
+- After mount, `mount()` walks `[data-anim]` and registers the matching ScrollTrigger.
+
+### 0.2 Primitives — current vs. target
+
+| Primitive            | DOM hook                                     | Implements legacy                                                              | Status                                                                                                                                                                                                                    |
+| -------------------- | -------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mountIntro()`       | `[data-intro]` on `<html>` + child marks     | `slide-up-intro`, `fade-up-intro`, `fade-down-intro`, `hero_img-intro`         | ✅ Live. One-shot timeline on `window.load`, no scroll trigger.                                                                                                                                                           |
+| `registerSlideUp`    | `data-anim="slide-up"`                       | `slide-up`, `slide-up__el`, `slide-up__lines`, `slide-up2`, `slide-up2__lines` | ✅ Live. Stagger via `data-anim-delay`. Lines split deferred until SplitText is licensed (Phase 1B).                                                                                                                      |
+| `registerFadeUp`     | `data-anim="fade-up"`, `data-anim="fade-in"` | `fade-up`, `fade-up__el`, `fade-in`, `fade-in__el`                             | ✅ Live. `fade-in` variant skips the y-translate.                                                                                                                                                                         |
+| `registerRotateIn`   | `data-anim="rotate-in"`                      | `rotate-in`, `rotate-in__el`                                                   | ✅ Live. Scale 0.8 + opacity 0 → 1.                                                                                                                                                                                       |
+| `registerParallaxBg` | `data-anim="parallax-bg"`                    | `.parallax` + `.parallax__el` background-position scroll                       | ✅ Live. Used by `VideoStrip`. Strength via `data-anim-strength`.                                                                                                                                                         |
+| `registerParallaxY`  | `data-anim="parallax-y"`                     | (new — fills the missing vertical parallax slot)                               | ✅ Live. Strength via `data-anim-strength` (px), direction via `data-anim-direction="up\|down"`. Used by `Featured` images + numerals.                                                                                    |
+| `registerOdometer`   | `data-anim="odometer"`                       | `js-odometer--simple`                                                          | ✅ Live. Counts to `data-number-end`. The "999999 → ~1 Million+" string-swap behaviour is **deferred** (Phase 1B).                                                                                                        |
+| `registerSvgDraw`    | `data-anim="svg-draw"`                       | `svg-draw`, `svg-draw__el`, `svg-draw--filled`                                 | ⚠️ Partial. `<path>` stroke-dasharray draw works for service icons. The giant Featured numerals (drawn as outlined paths in legacy) and the testimonials quote-mark watermark currently render as static text — Phase 1B. |
+| `registerCoverDR`    | `data-anim="cover-d-r-img"`                  | `cover-d-r-img`, `cover-d-r-img__el`                                           | ❌ Deferred to Phase 1B. Needs clip-path animation.                                                                                                                                                                       |
+| `registerCoverUp`    | `data-anim="cover-up"`                       | `cover-up`, `cover-up__el`, `cover-transp` line reveals                        | ❌ Deferred to Phase 1B.                                                                                                                                                                                                  |
+| `registerBars`       | `data-anim="bars"`                           | `bounty.js` skill bars                                                         | ❌ Deferred — only blog/about pages need it (Phase 1B).                                                                                                                                                                   |
+
+### 0.3 Interactive components — current state
+
+| Component / behavior          | Implementation in `rebuild/`                                                                                                                                                                          | Notes vs. legacy                                                                                                                                 |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Nav drawer + search overlay   | `Nav.astro` — Alpine `x-data` shared between header/drawer/search; opacity+visibility transitions; body scroll lock; ESC to close; staggered link entry.                                              | Drawer hoisted **outside** `<header>` to avoid stacking-context bugs (the header is `z-[60]`, drawer `z-[55]`, search `z-[65]`).                 |
+| Loading screen                | `LoadingScreen.astro` — fades out on `window.load`.                                                                                                                                                   | The legacy stroke-draw on the "infinito" wordmark is deferred to Phase 1B (needs `svg-draw` for filled paths).                                   |
+| Portfolio filter grid         | `Portfolio.astro` — Alpine `matches()` filter, 12-column grid with `auto-rows-[260\|300px]` and `grid-auto-flow: dense`, `x-transition` opacity.                                                      | Replaces Isotope masonry. AJAX load-more deferred. Lightbox deferred (links open in new tab).                                                    |
+| Process timeline (carousel)   | `ProcessCarousel.astro` — Alpine state, dot+label wrapped in a single `<button>` for full click target, progress line evenly distributed across dots with px offsets so it terminates inside the dot. | Replaces `owl-carousel`. No swipe gesture yet — Phase 1B will swap to Swiper.                                                                    |
+| Testimonials carousel         | `Testimonials.astro` — Alpine fade carousel.                                                                                                                                                          | Replaces `master-slider`. Swiper migration is Phase 1B.                                                                                          |
+| Pricing monthly/yearly toggle | `Pricing.astro` — Alpine `billing` state, two stacked `<span>`s in a 1×1 grid with scale+fade `x-transition`.                                                                                         | Replaces the legacy show/hide swap; the odometer count-up on yearly prices is deferred (Phase 1B; needs `registerOdometer` re-trigger on click). |
+| VideoStrip lightbox           | `VideoStrip.astro` — `<button>` opens a fixed-position iframe modal; `toEmbed()` converts Vimeo/YouTube watch URLs to embed URLs; ESC + backdrop click + body scroll lock.                            | Replaces the LightGallery video popup. Real LightGallery v2 is Phase 1B if buyers want gallery features.                                         |
+| Contact map                   | `Contact.astro` — Google Maps no-API embed iframe (`maps.google.com/maps?q=...&output=embed`) with an "Open in Google Maps" overlay button.                                                           | Replaces the keyed Google Maps JS API integration. No API key required; styling is limited to CSS filters (`grayscale-[0.2] contrast-95`).       |
+| Subscribe + Contact forms     | Wired to Formspree via `import.meta.env.PUBLIC_FORMSPREE_ENDPOINT`.                                                                                                                                   | Replaces Mailchimp/PHP mailer. Inline notice when the env var is unset.                                                                          |
+
+### 0.4 Reduced motion
+
+`prefers-reduced-motion: reduce` is honored globally:
+
+```ts
+// rebuild/src/layouts/BaseLayout.astro
+if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+  document.documentElement.classList.add("has-anim");
+}
+```
+
+```css
+/* rebuild/src/styles/global.css */
+html:not(.has-anim) [data-anim] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+```
+
+When `has-anim` is absent, the `mount()` function in `animations.ts` early-returns and ScrollTriggers are never created. This satisfies the constraint in [§15](#15-performance--accessibility-constraints) for every primitive shipped in Phase 1A.
+
+---
+
 ## 1. Hero / Intro Effects
 
 ### 1.1 Liquid Distortion (Pixi.js slideshow)

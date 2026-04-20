@@ -20,6 +20,56 @@ The codebase has two faces:
 
 ---
 
+## 1.5 Implementation Progress (live)
+
+> Last updated: **2026-04-20**. The detailed Phase 1A handoff lives in [`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md).
+
+The new product lives under **`rebuild/`** and is built on **Astro + Tailwind + Alpine.js + GSAP 3** (the "Strong alternative" row from §5.1, promoted to primary). The legacy `Final_Files/`, `working_dir/`, and `Documentation/` trees are untouched and remain the design reference.
+
+### ✅ Phase 0 — Foundation (complete)
+
+- Astro project scaffolded under `rebuild/` (`astro.config.mjs`, Tailwind integration, TypeScript strict).
+- Tailwind config with custom design tokens (colors, breakpoints incl. `nav` breakpoint, font stacks, gradient utilities, custom `zIndex` scale).
+  - ⚠️ **Watch-out for future-me:** the custom `zIndex` scale maps `z-1`…`z-10` to `100`…`1000`. Arbitrary values like `z-[55]` therefore stack **below** `z-10`. Use `z-[60]+` or extend the scale when layering modals.
+- Self-hosted fonts via `@fontsource` (Playfair Display, Cormorant Garamond, Josefin Sans, Montserrat, Roboto), loaded in `BaseLayout.astro` via `src/styles/fonts.css`.
+- Lucide icons available via inline SVG.
+- GSAP 3 + ScrollTrigger free-tier primitives in `src/lib/animations.ts` (no Club plugins yet — `SplitText`/`DrawSVG` deferred). See [`ANIMATION_AUDIT.md` §0](ANIMATION_AUDIT.md#0-implementation-status-phase-1a).
+- `prefers-reduced-motion` honored: `BaseLayout` adds `html.has-anim` only when motion is allowed; `global.css` has visibility fallbacks so reduced-motion users still see all content.
+
+### ✅ Phase 1A — Vertical slice of `index.html` (complete)
+
+One Astro route (`/`) renders the full home page using the new component model.
+
+- **Tier A shell** — `Nav`, `Footer`, `LoadingScreen`, `PageShell`, `BaseLayout`.
+- **Tier B sections (15)** — `Hero`, `About`, `Featured`, `Services`, `VideoStrip`, `Portfolio`, `ProcessCarousel`, `TeamGrid`, `CtaStrip`, `BlogPreview`, `Subscribe`, `Pricing`, `Testimonials`, `LogoCloud`, `Contact`.
+- **Tier D atoms** — `Button`, `GradientText`, `SectionTitle`, `Input`, `Textarea`, `IconLine`, `Link`.
+- **Centralized data** — `src/data/index.ts` is the single source of truth for all home-page copy and asset paths (typed).
+- **Forms** — Contact + Subscribe wired to Formspree via `PUBLIC_FORMSPREE_ENDPOINT` env var; graceful inline notice when unset.
+- **Carousels** — Alpine-driven (no Swiper yet) for Testimonials and ProcessCarousel.
+- **Assets** — only `index.html`-referenced assets selectively copied to `rebuild/public/img/` (see `rebuild/docs/index-section-map.md` "Asset manifest").
+- **Bug-fix pass** — 9 critical issues from manual testing resolved (nav drawer, search overlay, Featured parallax, Services row 2 centering, video lightbox modal, Portfolio dense-pack + flicker, Process timeline click target + line/dot alignment, Pricing toggle animation, Contact Google Maps embed). Full log in [`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md#today-2026-04-20--bug-fix-pass-9-issues).
+
+### ⏳ Phase 1B — next up
+
+- Cover/reveal animations (`cover-d-r-img`, `cover-up`, `cover-transp` lines) — currently deferred placeholders.
+- SVG draw-in for the giant Featured numerals (currently rendered as static text).
+- Real Swiper integration for Testimonials + ProcessCarousel (replace Alpine carousels).
+- LightGallery v2 wiring for Portfolio + VideoStrip (currently a vanilla iframe lightbox).
+- Marquee animation for the LogoCloud rows.
+- Inner pages: `about.html`, `contact.html`, `services-01..03`, `projects/*`, `blog`, `blog-post-*`, `404`, `coming-soon`, `pricing`.
+- Phase 1B-only deferred polish items tracked in [`PHASE_1A_STATUS.md` "Known remaining issues"](rebuild/docs/PHASE_1A_STATUS.md#known-remaining-issues--phase-1b-backlog).
+
+### Decisions changed since the original plan
+
+| Decision                | Original plan (§5)              | Actual                                                                                |
+| ----------------------- | ------------------------------- | ------------------------------------------------------------------------------------- |
+| Primary stack           | HTML + Vite + Tailwind + Alpine | **Astro + Tailwind + Alpine + GSAP** (§5.1 "Strong alternative" promoted to primary). |
+| Per-demo HTML files     | One static HTML per demo        | One Astro route per demo, statically rendered. Buyer ships `dist/`.                   |
+| Initial GSAP plugin set | ScrollTrigger + SplitText       | ScrollTrigger only for Phase 1A. SplitText/DrawSVG deferred to Phase 1B.              |
+| Carousel library        | Swiper from day one             | Alpine carousels for Phase 1A; Swiper integration is a Phase 1B task.                 |
+
+---
+
 ## 2. Strongest Demos to Reuse (Ranked)
 
 Ranking blends **visual impact**, **technical viability today**, **uniqueness on Envato**, and **rebuild cost**.
