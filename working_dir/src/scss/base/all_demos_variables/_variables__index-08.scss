@@ -1,0 +1,868 @@
+// ==================================================
+//                   Variables
+// ==================================================
+
+$direction--default: left;
+$direction--opposite: right;
+
+
+
+// --------------------------------------------------
+// Typography
+// --------------------------------------------------
+
+//## Font, line-height, and color for body text, heading, and more.
+$font--01: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font--02: 'Montserrat', sans-serif;
+$font--03: 'Playfair Display', serif;//'Cardo', serif;
+$font--04: 'Josefin Sans', sans-serif;
+
+// Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family--monospace: Menlo, Monaco, Consolas, 'Courier New', monospace;
+$font-family--base: $font--01;
+$font-size--base: 16px;
+$font-size--large: 1.25em; // ~18px
+$font-size--small: .85em; // ~12px
+// $font-size-h1         : floor(($font-size--base * 2.6)); // ~36px
+// $font-size-h2         : floor(($font-size--base * 2.15)); // ~30px
+// $font-size-h3         : ceil(($font-size--base * 1.7)); // ~24px
+// $font-size-h4         : ceil(($font-size--base * 1.25)); // ~18px
+// $font-size-h5         : $font-size--base;
+// $font-size-h6         : ceil(($font-size--base * .85)); // ~12px
+
+// Unit-less `line-height`
+$line-height--base: 1.5; // 20/14
+
+// Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+$line-height--computed: floor(($font-size--base * $line-height--base)); // ~20px
+
+// By default, this inherits from the `<body>`.
+$font-family__heading--01: inherit;
+$font-family__heading--02: $font--02;
+$font-weight__heading: 500;
+$line-height__heading: 1.1;
+$color-text__heading: inherit;
+
+// default icon size
+$font-size__icon--default: 65px;
+
+// link hover decoration.
+$text-decoration__link: underline;
+
+
+
+//-------------------------------------------
+//  Easings
+//-------------------------------------------
+
+// In out timing functions
+$ease-in-out: ease-in-out; // ease-in-out
+$in-out-sine: cubic-bezier(.45, .05, .55, .95); // In Out · Sine
+$in-out-quadratic: cubic-bezier(.46, .03, .52, .96); // In Out · Quadratic
+$in-out-cubic: cubic-bezier(.65, .05, .36, 1); // In Out · Cubic
+$fast-out-slow-in: cubic-bezier(.4, 0, .2, 1); // Fast Out, Slow In
+$in-out-back: cubic-bezier(.68, -.55, .27, 1.55);// In Out · Back
+
+// in timing functions
+$ease-in: ease-in; // ease-in
+$in-sine: cubic-bezier(.47, 0, .75, .72); // In · Sine
+$in-quadritic: cubic-bezier(.55, .09, .68, .53); // In · Quadratic
+$in-cubic: cubic-bezier(.55, .06, .68, .19); // In · Cubic
+$in-back: cubic-bezier(.6, -.28, .74, .05); // In · Back
+$fast-out-linear-in: cubic-bezier(.4, 0, 1, 1); // Fast Out, Linear In
+
+// out timing functions
+$ease-out: ease-out; // ease-out
+$out-sine: cubic-bezier(.39, .58, .57, 1); // Out · Sine
+$out-quadratic: cubic-bezier(.25, .46, .45, .94); // Out · Quadratic
+$out-cubic: cubic-bezier(.215, .61, .355, 1); // Out · Cubic
+$linear-out-slow-in: cubic-bezier(0, 0, .2, 1); // Linear Out, Slow In
+$out-back: cubic-bezier(.18, .89, .32, 1.28); // Out · Back
+
+
+
+//-------------------------------------------
+//  media queries
+//-------------------------------------------
+$xs: 480px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$nav-transform-point-width: 856px;
+
+
+
+//-------------------------------------------
+//  z-index depths
+//-------------------------------------------
+$depth---01: -1;
+$depth--0  : 0;
+$depth--01 : 100;
+$depth--02 : 200;
+$depth--03 : 300;
+$depth--04 : 400;
+$depth--05 : 500;
+$depth--06 : 600;
+$depth--07 : 700;
+$depth--08 : 800;
+$depth--09 : 900;
+$depth--10 : 1000;
+
+
+
+//-------------------------------------------
+//  page content & cover
+//-------------------------------------------
+$transition-duration__page-contents: 400ms;
+$transition__page-cover: transform $transition-duration__page-contents cubic-bezier(.55, .31, .15, .93), opacity $transition-duration__page-contents ease-out, visibility 0s ease-out $transition-duration__page-contents;
+
+
+
+//-------------------------------------------
+//  SVG infinity icon animation related
+//-------------------------------------------
+$len: 242.776657104492px;
+$time: 1.6s;
+
+
+
+
+//-------------------------------------------
+//  buttons
+//-------------------------------------------
+
+$font-family__btn: $font--02;
+$font-size__btn: 10px;
+$font-weight__btn: 600;
+$letter-spacing__btn: .1em;
+
+$font-size__btn--small: 9px;
+$padding__btn--top-bottom--small: 10px;
+$padding__btn--left-right--small: 18px;
+
+$min-width__btn: 170px;
+$border-width__btn: 2px;
+$padding__btn--top-bottom: 15.2px;
+$padding__btn--left-right: 22px;
+
+$border-width__btn--cube: 2px;
+$perspective__btn--cube: 500px;
+$height__btn--cube: 46px;
+$transition-duration__btn--cube--front: 500ms;
+$transition-duration__btn--cube--back: 350ms;
+$transition-duration__btn--cube--front--hovered: 200ms;
+$transition-duration__btn--cube--back--hovered: 300ms;
+
+$transition-duration__btn--slide: 200ms;
+$transition-duration__btn--slide--hovered: 220ms;
+
+
+// Button with lettering effect
+// ------------------------
+$transform-x__btn--letters: 10px;
+$rotation__btn--letters: 90deg;
+$persperctive__btn--letters: 200px;
+$stagger__btn--letters: 30ms;
+$transition-duration__btn--letters: 400ms;
+$timing-function__btn--letters: $out-cubic;
+
+
+
+$height__btn--scroll__flashing-instance: 70%;
+
+//-------------------------------------------
+//  navigation
+//-------------------------------------------
+
+//  static menu
+$width__nav-side--static: 220px;
+
+//  side menu has background image - slice
+$offset__nav-side__bg-img: 20%;
+$bg-img__nav: url('../images/backgrounds/stock-photo-123474871.jpg');
+
+//  menu hamburger button
+$transition-duration__nav-toggle--hovered: 900ms;
+
+$dimension__nav__hamburger: 100px; // nav toggle button outer dimension
+$padding__nav__hamburger: 20px;
+$line-height__nav__hamburger: 2px; // nav hamburger line height
+$transition-duration__nav__hamburger--color: 300ms;
+
+$width__nav__hamburger__line: 35px; // nav hamburger line width
+$offset__nav__hamburger__line--hovered: $width__nav__hamburger__line * 5;
+$delay__nav__hamburger__line--hovered: 100ms;
+$rotation__nav__hamburger__line--clicked: 45deg; // nav burger upper an lower line rotation upon clicking
+$offset__nav__hamburger__line--middle--clicked: 51px; // nav hamburger middle line indent product__amount upon clicking
+
+//  menu logo
+$height__logo--on-nav: $dimension__nav__hamburger;
+$width__logo--on-nav: 1.3 * $dimension__nav__hamburger;
+
+//  nav vars
+$offset__nav: -100%; // total nav menu hidden part percent
+$skew__nav: -3deg;
+$transition-duration__nav--slide--openning: 600ms;
+$transition-duration__nav--slide--closing: 400ms;
+$transition__nav--slide--openning: $transition-duration__nav--slide--openning cubic-bezier(.55, .31, .15, .93);
+$transition__nav--slide--closing: $transition-duration__nav--slide--closing cubic-bezier(.55, .31, .15, .93);
+
+//  nav links in nav side and mobile default
+$offset__nav-link--on-nav-slide: -80px; // the product__amount of nav link items indent that coms back when menu slides in
+$height__nav-link: 60px; // nav link item height
+$padding__nav-link--left: $height__nav-link / 2 + 10px;
+$padding__nav-link--right: ($height__nav-link / 2) + 15px;
+$font-size__nav-link: .65em;
+$letter-spacing__nav-link: .15em;
+$font-weight__nav-link: 400;
+$text-transform__nav-link: uppercase;
+
+
+
+//-----------------------------------------
+//  dropdown
+//-----------------------------------------
+
+// general dropdown vars
+$offset__dropdown--push--clicked: 100%; // sliding in
+$offset__dropdown--pull--clicked: -20%; // sliding out
+$transition__dropdown--sliding: transform 400ms $out-cubic, opacity 300ms $out-cubic, color 150ms $out-cubic;
+$transition__dropdown--sliding--hidden: transform 500ms $out-cubic, opacity 500ms $out-cubic; // the items the slide out on clicking
+$delay__dropdown--hovered: 0s; // whether or not to have a delay on dropdown apearing
+
+$height__dropdown__branch__headline: 25px;
+$font-size__dropdown__branch__headline: .7em;
+
+$padding__dropdown__item--top-bottom: 30px;
+$padding__dropdown__item--left-right: 20px;
+
+$height__dropdown__btn--see-all--main: 45px; // big see all button that is in .secondary, .gallery and .icons dropdown
+
+//  dropdown secondary
+$width__dropdown__secondary__branch: 280px;
+$cols__dropdown__secondary: 3;
+$rows__dropdown__secondary: 2;
+$width__dropdown__secondary: $cols__dropdown__secondary * $width__dropdown__secondary__branch;
+
+$num__dropdown__secondary__link--item: 6;
+$height__dropdown__secondary__link: 30px;
+$padding__dropdown__secondary__link--left: $height__dropdown__secondary__link / 1.5;
+$font-size__dropdown__secondary__link: $font-size__nav-link * .928;
+$letter-spacing__dropdown__secondary__link: $letter-spacing__nav-link * (2 / 3);
+
+$height__dropdown__secondary__child: (($num__dropdown__secondary__link--item + 1.5) * $height__dropdown__secondary__link) + ($height__dropdown__branch__headline * 2);
+
+//  dropdown gallery
+$padding__dropdown__gallery__item: 25px;
+
+$height__dropdown__gallery__nav-link: $height__nav-link;
+
+$cols__dropdown__gallery__img: 2;
+$height__dropdown__gallery__img: $height__dropdown__gallery__nav-link * (2 / 3);
+$width__dropdown__gallery__img: $height__dropdown__gallery__img * (16 / 9);
+$width__dropdown__gallery__img--lg: 280px;
+
+//  dropdown icons
+$cols__dropdown__icons: 3;
+$width__dropdown__icons--lg: 280px;
+
+$height__dropdown__icons__nav-link: $height__nav-link;
+$height__dropdown__icons__nav-link--lg: 80px;
+$padding__dropdown__icons__nav-link__text: 5px;
+
+$font-size__dropdown__icons--icon-size: 28px;
+$font-size__dropdown__icons--icon-size--lg: 32px;
+
+$padding__dropdown__icons-and-dropdown__gallery__nav-link--left: $padding__nav-link--left / 2; // on small screens
+
+//  dropdown arrows
+$dimension__dropdown-arrow: 7px;
+$rotation__dropdown-arrow: 45deg;
+
+$offset__dropdown-arrow: $padding__nav-link--left / 2 + 2px;
+$offset__dropdown-arrow--clicked: - 1.5 * $offset__dropdown-arrow;
+
+$width__dropdown-arrow__line: 1px;
+$border-radius__dropdown-arrow__line: 1px;
+
+
+
+//-----------------------------------------
+//  search button
+//-----------------------------------------
+$rotation__search-icon: -45deg;
+$diameter__search-icon__circle: 26px;
+$height__search-icon__handle: $line-height__nav__hamburger * 8;
+
+$transition-duration__search-icon: 500ms;
+$transition-duration__search-icon--rotation: 200ms;
+$transition-duration__search-icon__parts: $transition-duration__search-icon * .65;
+$delay__search-icon__parts: $transition-duration__search-icon - $transition-duration__search-icon__parts;
+$timing-function__search-icon: $out-cubic;
+
+
+
+//-----------------------------------------
+//  hover bg flow
+//-----------------------------------------
+$transform-origin__hover--bg-flow--start: 0% 0%;
+$transform-origin__hover--bg-flow--end: 100% 100%;
+$transform-origin__hover--bg-flow--start--on-nav-bar: 0% 0%;
+$transform-origin__hover--bg-flow--end--on-nav-bar: 100% 100%;
+
+
+
+//-----------------------------------------
+//  nav bar - lateral menu
+//-----------------------------------------
+$cols__dropdown__secondary__branch--on-nav-bar: 2;
+$cols__dropdown__gallery__img--on-nav-bar: 4;
+$cols__dropdown__icons--on-nav-bar: 4;
+
+$height__dropdown__branch__headline--on-nav-bar: 70px;
+
+$padding__dorpdown--02-level--top-bottom--on-nav-bar: 30px;
+
+$padding__dorpdown--03-level--top-bottom--on-nav-bar: 30px;
+
+
+
+
+
+$hero-framed-gap: 40px; // like in prism demo
+$border-radius__round-corners: 20px;
+
+
+
+//-----------------------------------------
+//  hover items and portfolio (usually images revealing info when you hover over them) variables
+//-----------------------------------------
+$offset__hover-item__cover: 20px;
+$offset__hover-item__cover--small-gapped: 0;
+$border-width__hover-item__cover: 0;
+
+$gap__hover-item: 20px;
+$padding__hover-item: 20px;
+
+$padding__hover-item__info: 20px;
+
+$height__porfolio-item--fit-rows: 250px;
+$transition-duration__portfolio__btn-ajax--shrink: 400ms;
+$transition-duration__portfolio__btn-ajax--expand: 400ms;
+$delay__portfolio__btn-ajax: 1000ms;
+
+//-----------------------------------------
+//  form control elements variables
+//-----------------------------------------
+$indicator__dimansion: 18px;
+$indicator__padding-right: 15px;
+
+$margin__control--bottom: 15px;
+$font-size__control: 11px;
+
+$width__checkbox__tick: 2px;
+
+$dimension__radio__dot: 10px;
+
+$padding__select--top-bottom: 10px;
+$padding__select--left-right: 15px;
+$dimension__select__arrow: 7px;
+$width__select__arrow: 1px;
+
+
+//-----------------------------------------
+//  quotes vars
+//-----------------------------------------
+$width__quote__text--percent: 80%;
+$width__quote__footer--percent: 100% - $width__quote__text--percent;
+$width__quote__footer__line: 50px;
+$margin__quote__footer__line: 10px;
+
+
+
+
+//-----------------------------------------
+//  accordian
+//-----------------------------------------
+
+$height__heading--accordian: 49.2px;
+$vertical-align__heading--accordian: top;
+$degree__arrow-heading--accordian: -45deg; //should be 135deg if above var is "top"
+
+
+
+//-----------------------------------------
+//  process bars
+//-----------------------------------------
+
+$padding__process__nav: 100px;
+$offset__timeline-bar--left: 10px;
+$margin__timeline-bar: 60px;
+
+
+
+
+//=======================================
+//  Theme
+//=======================================
+
+//== Colors
+//
+
+//-----------------------------------------------------
+//  gray and brand colors for use across the template.
+//-----------------------------------------------------
+
+// possible colors
+$color--white        : rgba(255, 255, 255, 1);
+$color--white--half  : rgba($color--white, .5);
+$color--black--true  : rgba(0, 0, 0, 1);
+$color--black        : #1d1d1d;//#020100;
+$color--bluish         : #52c4e9;
+$color--purple       : #a29fcf;
+$color--gold         : #f97f24;
+$color--galaxy-purple: #0a0267;
+$color--galaxy-violet: #a8267f;
+$color--red          : #f00;
+$color--green        : #0f0;
+$color--blue         : #00f;
+$color--yellow       : #ff0;
+
+// $color--01: #00c9ff;
+// $color--02: #92fe9d; 09
+
+// $color--01: #ff0844;
+// $color--02: #ffb199; 08
+
+// $color--01: $color--black;
+// $color--02: $color--black; 06
+
+// $color--01: #d57eeb;
+// $color--02: #fccb90; 05
+
+// $color-text__hover-item: $color--white
+// $color--01: #f43b47;
+// $color--02: #453a94; 10
+
+
+// $color--01: #a2f2f7;
+// $color--02: #daffcc; 11
+
+// $color--01: #e6001e;
+// $color--02: #ff5a00; 01
+
+
+// $color--01: #00796b;
+// $color--02: #33f59a; 02
+
+
+// $color--01: #f43b47;
+// $color--02: #453a94; 04
+
+
+// $color--01: #fdd835;
+// $color--02: #323ea2 03
+
+
+// $color--01: #d57eeb;
+// $color--02: #fccb90; 05
+
+// $color--01: #00c9ff;
+// $color--02: #92fe9d; 09
+
+$color--01: #00c9ff;//#d57eeb;//#e6001e;//;//#f43b47;//#fdd835;//#f53844;//$color-text__heading--cd;//;//#a773fb;//#daffce;
+$color--02: #92fe9d;//#fccb90;//#ff5a00;//;//#453a94;//#323ea2;//$color--galaxy-violet; //#d35657; // Chestnut Rose
+// $color--01: #fdd835;//#f53844;//$color-text__heading--cd;//;//#a773fb;//#daffce;
+// $color--02: #453a94;//#323ea2;//$color--galaxy-violet; //#d35657; // Chestnut Rose
+$color--03: #343943; // Tuna
+$color--04: #e4b162; // Equator
+$color--05: #131519; // Woodsmoke
+$color--06: $color--white; // White
+
+$color--primary: $color--01;//#2b3585;//#00796b;//rgb(230, 0, 30);//#a177db;//$color--01;
+$color--01--gradient: $color--02;//#f64747;//$color--01; //#e94c75;//#a773fb;//#daffce;//$color--01; //#867ae8; //#2f248d;//#ff0844; // for certain buttons and texts
+$color--02--gradient: $color--primary;//#33f59a;//rgb(255, 90, 0); //#74bcf7; //saturate(darken($color--primary, 25%), 35%);//#42378F;//saturate(lighten($color--01, 10%), 30%);//#ff3d5f;//#867ae8; //#5c3694;//#81b9e8;//#aaf5f9;//#ff7f66; //#ff6535; //#ffb199; //linear-gradient(0deg, #aaf5f9 0%, #dbfec8 100%)
+// $color--01--gradient       : #f78ca0;
+// $color--02--gradient       : #fe9a8b;
+
+
+// action colors - Related to forms mostly
+//-----------------------------------------
+$color--success: #27eaad;
+$color--gradient_success__1: #66bb6a; //  for when gradient colors are needed!
+$color--gradient_success__2: #00e2ff; //  for when gradient colors are needed!
+
+$color--alert: #ff2929;
+$color--gradient_alert__1: #ff2929; //  for when gradient colors are needed!
+$color--gradient_alert__2: #79003d; //  for when gradient colors are needed!
+
+
+//  absolute grey colors --- NO Transparency
+$gray--01: darken($color--white, 4%);
+$gray--02: darken($color--white, 10%);
+$gray--03: darken($color--white, 15%);
+$gray--04: darken($color--white, 20%);
+$gray--05: darken($color--white, 25%);
+$gray--06: darken($color--white, 30%);
+$gray--07: darken($color--white, 35%);
+$gray--08: darken($color--white, 40%);
+$gray--09: darken($color--white, 45%);
+$gray--10: darken($color--white, 50%);
+$gray--11: darken($color--white, 55%);
+$gray--12: darken($color--white, 60%);
+$gray--13: darken($color--white, 65%);
+$gray--14: darken($color--white, 70%);
+$gray--15: darken($color--white, 75%);
+$gray--16: darken($color--white, 80%);
+$gray--17: darken($color--white, 85%);
+$gray--18: darken($color--white, 90%);
+$gray--19: darken($color--white, 95%);
+$gray--20: darken($color--white, 100%);
+
+//  relative grey colors --- with Transparency
+$gray--rel--01: rgba($color--black--true, .05);
+$gray--rel--02: rgba($color--black--true, .1);
+$gray--rel--03: rgba($color--black--true, .15);
+$gray--rel--04: rgba($color--black--true, .2);
+$gray--rel--05: rgba($color--black--true, .25);
+$gray--rel--06: rgba($color--black--true, .3);
+$gray--rel--07: rgba($color--black--true, .35);
+$gray--rel--08: rgba($color--black--true, .4);
+$gray--rel--09: rgba($color--black--true, .45);
+$gray--rel--10: rgba($color--black--true, .5);
+$gray--rel--11: rgba($color--black--true, .55);
+$gray--rel--12: rgba($color--black--true, .6);
+$gray--rel--13: rgba($color--black--true, .65);
+$gray--rel--14: rgba($color--black--true, .7);
+$gray--rel--15: rgba($color--black--true, .75);
+$gray--rel--16: rgba($color--black--true, .8);
+$gray--rel--17: rgba($color--black--true, .85);
+$gray--rel--18: rgba($color--black--true, .9);
+$gray--rel--19: rgba($color--black--true, .95);
+$gray--rel--20: rgba($color--black--true, 1);
+
+// $color-bg--cd: hsl(235, 21%, 21%);//hsl(229, 47%, 32%);
+// $color-bg-gray--cd: hsl(235, 16%, 16%);//hsl(229, 42%, 27%);
+// $color-text__heading--cd: #EF233C;
+// $color-text--cd: #8D99AE;//#EAEAEA;
+
+$color-bg--cd: $gray--16;//hsl(235, 21%, 21%);//hsl(229, 47%, 32%);
+$color-bg-gray--cd: darken($gray--16, 2%);//hsl(235, 16%, 16%);//hsl(229, 42%, 27%);
+$color-text__heading--cd: #d5f5c2;//#EF233C; --> (grad pair --> #a6f8fe;)
+$color-text--cd: #edeeeb;//#8D99AE;//#EAEAEA;
+
+$color--inverted: $color--white;
+$color-bg--inverted: $color--black;
+
+
+//-----------------------------------------
+//  body and sections main colors
+//-----------------------------------------
+
+$color-bg__body--underneath: #2e2e2e;//$color--black; //#252525;
+$color-bg__body: $color--white;//$color-bg--cd;//;
+$color-bg__pagecover: rgba($color-bg__body--underneath, .4);
+$color-bg__hero__overlay: $color-bg__body--underneath;
+
+$color-text__hero__heading: $color-bg__body;
+
+$opacity__hero__overlay: .64;
+
+$img-bg__hero--background: none;
+
+$color-text__hero: $color--white;
+$color-text__hero--inactive: $color-text__hero;
+
+$opacity__hero__text-inactive: .3;
+
+$color-text__hero--dark: $color--black--true;
+$color-text__hero--dark-inactive: $color-text__hero--dark;
+
+$opacity__color--dark-inactive: .3;
+
+$color-text__hero--white: $color--white;
+$color-text__hero--white-inactive: $color-text__hero--white;
+
+$color-bg__section--dark: $gray--16;//$color-bg-gray--cd;darken($color-bg-gray--cd, 10%);//;//$gray--16;//$gray--17;
+$color-bg__section--gray: $gray--01;//$color-bg-gray--cd;// // ".background--gray" section
+
+$color-text__section--colored: $color--black;
+
+$opacity__section__text--thin: .4;
+$opacity__section__text--normal: .7;
+$opacity__section__text--thick: .9;
+
+$color-boder__hr: darken($color-bg__section--gray, 8%);
+$color-boder__hr--gray: darken($color-bg__section--gray, 19%);
+
+
+$color__process--inactive: darken($color-bg__section--gray, 10%);
+$color__process--inactive--on-bg-dark: darken($color-bg__section--dark, 10%);
+
+
+//-----------------------------------------------------
+//  text and links colors
+//-----------------------------------------------------
+
+//  global text color on `<body>`.
+$color-text: $color--black;//$color-text--cd;//;
+$color-text--on-bg-dark: darken($color--white, 10%);//$color-text--cd;//
+$color-text--on-bg-img: $color-bg__body;
+
+$color-text__heading: $color-text;//$color-text__heading--cd; //;
+
+$color-bg__form-items---dark: $color-text;//$color-text--on-bg-dark;
+//  global textual link color.
+$color-text__link: $color--01;
+
+//  link hover color set via `darken()` function.
+$color-text__link--hovered: darken($color-text__link, 15%);
+
+
+$color-text__section--gradient: $color--black;
+
+//-----------------------------------------------------
+//  btn colors
+//-----------------------------------------------------
+$color__btn: $color--primary;
+$color__btn--02: $color-text; // usually for the texts, initial or on hover
+$color__btn--gradient: $color--01--gradient; // if gradient option selected
+$color__btn--white: $color--white;
+$color__btn--gray: $color-bg__section--gray;
+$color__btn--dark: $gray--18;
+$color__btn--dark--02: $color-bg__body;
+$color__btn--dark--on-bg-dark: hsl(0, 0%, 12%); // when the button is on a dark background
+$color__btn--text-on--colored-bg: $color-text__section--colored;
+$color__btn--text-on--gradient-bg: $color-text__section--gradient;
+
+
+
+//-----------------------------------------------------
+//  navigation menu colors
+//-----------------------------------------------------
+$color__nav--white: $color--white;
+$color__nav--dark: $color-text;
+
+$color__nav-toggle__btn: $color-text;
+
+$color-bg__nav: $color-bg__body; //$color-bg__section--dark;//#2e2e2e;//
+$opacity__nav-bg: .85;//0.99;//
+
+// $color-bg__nav--02-level                  : rgba(249, 249, 251, 1);
+// $color-bg__nav--03-level                  : rgba(243, 243, 245, 1);
+// $color-bg__nav--04-level                  : rgba(237, 237, 239, 1);
+// $color-bg__nav--05-level                  : rgba(231, 231, 233, 1);
+// $color-bg__nav--06-level                  : rgba(225, 225, 227, 1);
+
+
+// $color-bg__nav--02-level: darken($color-bg__nav, 2.5%);
+// $color-bg__nav--03-level: darken($color-bg__nav, 5%);
+// $color-bg__nav--04-level: darken($color-bg__nav, 7.5%);
+// $color-bg__nav--05-level: darken($color-bg__nav, 10%);
+// $color-bg__nav--06-level: darken($color-bg__nav, 12.5%);
+
+$color-bg__nav--02-level: darken($color-bg__nav, 3%);
+$color-bg__nav--03-level: darken($color-bg__nav, 6%);
+$color-bg__nav--04-level: darken($color-bg__nav, 9%);
+$color-bg__nav--05-level: darken($color-bg__nav, 12%);
+$color-bg__nav--06-level: darken($color-bg__nav, 15%);
+
+$color-text__nav-link: $color-text; //rgba($color--white, 0.75);//
+$color-text__nav-link--hovered: $color--primary;
+$color-bg__nav-link: transparent;
+$color-bg__nav-link--hovered: #ff0;
+$color-border__nav-link: $color-bg__nav--02-level;//$color-bg__nav--02-level; //
+
+$color__nav--highlight: $color--primary;
+$color__nav--alert: $color--primary;
+$color-text__nav: $color-text__nav-link;
+
+$color__search__btn: $color-bg__body;
+
+$color__logo--on-nav: $color-bg__body;//#2e2e2e;//
+
+$opacity__fotm-style--03__bg: .04;//.4;//
+
+$color-bg__control-indicator--on-nav: rgba($color-text, .1);//$color--black--true; //
+$color-bg__control-indicator--hovered--on-nav: rgba($color-text, .06);//rgba(0, 0, 0, .3); //
+$color-bg__indicator--disabled--on-nav: $color-text;
+$color__checkbox__tick--on-nav: $color-text__nav-link;
+$color__checkbox__tick--disbled--on-nav: solid rgba($color-bg__body, .3);
+
+$color-bg__cart--main: $color-bg__nav--02-level;
+$color-bg__cart-item: $color-bg__nav--02-level;
+$color-text__cart--primary: $color-text__nav;
+$color-text__cart--secondary: $color__nav--highlight;
+
+
+// ----------------------
+// 		  Dark nav
+// ----------------------
+
+$color-text__nav-link--dark: $color--white;
+$color-bg__nav--dark: $color-bg__section--dark;
+$opacity__nav-bg--dark: .98;
+$color-bg__nav--dark--02-level: darken($color-bg__nav--dark, 2.5%);
+$color-bg__nav--dark--03-level: darken($color-bg__nav--dark, 5%);
+$color-bg__nav--dark--04-level: darken($color-bg__nav--dark, 7.5%);
+$color-bg__nav--dark--05-level: darken($color-bg__nav--dark, 10%);
+$color-bg__nav--dark--06-level: darken($color-bg__nav--dark, 12.5%);
+$color-text__nav--dark: $color-text__nav-link--dark;
+$color-border__nav-link--dark: $color-bg__nav--dark--02-level;
+$color-bg__cart--main--dark: $color-bg__nav--dark--02-level;
+$color-text__cart--primary--dark: $color-text__nav--dark;
+$color-bg__cart-item--dark: $color-bg__nav--dark--02-level;
+$color-bg__control-indicator--on-nav--dark: rgba(0, 0, 0, .1);
+$color-bg__control-indicator--hovered--on-nav--dark: rgba(0, 0, 0, .06);
+$color-bg__indicator--disabled--on-nav--dark: $gray--16;
+$color__checkbox__tick--on-nav--dark: $color-text__nav-link--dark;
+$color__checkbox__tick--disbled--on-nav--dark: rgba(255, 255, 255, .3);
+
+
+
+//-----------------------------------------------------
+//  hover items and portfolio. (images that will be hovered)
+//-----------------------------------------------------
+$color-text__hover-item: $color-text;
+
+$color-bg__hover-item__cover--01--gradient: $color--01--gradient; //$color--white;
+$color-bg__hover-item__cover--02--gradient: $color--02--gradient; //#707070;
+$color-bg__hover-item__cover: linear-gradient(0deg, $color-bg__hover-item__cover--02--gradient 0%, $color-bg__hover-item__cover--01--gradient 100%);
+$color-border__hover-item__cover: $color-text;
+
+$mix-blend-mode__hover-item__cover: lighten;
+
+// portfolio
+$color-bg__portfolio__loaded-item__cover: $color-bg__body;
+$color-text__portfolio__btn-ajax: $color--black--true;
+$color-border__portfolio__btn-ajax: $color--black--true;
+
+$color-text__portfolio__btn-ajax--success: $color--success;
+$color-bg__portfolio__btn-ajax--success: transparent;
+
+$color-text__portfolio__btn-ajax--error: #ff2424;
+$color-bg__portfolio__btn-ajax--error: transparent;
+
+// $portfolio-item__cover-color           : linear-gradient(0deg, $color--01--gradient 0%, $color--02--gradient 100%); //linear-gradient(0deg, #FF5722 0%, #ff0050 100%);
+// $portfolio-cover-color-text            : $color--white; // bahind the buttons
+$color-border__portfolio-filters: $color-text;
+$color-text__portfolio-filters: $color-text;
+$color-bg__portfolio-filters: rgba(5, 5, 50, .02);
+
+$color-bg__portfolio-header: $color-bg__body;
+$opacity__portfolio-header--bg: $opacity__nav-bg;
+
+
+
+//-----------------------------------------------------
+//  pricing-table table
+//-----------------------------------------------------
+$color__pricing-tables--01: $color-text;//$color-bg__section--dark;
+$color__pricing-tables--02: $color-text;
+
+
+
+//-----------------------------------------------------
+//  chocolat lightbox
+//-----------------------------------------------------
+$choclolat-default-overlay-color: $color--white;
+$choclolat-default-controls-color: $color--black--true;
+$choclolat-dark-overlay-color: $color--black--true;
+$choclolat-dark-controls-color: $color--white;
+
+
+
+//-----------------------------------------------------
+//  lightgallery lightbox
+//-----------------------------------------------------
+$color__lg-process: #00f;
+$color-bg__lg: $color--black--true; // lightGallery background color
+$color__lg-el: $color--white; // lightGallery elements color
+$opacity__lg-backdrop: .9;
+
+
+
+//-----------------------------------------
+//  tabs colors
+//-----------------------------------------
+$color-bg__tabs--vertical__tabs: rgba(9, 0, 86, .02);
+$width__tabs--vertical__nav-tabs: 30%;
+$color__tabs--vertical__nav-tabs--primary: $color-text;
+$color__tabs--vertical__nav-tabs--highlight: $color--01;
+
+
+
+//-----------------------------------------
+//  bars colors
+//-----------------------------------------
+$color-bg__bar: transparent;
+$color__bar: $color-text;
+$color__bar--shadow: transparent;
+
+$degree__bars__gradient: 90deg;
+
+$color--01--gradient--bars: $color--01--gradient;
+$color--02--gradient--bars: $color--02--gradient;
+
+
+//-----------------------------------------
+//  form control elements variables
+//-----------------------------------------
+$color-bg__indicator: rgba(0, 0, 0, .1);
+$color-bg__indicator--hovered: rgba(0, 0, 0, .06);
+$color-bg__indicator--checked: $color-bg__indicator;
+$color-bg__indicator--checked--hovered: $color-bg__indicator--hovered;
+
+$color-bg__indicator--disabled: $gray--16;
+
+$color__checkbox__tick: $color--black--true;
+$color__checkbox__tick--disbled: solid rgba(0, 0, 0, .3);
+
+$color__radio__dot: $color__checkbox__tick;
+$color__radio__dot--disabled: $color__checkbox__tick--disbled;
+
+$color__select: $gray--16;
+$color__select--hovered: $color--black;
+
+$color-bg__select: $gray--02;
+$color-bg__select--hovered: $gray--08;
+
+$color__select__arrow: $gray--16;
+$color__select__arrow--hovered: $color--black;
+$color__select__arrow--disabled: $gray--08;
+
+$opacity__control--disabled: .4;
+
+
+
+
+//-----------------------------------------
+//  Search screen variables
+//-----------------------------------------
+$diameter__btn--search--big: 6vw;
+$width__btn--search--big__circle: .6vw;
+$diameter__btn--search--big__circle: 4.5vw;
+$height__btn--search--big__handle: 3vw;
+$color__btn--search--big: #757575;
+
+
+
+//=================================================
+// Change the direction in case of RTL websites
+//=================================================
+
+@if $direction--default == right {
+  $offset__nav__hamburger__line--middle--clicked: - $offset__nav__hamburger__line--middle--clicked;
+  $rotation__nav__hamburger__line--clicked: - $rotation__nav__hamburger__line--clicked;
+  $offset__nav: - $offset__nav;
+  $offset__nav-link--on-nav-slide: - $offset__nav-link--on-nav-slide;
+  $offset__nav__hamburger__line--hovered: - $offset__nav__hamburger__line--hovered;
+  $offset__dropdown--push--clicked: - $offset__dropdown--push--clicked;
+  $offset__dropdown--pull--clicked: - $offset__dropdown--pull--clicked;
+  $offset__dropdown-arrow--clicked: - $offset__dropdown-arrow--clicked;
+  $rotation__dropdown-arrow: - $rotation__dropdown-arrow;
+  $rotation__search-icon: - $rotation__search-icon;
+  $transform-origin__hover--bg-flow--end: 0% 50%;
+  $transform-origin__hover--bg-flow--start: 100% 50%;
+  $skew__nav: - $skew__nav;
+}

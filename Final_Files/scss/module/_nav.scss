@@ -1,0 +1,3318 @@
+
+
+// 00. -----  CONTENTS
+
+// 01. -----  nav
+// |________   lateral nav wrapper
+// |________   side(horizontal) nav wrapper
+// |________   sliding nav not fixed one
+// |________  nav static - not sliding
+// |________  nav goes to right on left-to-right languages and visa versa
+// |________  nav background
+// |________  nav header: includes the logo, hamburger button and probabley some links
+
+// 02. -----  nav toggle button
+// |________  nav toggle button name
+// |________  nav button hamberger style
+
+// 03. -----  Logo
+// |________  logo image
+// |________  logo text
+// |________  logo when is in the nav header
+// |________  logo when is in the footer
+
+// 04. -----  search button
+// |________  search toggle button name: search
+// |________  search magnifier button style
+
+// 05. -----  nav general styles, for mobile and small screens
+
+// 06. -----  nav buttons styles
+
+// 07. -----  when the nav has a background image
+
+// 08. -----  dropdowns
+// |________  dropdown with images
+// |________  dropdowns with icons
+// |________  arrows for back and forward on dropdowns
+
+// 09. -----  shopping cart - usually is in the nav so that's why it's here .. -----  !
+
+// 10. -----  nav text-slign on regulsr and RTL websites
+
+// 11. -----  direct relative dropdowns positioning on .nav-side
+
+// 12. -----  skewed nav
+
+// 13. -----  .nav-link hover effects
+
+// 14. -----  .nav-bar layout: means the order of the links, logos and button in the .nav-bar
+
+
+
+
+// ----------------------------------
+//              nav
+// ----------------------------------
+
+// lateral nav wrapper
+// -------------------
+.nav-bar-wrapper {
+  position              : fixed;
+  top                   : 0;
+  #{$direction--default}: 0;
+  width                 : 100vw;
+  z-index               : $depth--01 - 1;
+
+  .nav-header {
+    height: 0;
+  }
+}
+
+// side(horizontal) nav wrapper
+// -----------------------------
+.nav-side-wrapper {
+  position              : fixed;
+  top                   : 0;
+  #{$direction--default}: 0;
+  width                 : 100vw;
+  min-width             : 245px;
+  z-index               : $depth--01;
+}
+
+// sliding nav not fixed one
+// --------------------------
+.sliding {
+  position               : fixed;
+  top                    : 0;
+  #{$direction--opposite}: 0;
+  width                  : 100%;
+  min-width              : 245px;
+  height                 : 100vh;
+  padding                : 100px 15px;
+  z-index                : $depth--05;
+
+  .search__nav {
+    width : 100%;
+  }
+
+  .hamburger {
+    position: absolute;
+    top     : 0;
+    right   : 30px;
+  }
+
+  .hamburger__lines {
+    span {
+      &:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+
+  .search__suggestions {
+    margin    : 100px 0;
+    padding   : 30px 0;
+    text-align: center;
+  }
+
+  @include mq(nav-transform-point-width) {
+    width  : 27%;
+    padding: 100px 30px;
+  }
+}
+
+// nav static - not sliding
+// ------------------------
+@include mq(nav-transform-point-width) {
+  .nav-bar-wrapper {
+    position              : fixed;
+    top                   : 0;
+    #{$direction--default}: 0;
+    width                 : 100%;
+    z-index               : $depth--01;
+
+    _:-ms-lang(x), & { // Internet Explorer 10-11, Microsoft Edge
+      width: calc(100% - 17px);
+    }
+
+    .nav-header {
+      height: 0;
+    }
+
+    .nav__toggle {
+      display: none;
+    }
+  }
+
+  .nav-static {
+    &.nav-side-wrapper {
+      width    : $width__nav-side--static;
+      min-width: $width__nav-side--static;
+    }
+
+    .nav__toggle {
+      display: none;
+    }
+
+    .nav-side {
+      transform : translateX(0);
+      transition: 0s;
+      overflow-x: visible;
+
+      .has--dropdown__branch {
+        > .nav-link {
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-static--down-there {
+    .page-contents-wrapper {
+      width: calc(100% - #{$width__nav-side--static});
+      float: $direction--opposite;
+    }
+  }
+}
+
+// nav goes to right on left-to-right languages and visa versa
+// -----------------------------------------------------------
+.nav-side--opposite {
+  #{$direction--default} : auto;
+  #{$direction--opposite}: 0;
+
+  .nav__toggle {
+    #{$direction--default} : auto;
+    #{$direction--opposite}: $dimension__nav__hamburger / 3;
+
+    .hamburger__name {
+      text-align: $direction--default;
+    }
+
+    .hamburger__lines {
+      #{$direction--default} : auto;
+      #{$direction--opposite}: 0;
+    }
+
+    &.clicked {
+      .hamburger__lines {
+        span {
+          &:nth-child(2) {
+            transform: translateX(- $offset__nav__hamburger__line--middle--clicked) scaleX(2);
+          }
+
+          &:first-child {
+            transform: rotate($rotation__nav__hamburger__line--clicked);
+          }
+
+          &:nth-child(3) {
+            transform: rotate(- $rotation__nav__hamburger__line--clicked);
+          }
+        }
+      }
+    }
+  }
+
+  .nav-side {
+    transform: translateX(- $offset__nav);
+  }
+
+  @include mq(nav-transform-point-width) {
+    &.nav-side--expanded-dropdown {
+      .nav-side {
+        > ul  > li > .nav-link,
+        .dropdown__simple-wrapper .nav-link {
+          &::before {
+            #{$direction--default} : $offset__dropdown-arrow;
+            #{$direction--opposite}: auto;
+            transition             : border-color 200ms $out-cubic;
+            border                 : 0;
+            border-bottom-width    : $width__dropdown-arrow__line;
+            border-left-width      : $width__dropdown-arrow__line;
+            border-style           : solid;
+          }
+        }
+      }
+
+      .has--dropdown {
+        .dropdown__branch-wrapper,
+        .dropdown__branch-wrapper > ul,
+        .dropdown__simple-wrapper ul {
+          #{$direction--default}: auto;
+          #{$direction--opposite}: calc(100% - 1px);
+        }
+      }
+    }
+  }
+}
+
+// nav background
+// -------------
+.nav-bg {
+  width           : 100vw;
+  height          : 60px;
+  transform       : scaleY(1);
+  background-color: $color--black;
+
+  .visible & {
+    opacity: 0;
+  }
+
+  _:-ms-lang(x), & { // Internet Explorer 10-11, Microsoft Edge
+    width: 100%;
+  }
+}
+
+// nav header: includes the logo, hamburger button and probabley some links
+// ------------------------------------------------------------------------
+.nav-header {
+  position      : absolute;
+  top           : 0;
+  width         : 100%;
+  height        : 0;
+  padding       : 0 30px;
+  z-index       : $depth--05;
+  
+  > .has--dropdown {
+    width: auto;
+  }
+
+  > ul {
+    display      : inline-block;
+    width        : auto;
+    max-height   : none;
+    margin       : 0;
+    margin-right : auto;
+    margin-left  : auto;
+    padding-right: 15px;
+    padding-left : 15px;
+    float        : right;
+    text-align   : right;
+
+    > li {
+      display: inline-block;
+      width  : auto;
+      float  : left;
+
+      > .nav-link {
+        padding         : 0 20px;
+        background-color: transparent !important;
+
+        .icon {
+          position: static;
+
+          &,
+          &::before {
+            transform  : translateZ(0);
+            transition : 0s;
+            font-size  : 20px;
+            font-weight: 900 !important;
+            line-height: 56px;
+          }
+
+          + span {
+            display: none;
+          }
+        }
+      }
+    }
+
+    > .has--dropdown__branch {
+
+      > .nav-link {
+        &::before {
+          content : none;
+        }
+      }
+    }
+  }
+
+  .has--dropdown,
+  .has--dropdown ul {
+    overflow: visible;
+  }
+
+  .has--dropdown {
+    // reset mobile style
+    position: static;
+    height  : auto;
+
+    ul {
+      height: auto;
+    }
+  }
+
+  .has--dropdown__branch {
+    &:hover {
+      > .dropdown__branch-wrapper {
+        html:not(.mobile) & {
+          // when hover over .has--dropdown items - show subnavigation
+          transform: perspective(600px) translateY(0);
+          transition-delay: $delay__dropdown--hovered;
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+
+    &.hovered {
+      > .dropdown__branch-wrapper {
+        .mobile & {
+          // when hover over .has--dropdown items - show subnavigation
+          transform: perspective(600px) translateY(0);
+          transition-delay: $delay__dropdown--hovered;
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  li {
+    width: auto;
+
+    + li {
+      > .nav-link {
+        border-top: 0 !important;
+      }
+    }
+  }
+
+  .dropdown__branch-wrapper {
+    display               : flex;
+    position              : absolute;
+    top                   : 100%;
+    #{$direction--default}: 0;
+    flex-direction        : column;
+    justify-content       : center;
+    width                 : 100%;
+
+    // Hiding the sun menu
+    transform       : perspective(600px) translateY(10px);
+    transform-origin: 50% 0%;
+    transition      : opacity 270ms $out-cubic, visibility 270ms $out-cubic, transform $out-cubic 270ms;
+    opacity         : 0;
+    visibility      : hidden;
+  }
+
+  .dropdown__block-wrapper {
+    top   : 60px;
+    height: calc(100vh - 80px);
+
+    &.dropdown__search {
+      height: auto;
+
+      .search__nav {
+        width: 100%;
+      }
+    }
+
+    ul {
+      position: relative;
+      left    : 0;
+    }
+
+    a {
+      display: inline-block;
+    }
+  }
+
+  .dropdown__block {
+    > li {
+      width: 100%;
+    }
+  }
+
+  .dropdown__block__content {
+    padding: 20px;
+  }
+
+  .dropdown__search {
+    .fieldset {
+      margin: 0;
+    }
+  }
+
+  @include mq(nav-transform-point-width) {
+    .dropdown__block-wrapper {
+      width     : 480px;
+      height    : auto;
+      text-align: left;
+
+      &.dropdown__search {
+        width: 320px;
+      }
+    }
+
+    .dropdown__block__content {
+      padding: 30px;
+    }
+  }
+}
+
+.search__btn {
+  position               : absolute;
+  top                    : 0;
+  #{$direction--opposite}: 5px;
+  width                  : 55px;
+  height                 : 55px;
+  padding                : 0 15px;
+  border                 : 0;
+  background-color       : transparent;
+  font-size              : 0;
+  cursor                 : pointer;
+  z-index                : 5;
+
+  .icon {
+    font-size  : 20px;
+    font-weight: 900;
+    line-height: 50px;
+
+    &::before {
+      font-size: 20px;
+    }
+  }
+}
+
+.search__nav {
+  display: inline-block;
+  float  : right;
+
+  @include mq(nav-transform-point-width) {
+    min-width: 250px;
+  }
+
+  .fieldset {
+    margin-bottom: 0;
+  }
+
+  input {
+    position      : static;
+    width         : 100%;
+    height        : $height__nav-link;
+    padding       : 0 65px 0 30px;
+    border        : 0;
+    color         : $color-text__nav;
+    font-family   : $font--02;
+    font-size     : $font-size__nav-link;
+    font-weight   : $font-weight__nav-link;
+    letter-spacing: $letter-spacing__nav-link;
+    line-height   : $height__nav-link - .1px;
+    text-transform: $text-transform__nav-link;
+  }
+}
+
+.search__suggestions {
+  .label {
+    font-family   : $font--02;
+    font-size     : $font-size__nav-link - .05em;
+    font-weight   : $font-weight__nav-link;
+    letter-spacing: $letter-spacing__nav-link;
+    text-transform: $text-transform__nav-link;
+  }
+}
+
+
+
+
+// --------------------------------------------
+//             nav toggle button
+// --------------------------------------------
+
+.hamburger {
+  display         : inline-block;
+  display         : flex;
+  position        : relative;
+  align-items     : center;
+  height          : $dimension__nav__hamburger - 2 * $padding__nav__hamburger;
+  padding         : 0 20px;
+  float           : left;
+  border          : 0;
+  background-color: transparent;
+  vertical-align  : middle;
+
+  &:hover {
+    .hamburger__lines {
+      span {
+        &:first-child {
+          &::before,
+          &::after {
+            transition: transform $transition-duration__nav-toggle--hovered $out-cubic, background-color $transition-duration__nav__hamburger--color $out-cubic;
+          }
+        }
+
+        &:nth-child(2) {
+          &::after {
+            transform: translateX($offset__nav__hamburger__line--hovered);
+          }
+
+          &::before,
+          &::after {
+            transition: transform $transition-duration__nav-toggle--hovered $out-cubic $delay__nav__hamburger__line--hovered, background-color $transition-duration__nav__hamburger--color $out-cubic;
+          }
+        }
+
+        &:nth-child(3) {
+          &::before,
+          &::after {
+            transition: transform $transition-duration__nav-toggle--hovered $out-cubic 2 * $delay__nav__hamburger__line--hovered, background-color $transition-duration__nav__hamburger--color $out-cubic;
+          }
+        }
+
+        &::before {
+          transform: translateX(0);
+        }
+
+        &:first-child,
+        &:nth-child(3) {
+          &::after {
+            transform: translateX(-$offset__nav__hamburger__line--hovered);
+          }
+        }
+      }
+    }
+  }
+}
+
+// nav toggle button name
+// ----------------------
+.hamburger__name {
+  @include nav-header-text;
+
+  margin-left: 10px;
+  color      : $color__nav-toggle__btn;
+  text-align : $direction--opposite;
+}
+
+// nav button hamberger style
+// -------------------------
+.hamburger__lines {
+  display               : block;
+  position              : relative;
+  #{$direction--default}: 0;
+  width                 : $width__nav__hamburger__line;
+  height                : $line-height__nav__hamburger;
+
+  .clicked & {
+    span {
+      &:nth-child(2) {
+        transform: translateX($offset__nav__hamburger__line--middle--clicked) scaleX(1.7);
+      }
+
+      &:first-child {
+        transform: rotate(-$rotation__nav__hamburger__line--clicked);
+      }
+
+      &:nth-child(3) {
+        transform: rotate($rotation__nav__hamburger__line--clicked);
+      }
+    }
+  }
+
+  span {
+    display         : block;
+    width           : 100%;
+    height          : 100%;
+    transition      : transform 500ms $out-cubic 0ms;
+    border-radius   : 100px;
+    background-color: transparent;
+    overflow        : hidden;
+
+    &::before,
+    &::after {
+      position              : absolute;
+      top                   : 0;
+      #{$direction--default}: 0;
+      width                 : 100%;
+      height                : 100%;
+      transition            : background-color $transition-duration__nav__hamburger--color $out-cubic;
+      border-radius         : 100px;
+      background-color      : $color__nav-toggle__btn;
+      content               : '';
+    }
+
+
+    //eparating hamburger lines
+    &:first-child,
+    &:nth-child(3) {
+      position              : absolute;
+      top                   : 0;
+      #{$direction--default}: 0;
+
+      &::before {
+        transform: translateX($offset__nav__hamburger__line--hovered);
+      }
+    }
+
+    &:first-child {
+      transform: translateY(-($line-height__nav__hamburger * 4));
+    }
+
+    &:nth-child(2) {
+      position: relative;
+
+      &::before {
+        transform: translateX(- $offset__nav__hamburger__line--hovered);
+      }
+    }
+
+    &:nth-child(3) {
+      transform: translateY(($line-height__nav__hamburger * 4));
+    }
+  }
+}
+
+
+
+
+// --------------------------------------
+//                Logo
+// --------------------------------------
+
+.logo {
+  display       : inline-block;
+  position      : relative;
+  height        : 50px;
+  padding       : 0 20px;
+  line-height   : 50px;
+  text-align    : center;
+  vertical-align: middle;
+}
+
+// logo image
+// -----------
+.logo__figure {
+  display: inline-block;
+  width  : auto !important;
+  height : 100%;
+
+  img {
+    position: relative;
+    top     : -2px;
+    left    : -3px;
+    width   : auto;
+    height  : 100%;
+  }
+
+  svg {
+    position      : relative;
+    top           : -3px;
+    left          : -3px;
+    width         : 60px;
+    height        : 100%;
+    vertical-align: middle;
+  }
+
+  path {
+    fill: $color__logo--on-nav;
+  }
+}
+
+// logo text
+// ----------
+.logo__title {
+  display       : inline-block;
+  margin-left   : 4px;
+  font-size     : 20px;
+  font-weight   : 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+// logo when is in the nav header
+// ------------------------------
+.logo--header {
+  height     : $height__logo--on-nav - 2 * $padding__nav__hamburger;
+  padding    : 0 35px;
+  margin-left: 2px;
+  line-height: $height__logo--on-nav - 2 * $padding__nav__hamburger;
+  transform: translateZ(-1px);
+
+  &.logo--right {
+    float: right;
+  }
+
+  &.logo--left {
+    float: left;
+  }
+
+  &.logo--center {
+    position : absolute;
+    left     : 50%;
+    transform: translateX(-50%);
+  }
+
+  .logo__title {
+    @include nav-header-text;
+  }
+
+  .logo__figure {
+    img {
+      top: -5px;
+    }
+
+    svg {
+      top  : -1px;
+      width: 40px;
+    }
+  }
+
+  path {
+    transition: fill $transition-duration__nav__hamburger--color $out-cubic;
+  }
+}
+
+// logo when is in the footer
+// --------------------------
+.logo--footer {
+  text-align: center;
+
+  .logo__figure {
+    display: block;
+
+    img {
+      top: 0;
+    }
+
+    svg {
+      top  : 0;
+      width: 65px;
+    }
+  }
+
+  .logo__title {
+    display     : block;
+    height      : auto;
+    margin-top  : 10px;
+    margin-right: 0;
+    font-size   : 1em;
+    line-height : 1;
+  }
+}
+
+
+
+
+// --------------------------------------
+//             search button
+// --------------------------------------
+
+.search-toggle {
+  display         : inline-block;
+  display         : flex;
+  position        : relative;
+  align-items     : center;
+  height          : $dimension__nav__hamburger - 2 * $padding__nav__hamburger;
+  padding         : 0 20px;
+  float           : right;
+  border          : 0;
+  background-color: transparent;
+  vertical-align  : middle;
+
+  &.search-toggle--left-side {
+    #{$direction--opposite}: auto;
+    #{$direction--default} : $dimension__nav__hamburger / 3;
+  }
+
+  &.clicked {
+    &.search-toggle--left-side {
+      .search-toggle__icon {
+        transform: rotate(- 2 * $rotation__search-icon);
+      }
+    }
+
+    &:hover {
+      .search-toggle__name {
+        transition: color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts;
+      }
+
+      .search-toggle__icon__circle__left,
+      .search-toggle__icon__circle__right {
+        transition: transform $transition-duration__search-icon $timing-function__search-icon ($transition-duration__search-icon--rotation), background-color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts, border-color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts, border-radius $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts;
+      }
+
+      .search-toggle__icon__handle {
+        transition: transform $transition-duration__search-icon $timing-function__search-icon $transition-duration__search-icon--rotation / 2, background-color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts;
+      }
+    }
+
+    .search-toggle__name {
+      transition: color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts;
+      // color     : $color__search__btn !important;
+    }
+
+    .search-toggle__icon {
+      transform : rotate(2 * $rotation__search-icon);
+      transition: transform $transition-duration__search-icon--rotation $timing-function__search-icon 0ms;
+    }
+
+    .search-toggle__icon__circle__left,
+    .search-toggle__icon__circle__right {
+      transition      : transform $transition-duration__search-icon $timing-function__search-icon ($transition-duration__search-icon--rotation), background-color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts, border-color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts, border-radius $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts;
+      border-radius   : $line-height__nav__hamburger;
+      // border-color    : $color__search__btn;
+      // background-color: $color__search__btn;
+    }
+
+    .search-toggle__icon__circle__left {
+      transform: rotate($rotation__search-icon) scale3d((($line-height__nav__hamburger) / ($diameter__search-icon__circle / 2)), (($width__nav__hamburger__line) / ($diameter__search-icon__circle)), 1);
+    }
+
+    .search-toggle__icon__circle__right {
+      transform: rotate(- $rotation__search-icon) scale3d((($line-height__nav__hamburger) / ($diameter__search-icon__circle / 2)), (($width__nav__hamburger__line) / ($diameter__search-icon__circle)), 1);
+    }
+
+    .search-toggle__icon__handle {
+      transform       : translate3d(0, -79px, 0) scaleY(5);
+      transition      : transform $transition-duration__search-icon $timing-function__search-icon $transition-duration__search-icon--rotation / 2, background-color $delay__search-icon__parts $timing-function__search-icon $transition-duration__search-icon__parts;
+      // background-color: $color__search__btn;
+      z-index         : $depth--02;
+    }
+  }
+
+  &:hover {
+    .search-toggle__name {
+      transition: color $transition-duration__search-icon__parts $timing-function__search-icon $delay__search-icon__parts;
+    }
+
+    .search-toggle__icon__circle__left,
+    .search-toggle__icon__circle__right {
+      transition: transform $transition-duration__search-icon $timing-function__search-icon $transition-duration__search-icon--rotation, background-color $transition-duration__search-icon__parts $timing-function__search-icon $delay__search-icon__parts, border-color $transition-duration__search-icon__parts $timing-function__search-icon $delay__search-icon__parts, border-radius $transition-duration__search-icon__parts $timing-function__search-icon $delay__search-icon__parts;
+    }
+
+    .search-toggle__icon__handle {
+      transition: transform $transition-duration__search-icon $timing-function__search-icon 0ms, background-color $transition-duration__search-icon__parts $timing-function__search-icon $delay__search-icon__parts;
+    }
+  }
+}
+
+// search toggle button name: search
+// --------------------------------
+.search-toggle__name {
+  @include nav-header-text;
+
+  margin-right: 8px;
+  color       : $color__search__btn;
+  text-align  : $direction--default;
+
+  .search-toggle--left-side & {
+    text-align: $direction--opposite;
+  }
+}
+
+// search magnifier button style
+// -----------------------------
+.search-toggle__icon {
+  display                : block;
+  position               : relative;
+  top                    : 50%;
+  #{$direction--opposite}: 0;
+  width                  : $width__nav__hamburger__line;
+  height                 : $line-height__nav__hamburger;
+  margin-top             : - ($line-height__nav__hamburger / 2);
+  transform              : rotate($rotation__search-icon);
+  transition             : transform $transition-duration__search-icon--rotation $timing-function__search-icon $transition-duration__search-icon / 2;
+  
+  .not-chrome.desktop & {
+    top: 0;
+  }
+
+  .search-toggle--left-side & {
+    #{$direction--default} : 0;
+    #{$direction--opposite}: auto;
+    transform              : rotate(- $rotation__search-icon);
+  }
+}
+
+.search-toggle__icon__circle {
+  position                     : absolute;
+  top                          : - ($diameter__search-icon__circle / 2 - ($line-height__nav__hamburger / 2));
+  #{$direction--default}       : 50%;
+  width                        : $diameter__search-icon__circle;
+  height                       : $diameter__search-icon__circle;
+  margin-#{$direction--default}: - $diameter__search-icon__circle / 2;
+}
+
+// the magnifier circle is 2 semi-circle
+// -------------------------------------
+.search-toggle__icon__circle__left,
+.search-toggle__icon__circle__right {
+  position        : absolute;
+  bottom          : 0;
+  width           : 50%;
+  height          : 100%;
+  transform-origin: 50% 25.5%;
+  transition:       transform $transition-duration__search-icon $timing-function__search-icon $transition-duration__search-icon--rotation,
+                    background-color $transition-duration__nav__hamburger--color $out-cubic,
+                    border-color $transition-duration__nav__hamburger--color $out-cubic,
+                    border-radius $transition-duration__search-icon__parts $timing-function__search-icon $delay__search-icon__parts;
+  border-style    : solid;
+  border-color    : $color-bg__nav;
+  background-color: transparent;
+  z-index         : $depth--02;
+}
+
+.search-toggle__icon__circle__left {
+  #{$direction--default}                     : 1px;
+  border-width                               : $line-height__nav__hamburger;
+  border-style                               : solid;
+  border-radius                              : 0;
+  border-#{$direction--opposite}-width       : 0;
+  border-bottom-#{$direction--default}-radius: 100px;
+  border-top-#{$direction--default}-radius   : 100px;
+}
+
+.search-toggle__icon__circle__right {
+  #{$direction--opposite}                     : 0;
+  border-width                                : $line-height__nav__hamburger;
+  border-style                                : solid;
+  border-radius                               : 0;
+  border-#{$direction--default}-width         : 0;
+  border-bottom-#{$direction--opposite}-radius: 100px;
+  border-top-#{$direction--opposite}-radius   : 100px;
+}
+
+.search-toggle__icon__handle {
+  display                      : block;
+  position                     : absolute;
+  top                          : $diameter__search-icon__circle / 2 - 1px;
+  #{$direction--default}       : 50%;
+  width                        : $line-height__nav__hamburger;
+  height                       : $height__search-icon__handle;
+  transition                   : transform $transition-duration__search-icon $timing-function__search-icon 0ms,
+                                 background-color $transition-duration__nav__hamburger--color $out-cubic;
+  background-color             : $color-bg__nav;
+  margin-#{$direction--default}: -($line-height__nav__hamburger / 2);
+}
+
+
+
+
+// -------------------------------------------------------------
+//     nav general styles, for mobile and small screens
+// -------------------------------------------------------------
+
+.nav {
+  display               : flex;
+  position              : absolute;
+  #{$direction--default}: 0;
+  top                   : 0;
+  flex-direction        : column;
+  justify-content       : center;
+  width                 : 100%;
+  height                : 100vh;
+
+  @include mq(nav-transform-point-width) {
+    width: 27%;
+  }
+
+  .nav-static & {
+    @include mq(nav-transform-point-width) {
+      width: 100%;
+    }
+  }
+
+  &:hover {
+    .nav-link::after,
+    .hover-bg,
+    .hover-bg::before,
+    .hover-bg::after {
+      will-change: transform;
+    }
+
+    .nav--has-sliced-bg-img__slice {
+      will-change: transform, left;
+    }
+  }
+
+  .ie-upto-10 & {
+    padding: $dimension__nav__hamburger 0;
+  }
+
+  > ul {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    width          : 100%;
+    height         : 100%;
+    max-height     : calc(100% - #{$dimension__nav__hamburger * 2});
+    margin         : 0;
+    padding        : 1px 0;
+    transition     : $transition__dropdown--sliding;
+  }
+
+  ul {
+    -webkit-overflow-scrolling: touch;
+    overflow-x                : hidden;
+  }
+
+  li {
+    width: 100%;
+    float: $direction--default;
+  }
+
+  .visible & {
+    .nav--has-sliced-bg-img__slice {
+      transform: translateX(0);
+    }
+  }
+
+  .no-flexbox & {
+    display: table;
+
+    > ul {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  .see-all {
+    .btn {
+      display: none;
+    }
+  }
+}
+
+
+
+
+// --------------------------------------
+//            nav buttons styles
+// --------------------------------------
+
+.nav-link {
+  display       : block;
+  height        : $height__nav-link;
+  padding       : 0 $padding__nav-link--right 0 $padding__nav-link--left;
+  transition    : color 300ms, $transition__dropdown--sliding;
+  color         : $color-text__nav;
+  font-family   : $font--02;
+  font-size     : $font-size__nav-link;
+  font-weight   : $font-weight__nav-link;
+  letter-spacing: $letter-spacing__nav-link;
+  line-height   : $height__nav-link - .1px;
+  text-align    : center;
+  text-transform: $text-transform__nav-link;
+
+  span {
+    &:last-child {
+      display: block;
+      position: relative;
+      z-index: $depth--01;
+    }
+  }
+
+  .cart-counter {
+    display      : inline-block;
+    position     : absolute;
+    top          : 12px;
+    right        : 12px;
+    width        : 18px;
+    height       : 18px;
+    padding-left : 2px;
+    border-radius: 50%;
+    background   : $color--red;
+    color        : $color-bg__body;
+    line-height  : 18px;
+    box-shadow   : 0 0 16px -4px $color--red;
+    z-index      : 101;
+  }
+
+  > .icon {
+    position               : absolute;
+    top                    : 0;
+    #{$direction--opposite}: 65%;
+    z-index                : $depth--01;
+
+    &,
+    &::before {
+      font-size  : 28px;
+      line-height: $height__nav-link - .1px;
+    }
+  }
+}
+
+// .nav-link--has-icon must be applied to the <ul>
+// that is direct parent of <li>s that contain .nav-link
+// -----------------------------------------------------
+.nav-link--has-icon {
+  > li {
+    > .nav-link {
+      span {
+        &:last-child {
+          display                       : block;
+          text-align                    : $direction--default;
+          padding-#{$direction--default}: 45%;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+// ------------------------------------------
+//     when the nav has a background image
+// ------------------------------------------
+
+.nav--has-bg-img .nav,
+.nav--has-sliced-bg-img .nav,
+.nav--has-sliced-bg-img__slice {
+  background-image   : $bg-img__nav;
+  background-repeat  : no-repeat;
+  background-position: 50% 50%;
+  background-size    : auto 100%;
+
+  // The opace mask for the background image if needed
+  // -------------------------------------------------
+  &::before {
+    display               : block;
+    position              : absolute;
+    top                   : 0;
+    #{$direction--default}: 0;
+    width                 : 100%;
+    height                : 100%;
+    background-color      : rgba(#000, .3);
+    content               : '';
+  }
+}
+
+.nav--has-sliced-bg-img {
+  .nav {
+    overflow: hidden;
+
+    li {
+      position: relative;
+      overflow: hidden;
+
+      // The mask tha appears on hover
+      // ----------------------------
+      &::before {
+        display               : block;
+        position              : absolute;
+        top                   : 0;
+        #{$direction--default}: -$offset__nav-side__bg-img;
+        width                 : (100% + 2 * $offset__nav-side__bg-img);
+        height                : 100%;
+        transition            : opacity 800ms $out-cubic;
+        content               : '';
+        opacity               : 0;
+        z-index               : 1;
+      }
+
+      &:hover {
+        &::before {
+          transition: opacity 220ms $out-cubic;
+          opacity   : 1;
+        }
+
+        .nav--has-sliced-bg-img__slice {
+          left      : -2 * $offset__nav-side__bg-img;
+          transform : scale(1.05) !important;
+          transition: transform 220ms $out-cubic, left 220ms $out-cubic;
+        }
+      }
+    }
+
+    .nav-link {
+      position      : relative;
+      // color         : $color-bg__body;
+      z-index       : 2;
+      // mix-blend-mode: difference;
+    }
+  }
+}
+
+.nav--has-sliced-bg-img__slice {
+  position        : absolute;
+  top             : 0;
+  left            : -2 * $offset__nav-side__bg-img;
+  width           : (100% + 4 * $offset__nav-side__bg-img);
+  height          : 100vh;
+  transform-origin: 0% 50%;
+}
+
+// > ul {
+//   &:hover {
+//     .nav--has-sliced-bg-img__slice {
+//       transition-duration: 700ms;
+//       transition-property: transform;
+//       transition-timing-function: cubic-bezier(.165, .84, .44, 1);
+//       backface-visibility: hidden;
+//     }
+//   }
+// }
+
+
+
+
+// --------------------------------------
+//               dropdowns
+// --------------------------------------
+
+.has--dropdown,
+.has--dropdown ul {
+  position              : absolute;
+  top                   : 0;
+  #{$direction--default}: 0;
+  width                 : 100%;
+  transition            : $transition__dropdown--sliding;
+  z-index               : 10;
+  backface-visibility   : hidden;
+  overflow-x            : hidden;
+  overflow-y            : auto;
+
+  &.is-hidden {
+    // Push the dropdown items to the right
+    // -----------------------------------
+    transform : translateX($offset__dropdown--push--clicked);
+    transition: $transition__dropdown--sliding--hidden;
+  }
+
+  &.is-hidden > li > a,
+  &.is-hidden > li > .menu-search,
+  &.move-out > li > a,
+  &.move-out > li > .menu-search {
+    // Lower down the dropdown items opacity - for dropdown items hidden on the right
+    // ------------------------------------------------------------------------------
+    opacity: 0;
+  }
+
+  &.move-out > li > a,
+  &.move-out > li > .menu-search {
+    // Push the parent dropdown items to the left when hidden dropdown slides in
+    // -------------------------------------------------------------------------
+    transform: translateX($offset__dropdown--pull--clicked);
+  }
+
+  &.move-out > li::before {
+    // Hide the go-back arrow of the parent link on click
+    // --------------------------------------------------
+    transform: translateX($offset__dropdown-arrow--clicked) rotate($rotation__dropdown-arrow);
+  }
+
+  .dropdown-is-active & {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  a {
+    display            : block;
+    position           : relative;
+    transition         : $transition__dropdown--sliding;
+    // height          : $height__nav-link;
+    // line-height     : $height__nav-link - .1px;
+    text-overflow      : ellipsis;
+    white-space        : nowrap;
+    backface-visibility: hidden;
+  }
+}
+
+.has--dropdown {
+  position: relative;
+  height  : auto;
+
+  ul {
+    height: 100%;
+  }
+}
+
+.dropdown__gallery,
+.dropdown__icons {
+  .dropdown__item {
+    // items with picture - icon and title
+    // -----------------------------------
+    font-size : $font-size__nav-link;
+    text-align: $direction--default;
+
+    h3 {
+      font: {
+        family: $font--02;
+        size  : 1em;
+        weight: $font-weight__nav-link;
+      }
+
+      letter-spacing: $letter-spacing__nav-link;
+      text-overflow : ellipsis;
+      // Truncate text with ellipsis if too long
+      // ---------------------------------------
+      text-transform: $text-transform__nav-link;
+      white-space   : nowrap;
+      overflow      : hidden;
+    }
+  }
+}
+
+// dropdown with images
+// --------------------
+.dropdown__gallery {
+  .dropdown__item {
+    position                      : relative;
+    height                        : $height__dropdown__gallery__nav-link;
+    // You must use images with 16:9 dimension in the gallery of the nav dropdown
+    // --------------------------------------------------------------------------
+    padding-#{$direction--default}: $padding__nav-link--left + $width__dropdown__gallery__img + $padding__dropdown__icons-and-dropdown__gallery__nav-link--left;
+
+    h3 {
+      position   : relative;
+      margin     : 0;
+      line-height: $height__dropdown__gallery__nav-link;
+      z-index    : 5;
+    }
+  }
+
+  img {
+    display               : block;
+    position              : absolute;
+    top                   : 50%;
+    #{$direction--default}: $padding__nav-link--left;
+    width                 : auto;
+    height                : $height__dropdown__gallery__img;
+    margin-top            : -($height__dropdown__gallery__img / 2);
+    z-index               : 5;
+  }
+}
+
+// dropdowns with icons
+// --------------------
+.dropdown__icons {
+  .dropdown__item {
+    position                      : relative;
+    height                        : $height__dropdown__icons__nav-link;
+    line-height                   : $height__dropdown__icons__nav-link;
+    padding-#{$direction--default}: $padding__nav-link--left + $font-size__dropdown__icons--icon-size + $padding__dropdown__icons-and-dropdown__gallery__nav-link--left;
+
+    h3 {
+      position   : relative;
+      margin     : 0;
+      line-height: $height__dropdown__icons__nav-link;
+      z-index    : 5;
+    }
+
+    p {
+      display : none;
+      position: relative;
+      // Hide description on small devices
+      // ---------------------------------
+      z-index: 5;
+    }
+
+    .icon {
+      position              : absolute;
+      #{$direction--default}: $padding__nav-link--left;
+      z-index               : 5;
+      // margin-top: -($font-size__dropdown__icons--icon-size / 2);
+    }
+
+    .icon,
+    .icon::before {
+      font-size: $font-size__dropdown__icons--icon-size;
+    }
+  }
+}
+
+.dropdown__block__content {
+  padding: 30px;
+}
+
+// arrows for back and forward on dropdowns
+// ---------------------------------------------
+.has--dropdown__branch > .nav-link,
+.go-back {
+  position: relative;
+
+  &::before {
+    position     : absolute;
+    top          : 50%;
+    width        : $dimension__dropdown-arrow;
+    height       : $dimension__dropdown-arrow;
+    margin-top   : -$dimension__dropdown-arrow / 2;
+    transform    : rotate($rotation__dropdown-arrow);
+    border-radius: $border-radius__dropdown-arrow__line;
+    border-color : $color-text__nav;
+    content      : '';
+    z-index      : $depth--01;
+  }
+}
+
+.has--dropdown__branch {
+  > .nav-link {
+    &::before {
+      #{$direction--opposite}             : $offset__dropdown-arrow;
+      transition                          : opacity 500ms;
+      border                              : 0;
+      border-top-width                    : $width__dropdown-arrow__line;
+      border-style                        : solid;
+      opacity                             : 0;
+      border-#{$direction--opposite}-width: $width__dropdown-arrow__line;
+
+      .visible &,
+      .nav-static & {
+        transition: border-color 200ms $out-cubic, transform 300ms $out-cubic, opacity 200ms ($transition__nav--slide--openning);
+        opacity   : 1;
+      }
+
+      .nav-bar-wrapper & {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.go-back {
+  &::before {
+    #{$direction--default}             : $offset__dropdown-arrow;
+    transition                         : border-color 200ms $out-cubic, transform 300ms $out-cubic;
+    border                             : 0;
+    border-bottom-width                : $width__dropdown-arrow__line;
+    border-style                       : solid;
+    border-#{$direction--default}-width: $width__dropdown-arrow__line;
+  }
+}
+
+@include mq(nav-transform-point-width) {
+  .nav-side--expanded-dropdown {
+    .nav-side {
+      .dropdown__branch-wrapper {
+        display               : flex;
+        position              : absolute;
+        top                   : 0;
+        #{$direction--default}: 100%;
+        flex-direction        : column;
+        justify-content       : center;
+        width                 : auto;
+        min-height            : 100%;
+
+        > ul {
+          position: static;
+        }
+      }
+
+      .has--dropdown,
+      .has--dropdown ul {
+        overflow: visible;
+
+        &.is-hidden > li > a,
+        &.is-hidden > li > .menu-search,
+        &.move-out > li > a,
+        &.move-out > li > .menu-search {
+          // reset mobile style
+          // ------------------
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .has--dropdown {
+        position: static;
+        height: auto;
+
+        > .has--dropdown__branch {
+          &.is-hidden {
+            // reset mobile style
+            // ------------------
+            transform: translateX(0);
+          }
+
+          .dropdown__branch-wrapper > .is-hidden {
+            transform: translateX(0);
+          }
+
+          .dropdown__branch-wrapper,
+          > ul {
+            transform       : perspective(600px) rotateY(-5deg) scale(.9);
+            transform-origin: 10% 50%;
+            transition      : opacity 270ms $out-cubic, visibility 270ms $out-cubic, transform $out-cubic 270ms;
+            opacity         : 0;
+            visibility      : hidden;
+          }
+
+          &:hover {
+            .dropdown__branch-wrapper,
+            > ul {
+              // when hover over .has--dropdown items - show subnavigation
+              // --------------------------------------------------------
+              transform       : perspective(300px)  scale(1);
+              transition-delay: $delay__dropdown--hovered;
+              opacity         : 1;
+              visibility      : visible;
+            }
+          }
+        }
+      }
+
+      .dropdown__secondary,
+      .dropdown__gallery,
+      .dropdown__icons {
+        top    : 0;
+        height : auto;
+        z-index: $depth--01;
+
+        > .go-back {
+          display: none;
+        }
+
+        > .see-all {
+          position     : absolute;
+          bottom       : 0;
+          height       : $height__dropdown__btn--see-all--main;
+          margin-bottom: $padding__dropdown__item--top-bottom;
+          text-align   : center;
+        }
+      }
+
+      .dropdown__gallery,
+      .dropdown__icons,
+      .dropdown__block {
+        padding: $padding__dropdown__item--top-bottom $padding__dropdown__item--left-right (2 * $padding__dropdown__item--top-bottom + $height__dropdown__btn--see-all--main);
+
+        > .see-all {
+          width: calc(100% - #{(2 * $padding__dropdown__item--left-right)});
+        }
+      }
+
+      .dropdown__secondary {
+        width   : $width__dropdown__secondary;
+        padding : ($padding__dropdown__item--top-bottom / 2) 0 (2 * $padding__dropdown__item--top-bottom + $height__dropdown__btn--see-all--main);
+        overflow: hidden;
+
+        &::before,
+        &::after {
+          // this is the separation line in the middle of the .dropdown__secondary element
+          // -----------------------------------------------------------------------------
+          display               : none;
+          position              : absolute;
+          #{$direction--default}: $padding__dropdown__item--left-right;
+          width                 : calc(100% - #{(2 * $padding__dropdown__item--left-right)});
+          height                : 1px;
+          content               : '';
+        }
+
+        &::before {
+          @include dropdown__secondary-first-divider;
+
+          top: $height__dropdown__secondary__child + ($padding__dropdown__item--top-bottom / 2);
+        }
+
+        &::after {
+          @include dropdown__secondary-second-divider;
+
+          top: 2 * ($height__dropdown__secondary__child) + ($padding__dropdown__item--top-bottom / 2);
+        }
+
+        .nav-link {
+          height                        : $height__dropdown__secondary__link;
+          font-size                     : $font-size__dropdown__secondary__link;
+          letter-spacing                : $letter-spacing__dropdown__secondary__link;
+          line-height                   : $height__dropdown__secondary__link;
+          text-align                    : $direction--default;
+          padding-#{$direction--default}: $padding__dropdown__secondary__link--left;
+        }
+
+        .go-back {
+          &::before {
+            #{$direction--default}: $padding__dropdown__secondary__link--left;
+          }
+
+          a {
+            color: transparent;
+
+            .no-touchevents &:hover {
+              color: transparent;
+            }
+          }
+        }
+
+        .see-all {
+          position              : absolute;
+          #{$direction--default}: 0;
+          bottom                : 0;
+          width                 : 100%;
+          padding-top           : 0;
+          padding-bottom        : 0;
+        }
+
+        .has--dropdown__branch {
+          a {
+            &::before {
+              #{$direction--opposite}: $padding__dropdown__secondary__link--left;
+            }
+          }
+        }
+
+        > .has--dropdown__branch > a {
+          // This the styles of the dropdown branches heading on large devices
+          // ------------------------------------------------------------------
+          height        : $height__dropdown__branch__headline;
+          margin-bottom : $font-size__dropdown__branch__headline;
+          font-size     : $font-size__dropdown__branch__headline;
+          font-weight   : bold;
+          letter-spacing: $letter-spacing__dropdown__secondary__link;
+          line-height   : $height__dropdown__branch__headline;
+          pointer-events: none;
+
+          &::after,
+          &::before,
+          .hover-bg {
+            // hide the arrow
+            // --------------
+            display: none;
+          }
+        }
+
+        > li {
+          width                               : percentage(1 / $cols__dropdown__secondary);
+          height                              : $height__dropdown__secondary__child;
+          padding                             : ($padding__dropdown__item--top-bottom / 2) $padding__dropdown__item--left-right;
+          float                               : $direction--default;
+          // The verticatl crossing devide lines for dropdown branches on large devices
+          // --------------------------------------------------------------------------
+          border-width                        : 0;
+          border-style                        : solid;
+          border-#{$direction--opposite}-width: 1px;
+
+          &:nth-of-type(#{$cols__dropdown__secondary}n + 2) {
+            border-right-width: 0;
+          }
+
+          > ul {
+            // reset mobile style
+            // ------------------
+            position : relative;
+            height   : auto;
+            transform: translateX(0);
+
+            > .go-back {
+              display: none;
+            }
+          }
+        }
+
+        li {
+          a {
+            border-top: 0;
+          }
+        }
+
+        ul {
+          height        : auto;
+          padding-bottom: $height__dropdown__secondary__link;
+          overflow      : hidden;
+
+          &.move-out > li > a {
+            // reset mobile style
+            // ------------------
+            transform: translateX($offset__dropdown--pull--clicked);
+            opacity: 0;
+          }
+        }
+      }
+
+      .dropdown__gallery {
+        width: $width__dropdown__gallery__img--lg * $cols__dropdown__gallery__img;
+
+        > li {
+          width                         : percentage(1 / $cols__dropdown__gallery__img) - 1%;
+          float                         : $direction--default;
+          margin-#{$direction--opposite}: $cols__dropdown__gallery__img * 1%;
+
+          &:nth-of-type(#{$cols__dropdown__gallery__img}n) {
+            margin-#{$direction--opposite}: 0;
+          }
+        }
+
+        .dropdown__item {
+          height       : auto;
+          margin-bottom: 1em;
+          padding      : 1em;
+          border       : 0;
+          line-height  : normal;
+
+          h3 {
+            line-height: 100%;
+          }
+        }
+
+        img {
+          position              : relative;
+          #{$direction--default}: 0;
+          width                 : 100%;
+          height                : auto;
+          margin                : 0 0 1em;
+        }
+      }
+
+      .dropdown__icons {
+        width: $width__dropdown__icons--lg * $cols__dropdown__icons;
+
+        > li {
+          @include no-top-border-on-first-items;
+
+          width: percentage(1 / $cols__dropdown__icons);
+          float: $direction--default;
+        }
+
+        .dropdown__item {
+          height                         : $height__dropdown__icons__nav-link--lg;
+          padding-top                    : (($height__dropdown__icons__nav-link--lg - $font-size__dropdown__icons--icon-size--lg + $padding__dropdown__icons__nav-link__text) / 2);
+          padding-bottom                 : 0;
+          padding-#{$direction--default} : $height__dropdown__icons__nav-link--lg;
+          padding-#{$direction--opposite}: 0;
+
+          h3 {
+            margin     : 0;
+            font-weight: bold;
+            line-height: 100%;
+          }
+
+          p {
+            display       : block;
+            margin        : 0;
+            padding-top   : $padding__dropdown__icons__nav-link__text;
+            font-size     : .8em;
+            letter-spacing: $letter-spacing__dropdown__secondary__link;
+            line-height   : 100%;
+          }
+
+          .icon {
+            #{$direction--default}: ($height__dropdown__icons__nav-link--lg - $font-size__dropdown__icons--icon-size--lg) / 2;
+            top                   : 9px;
+          }
+
+          .icon,
+          .icon::before {
+            font-size: $font-size__dropdown__icons--icon-size--lg;
+          }
+        }
+      }
+
+      .dropdown__simple-wrapper,
+      .dropdown__block-wrapper {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        height         : 100%;
+      }
+
+      .dropdown__simple-wrapper {
+        width: 70%;
+
+        ul {
+          display               : flex;
+          flex-direction        : column;
+          justify-content       : center;
+          #{$direction--default}: 100%;
+        }
+      }
+
+      .dropdown__block {
+        display               : flex;
+        flex-direction        : column;
+        justify-content       : center;
+        #{$direction--default}: 100%;
+        width                 : 100%;
+
+        > li {
+          width: 100%;
+        }
+      }
+
+      .dropdown__simple {
+        .has--dropdown__branch {
+          > ul, {
+            transform       : perspective(600px) rotateY(-5deg) scale(.9);
+            transform-origin: 10% 50%;
+            transition      : opacity 270ms $out-cubic, visibility 270ms $out-cubic, transform $out-cubic 270ms;
+            opacity         : 0;
+            visibility      : hidden;
+          }
+
+          &:hover {
+            > ul {
+              // when hover over .has--dropdown items - show subnavigation
+              // --------------------------------------------------------
+              transform       : perspective(300px) scale(1);
+              transition-delay: $delay__dropdown--hovered;
+              opacity         : 1;
+              visibility      : visible;
+            }
+          }
+        }
+
+        .go-back,
+        .see-all {
+          display: none;
+        }
+      }
+
+      .see-all {
+        overflow: visible;
+
+        a {
+          max-width: 2 * $width__dropdown__secondary__branch;
+          margin   : 0 auto;
+        }
+
+        .btn {
+          display: block;
+        }
+
+        .nav-link {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .nav-bar {
+    // Resetting mobile styles
+    // -----------------------
+    display : block;
+    width   : 100%;
+    height  : auto;
+    padding : 0 (15px + $width__logo--on-nav + $dimension__nav__hamburger / 3);
+    overflow: visible;
+
+    // setting the menu item initial position for the menu openning animation
+    // ----------------------------------------------------------------------
+    // transform: translateY(-100%);
+    .ie-upto-10 & {
+      padding: 0;
+    }
+
+    .no-flexbox & {
+      display: block;
+
+      > ul {
+        display: block;
+      }
+    }
+
+    > .has--dropdown {
+      width: auto;
+    }
+
+    > ul {
+      display      : inline-block;
+      width        : auto;
+      max-height   : none;
+      margin       : 0;
+      margin-right : auto;
+      margin-left  : auto;
+      padding      : 0;
+      padding-right: 15px;
+      padding-left : 15px;
+      float        : right;
+      text-align   : right;
+
+      > li {
+        display: inline-block;
+        width  : auto;
+
+        &.to-end {
+          float: none;
+
+          > .nav-link {
+            padding-right: 20px;
+
+            &::before {
+              content: none;
+            }
+          }
+        }
+
+        > .nav-link {
+          padding: 0 20px;
+          background-color: transparent !important;
+
+          .icon {
+            position: static;
+
+            &,
+            &::before {
+              transform  : translateZ(0);
+              transition : 0s;
+              font-size  : 20px;
+              font-weight: 900 !important;
+              line-height: 56px;
+            }
+
+            + span {
+              display: none;
+            }
+          }
+        }
+      }
+
+      > .has--dropdown__branch {
+
+        > .nav-link {
+          padding-#{$direction--opposite}: 36px;
+
+          &::before {
+            // Rotating the arrow on the 01 level downward
+            // --------------------------------------------
+            transform: rotate(135deg);
+          }
+        }
+      }
+    }
+
+    .has--dropdown,
+    .has--dropdown ul {
+      overflow: visible;
+
+      &.is-hidden > li > a,
+      &.is-hidden > li > .menu-search,
+      &.move-out > li > a,
+      &.move-out > li > .menu-search {
+        // reset mobile style
+        // ------------------
+        transform: translateX(0);
+        opacity  : 1;
+      }
+    }
+
+    .has--dropdown {
+      // reset mobile style
+      // ------------------
+      position: static;
+      height  : auto;
+
+      ul {
+        height: auto;
+      }
+    }
+
+    .has--dropdown__branch {
+      &.is-hidden {
+        // reset mobile style
+        // ------------------
+        transform: translateX(0);
+      }
+
+      // arrow must be downward and a have a little more offset
+      // ------------------------------------------------------
+      > .nav-link {
+        &::before {
+          top                    : 47%;
+          #{$direction--opposite}: 18px;
+        }
+      }
+
+      .dropdown__branch-wrapper {
+        // Hiding the sun menu
+        // -------------------
+        transform       : perspective(600px) translateY(10px);
+        transform-origin: 50% 0%;
+        transition      : opacity 270ms $out-cubic, visibility 270ms $out-cubic, transform $out-cubic 270ms;
+        opacity         : 0;
+        visibility      : hidden;
+
+        .is-hidden {
+          transform: translateX(0);
+        }
+      }
+
+      &:hover {
+        > .dropdown__branch-wrapper {
+          // when hover over .has--dropdown items - show subnavigation
+          // --------------------------------------------------------
+          transform       : perspective(600px) translateY(0);
+          transition-delay: $delay__dropdown--hovered;
+          opacity         : 1;
+          visibility      : visible;
+        }
+      }
+    }
+
+    li {
+      width: auto;
+
+      + li {
+        > .nav-link {
+          border-top: 0;
+        }
+      }
+    }
+
+    .dropdown__branch-wrapper {
+      display               : flex;
+      position              : absolute;
+      top                   : 100%;
+      #{$direction--default}: 0;
+      flex-direction        : column;
+      justify-content       : center;
+      width                 : 100%;
+    }
+
+    .dropdown__secondary,
+    .dropdown__gallery,
+    .dropdown__icons {
+      @include container-width-padding;
+
+      top                   : 0;
+      #{$direction--default}: 0;
+      transform             : translateX(0);
+      z-index               : $depth--01;
+    }
+
+    .dropdown__gallery,
+    .dropdown__icons {
+      > .see-all {
+        width: calc(100% - #{(2 * $padding__dropdown__item--left-right)});
+      }
+    }
+
+    .dropdown__secondary {
+      > li {
+        display                       : inline-block;
+        float                         : none;
+        margin-#{$direction--opposite}: -4px;
+
+        > ul {
+          position : absolute;
+          // reset mobile style
+          // ------------------
+          top      : 100%;
+          width    : 100%;
+          height   : auto;
+          transform: translateX(0);
+        }
+
+        > .nav-link {
+          // This the styles of the dropdown branches heading on large devices
+          // ------------------------------------------------------------------
+          height        : $height__dropdown__branch__headline--on-nav-bar;
+          padding       : 0 $padding__dropdown__item--left-right;
+          font-size     : $font-size__dropdown__branch__headline;
+          letter-spacing: $letter-spacing__dropdown__secondary__link;
+          line-height   : $height__dropdown__branch__headline--on-nav-bar;
+          pointer-events: none;
+
+          // The line that appears on submenu opening
+          // ----------------------------------------
+          &::before {
+            top                : auto;
+            bottom             : 0;
+            left               : 0;
+            width              : 100%;
+            height             : 0;
+            margin             : 0;
+            transform          : scaleY(0);
+            transform-origin   : bottom;
+            border-top-width   : 0;
+            border-bottom-width: 3px;
+
+          }
+        }
+
+        &:hover {
+          > .nav-link {
+            &::before {
+              transform: scaleY(1);
+            }
+          }
+        }
+      }
+
+      .dropdown__branch-wrapper {
+        padding-top   : $padding__dorpdown--02-level--top-bottom--on-nav-bar;
+        padding-bottom: $padding__dorpdown--02-level--top-bottom--on-nav-bar;
+      }
+
+      .dropdown__secondary__submenu {
+        @include nav-bar-dd-width-modified;
+
+        position    : relative;
+        margin-right: auto;
+        margin-left : auto;
+
+        > li {
+          width: 100% / $cols__dropdown__secondary__branch--on-nav-bar - 1%;
+        }
+
+        .nav-link {
+          height                        : $height__dropdown__secondary__link;
+          font-size                     : $font-size__dropdown__secondary__link;
+          font-weight                   : 700;
+          letter-spacing                : $letter-spacing__dropdown__secondary__link;
+          line-height                   : $height__dropdown__secondary__link;
+          text-align                    : $direction--default;
+          padding-#{$direction--default}: $padding__dropdown__secondary__link--left;
+
+          &::before {
+            display: none;
+          }
+        }
+
+        .has--dropdown__branch {
+          ul {
+            position: static;
+
+            .nav-link {
+              font-weight: 400;
+
+              .hover-bg {
+                opacity: .7;
+              }
+            }
+          }
+
+          li {
+            width: 100%;
+
+          }
+        }
+      }
+
+      .see-all {
+        margin-top : 11px;
+        margin-left: 30px;
+        float      : right;
+      }
+
+      .go-back {
+        display: none;
+      }
+
+      ul {
+        height: auto;
+      }
+    }
+
+    .dropdown__gallery {
+      padding-top   : $padding__dorpdown--02-level--top-bottom--on-nav-bar;
+      padding-bottom: $padding__dorpdown--02-level--top-bottom--on-nav-bar - $padding__dropdown__gallery__item;
+
+      > li {
+        width: percentage(1 / $cols__dropdown__gallery__img--on-nav-bar);
+        float: $direction--default;
+
+        &:nth-of-type(#{$cols__dropdown__gallery__img--on-nav-bar}n + 2) {
+          padding-#{$direction--opposite}: 0;
+        }
+      }
+
+      .dropdown__item {
+        height     : auto;
+        padding    : $padding__dropdown__gallery__item;
+        border     : 0;
+        line-height: normal;
+
+        h3 {
+          line-height: 100%;
+        }
+      }
+
+      img {
+        position              : relative;
+        #{$direction--default}: 0;
+        width                 : 100%;
+        height                : auto;
+        margin                : 0 0 1em;
+      }
+    }
+
+    .dropdown__icons {
+      padding-top   : $padding__dorpdown--02-level--top-bottom--on-nav-bar;
+      padding-bottom: $padding__dorpdown--02-level--top-bottom--on-nav-bar;
+
+      > li {
+        @include no-top-border-on-first-items;
+
+        width: percentage(1 / $cols__dropdown__icons--on-nav-bar);
+        float: $direction--default;
+      }
+
+      .dropdown__item {
+        height                         : $height__dropdown__icons__nav-link--lg;
+        padding-top                    : (($height__dropdown__icons__nav-link--lg - $font-size__dropdown__icons--icon-size--lg + $padding__dropdown__icons__nav-link__text) / 2);
+        padding-bottom                 : 0;
+        padding-#{$direction--default} : $height__dropdown__icons__nav-link--lg;
+        padding-#{$direction--opposite}: 0;
+
+        h3 {
+          margin     : 0;
+          font-weight: bold;
+          line-height: 100%;
+        }
+
+        p {
+          display       : block;
+          margin        : 0;
+          padding-top   : $padding__dropdown__icons__nav-link__text;
+          font-size     : .8em;
+          letter-spacing: $letter-spacing__dropdown__secondary__link;
+          line-height   : 100%;
+          opacity       : .8;
+        }
+
+        .icon {
+          #{$direction--default}: ($height__dropdown__icons__nav-link--lg - $font-size__dropdown__icons--icon-size--lg) / 2;
+          top                   : 9px;
+
+          &,
+          &::before {
+            font-size: $font-size__dropdown__icons--icon-size--lg;
+          }
+        }
+      }
+    }
+
+    .dropdown__block-wrapper {
+      width     : 480px;
+      text-align: left;
+
+      a {
+        display: inline-block;
+      }
+    }
+
+    .dropdown__block {
+      > li {
+        width: 100%;
+      }
+    }
+
+    .dropdown__search {
+      .fieldset {
+        margin: 0;
+      }
+
+      .icon {
+        font-size  : 20px;
+        font-weight: 900;
+
+        &::before {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .dropdown__simple-wrapper {
+      width: 300px;
+
+      ul {
+        display               : flex;
+        top                   : 0;
+        #{$direction--default}: calc(100% - 1px);
+        flex-direction        : column;
+        justify-content       : center;
+      }
+
+      > ul {
+        #{$direction--default}: 0;
+      }
+    }
+
+    .dropdown--to-left {
+      ul {
+        #{$direction--default} : auto;
+        #{$direction--opposite}: calc(100% - 1px);
+      }
+
+      > ul {
+        #{$direction--default} : 0;
+        #{$direction--opposite}: auto;
+      }
+
+      .has--dropdown__branch {
+        > .nav-link {
+          &::before {
+            #{$direction--default}: $offset__dropdown-arrow;
+            transform             : rotate(180deg + $rotation__dropdown-arrow);
+          }
+        }
+      }
+    }
+
+    .dropdown__simple {
+      .has--dropdown__branch {
+        position: relative;
+
+        > ul {
+          transform       : perspective(600px) scale(.9);
+          transform-origin: 10% 50%;
+          transition      : opacity 270ms $out-cubic, visibility 270ms $out-cubic, transform $out-cubic 270ms;
+          opacity         : 0;
+          visibility      : hidden;
+        }
+
+        &:hover {
+          > ul {
+            // when hover over .has--dropdown items - show subnavigation
+            transform       : scale(1);
+            transition-delay: $delay__dropdown--hovered;
+            opacity         : 1;
+            visibility      : visible;
+          }
+        }
+      }
+
+      .go-back,
+      .see-all {
+        display: none;
+      }
+    }
+
+    .go-back {
+      display: none;
+    }
+
+    .see-all {
+      .btn {
+        display: block;
+      }
+
+      .nav-link {
+        display: none;
+      }
+    }
+
+    .dropdown__gallery,
+    .dropdown__icons {
+      padding-bottom: 134px;
+
+      .see-all {
+        position: absolute;
+        bottom  : 30px;
+        left    : calc(50% - 150px);
+
+        &,
+        .btn {
+          width: 300px;
+        }
+      }
+    }
+
+    .dropdown__secondary__submenu {
+      padding-bottom: 104px;
+
+      .see-all {
+        position: absolute;
+        bottom  : 0;
+        left    : calc(50% - 150px);
+
+        &,
+        .btn {
+          width: 300px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+// -------------------------------------------------------------------------
+//     shopping cart - usually is in the nav so that's why it's here .. !
+// -------------------------------------------------------------------------
+
+.cart-wrapper {
+  background-color: $color-bg__cart--main;
+}
+
+.cart {
+  background-color: $color-bg__cart--main;
+
+  .empty-state {
+    display    : none;
+    position   : absolute;
+    font-weight: 400;
+    z-index    : 3;
+  }
+
+  .cart-item__remove {
+    display      : inline-block;
+    position     : absolute;
+    top          : 50%;
+    left         : 0;
+    transform    : translateY(-50%);
+    transition   : opacity .2s ease-out;
+    border-radius: 50%;
+    cursor       : pointer;
+
+    .icon {
+      display      : inline-block;
+      margin       : 8px;
+      padding      : 3px 3px 4px;
+      border-radius: 50%;
+      color        : $color-text;
+      font-size    : 16px;
+      font-weight  : bold;
+      line-height  : 15px;
+
+      &::before {
+        margin   : 0;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.cart__title {
+  position      : absolute;
+  top           : 0;
+  left          : 0;
+  width         : 100%;
+  margin        : 0;
+  padding       : 45px 0;
+  color         : $color-text__cart--primary;
+  font-family   : $font--02;
+  font-size     : 14px;
+  font-weight   : 700;
+  letter-spacing: .1em;
+  text-align    : center;
+  text-transform: uppercase;
+  z-index       : 11;
+
+  &::after {
+    position  : absolute;
+    top       : 0;
+    left      : 0;
+    width     : 100%;
+    height    : 100%;
+    background: linear-gradient(0deg, hsla(0, 0%, 100%, 0), $color-bg__cart--main 20%, $color-bg__cart--main);
+    content   : '';
+    z-index   : -1;
+  }
+}
+
+.cart__items-wrapper {
+  max-height: calc(100vh - 80px);
+  padding   : 77px 0 135px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.cart__items {
+  background-color: $color-bg__cart--main !important;
+  color           : $color-text__cart--secondary;
+  list-style      : none;
+}
+
+.cart-item {
+  display         : flex;
+  display         : -ms-flexbox;
+  display         : -webkit-box;
+  position        : relative;
+  flex-flow       : row wrap;
+  align-items     : center;
+  min-height      : 70px;
+  margin-bottom   : 10px;
+  padding         : 10px 30px;
+  background-color: $color-bg__cart-item;
+
+  font-size: 14px;
+  -ms-flex-flow: row wrap;
+}
+
+.cart-item__img {
+  img {
+    flex-grow        : 1;
+    max-width        : 60px;
+    max-height       : 60px;
+    margin-right     : 15px;
+    -ms-flex-positive: 1;
+    -webkit-box-flex : 1;
+  }
+}
+
+.cart-item__info {
+  position           : relative;
+  flex-grow          : 2;
+  align-self         : center;
+  text-align         : left;
+  overflow           : hidden;
+  -ms-flex-item-align: center;
+  -ms-flex-positive  : 2;
+  -ms-grid-row-align : center;
+  -webkit-box-flex   : 2;
+}
+
+.cart-item__title {
+  position      : relative;
+  width         : 100%;
+  margin-top    : 0;
+  margin-bottom : 5px;
+  font-family   : $font--02;
+  font-size     : 11px;
+  font-weight   : 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  z-index       : 1;
+
+  a {
+    color: $color-text__cart--secondary;
+  }
+}
+
+.cart-item__subinfo,
+.cart-item__qty {
+  font-size  : 11px;
+  font-weight: 500;
+}
+
+.cart-item__subinfo,
+.cart-item__qty span {
+  opacity: .5;
+}
+
+.cart-item__qty {
+  margin-right  : -17px;
+  text-transform: uppercase;
+
+  input {
+    max-width       : 34px;
+    border          : 0;
+    background-color: transparent;
+    text-align      : right;
+  }
+}
+
+.cart-item__color {
+  text-transform: uppercase;
+}
+
+.cart-item__size {
+  dl {
+    &.variation {
+      display: inline;
+
+      dt {
+        display: none;
+      }
+
+      dd,
+      p {
+        display: inline;
+        margin : 0;
+      }
+    }
+  }
+}
+
+.cart-item__actions {
+  width     : auto;
+  min-width : 70px;
+  text-align: right;
+}
+
+.cart-item__price {
+  display      : block;
+  margin-bottom: 5px;
+
+  del {
+    margin-right   : 7px;
+    text-decoration: line-through;
+    opacity        : .5;
+  }
+}
+
+.cart__totals {
+  position  : absolute;
+  bottom    : 40px;
+  left      : 0;
+  width     : 100%;
+  padding   : 20px 40px 0;
+  color     : $color-text__cart--primary;
+  text-align: center;
+  z-index   : 11;
+
+  &::after {
+    position  : absolute;
+    bottom    : -60px;
+    left      : 0;
+    width     : 100%;
+    height    : calc(100% + 60px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), $color-bg__cart--main 15%, $color-bg__cart--main);
+    content   : '';
+    z-index   : -1;
+  }
+
+  .btn {
+    width: 80%;
+  }
+}
+
+.cart__total {
+  position      : relative;
+  padding-bottom: 50px;
+  font-family   : $font--02;
+  font-size     : 14px;
+  font-weight   : 700;
+  letter-spacing: .1em;
+  text-align    : left;
+  text-transform: uppercase;
+
+  span {
+    &:last-of-type {
+      position      : absolute;
+      right         : 0;
+      letter-spacing: .2px;
+      text-align    : right;
+
+      span {
+        position: static;
+      }
+    }
+  }
+}
+
+@include mq(nav-transform-point-width) {
+  .cart__items-wrapper {
+    min-height: 420px;
+    max-height: calc(100vh - 160px);
+    padding   : 90px 0 158px;
+  }
+
+  .cart-item__remove {
+    opacity: 0;
+  }
+
+  .cart-item {
+    padding: 10px 40px;
+
+    &:hover {
+      .cart-item__remove {
+        opacity: .8;
+      }
+    }
+  }
+
+  .cart__totals {
+    padding: 30px 40px 0;
+
+    &::after {
+      bottom    : -40px;
+      height    : calc(100% + 40px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), $color-bg__cart--main 15%, $color-bg__cart--main);
+    }
+  }
+}
+
+.cart--mini {
+  background-color: $color-bg__cart--main;
+
+  .cart__title {
+    padding: 100px 0 50px;
+
+    &::after {
+      height    : 100%;
+      background: linear-gradient(0deg, hsla(0, 0%, 100%, 0), $color-bg__cart--main 15%, $color-bg__cart--main);
+    }
+  }
+
+  .cart__items-wrapper {
+    max-height: calc(100vh);
+    padding   : 167px 0 174px;
+  }
+
+  .cart__totals {
+    padding: 50px 40px 0;
+  }
+}
+
+
+
+
+
+// --------------------------------------------------
+//     nav text-slign on regulsr and RTL websites
+// --------------------------------------------------
+
+.nav {
+  // This would be text-align: left; on left to right website
+  // --------------------------------------------------------
+  .nav-text-align-direction--default & {
+    .nav-link {
+      text-align: $direction--default;
+    }
+  }
+
+  // This would be text-align: right; on left to right website
+  // ---------------------------------------------------------
+  .nav--text-align-direction--opposite & {
+    .nav-link {
+      text-align: $direction--opposite;
+    }
+
+    .dropdown__icons {
+      .dropdown__item {
+        padding-#{$direction--default} : 0;
+        padding-#{$direction--opposite}: $padding__nav-link--left + $font-size__dropdown__icons--icon-size + $padding__dropdown__icons-and-dropdown__gallery__nav-link--left;
+      }
+
+      .icon {
+        #{$direction--default} : auto;
+        #{$direction--opposite}: $padding__nav-link--left;
+      }
+
+      @include mq(nav-transform-point-width) {
+        .dropdown__item {
+          padding-#{$direction--default} : 20px;
+          padding-#{$direction--opposite}: $height__dropdown__icons__nav-link--lg;
+        }
+
+        .icon {
+          #{$direction--default}: auto;
+          #{$direction--opposite}: ($height__dropdown__icons__nav-link--lg - $font-size__dropdown__icons--icon-size--lg) / 2;
+        }
+      }
+    }
+
+    .dropdown__gallery {
+      .dropdown__item {
+        padding-#{$direction--default} : 0;
+        padding-#{$direction--opposite}: $padding__nav-link--left + $width__dropdown__gallery__img + $padding__dropdown__icons-and-dropdown__gallery__nav-link--left;
+      }
+
+      img {
+        #{$direction--default} : auto;
+        #{$direction--opposite}: $padding__nav-link--left;
+      }
+
+      @include mq(nav-transform-point-width) {
+        .dropdown__item {
+          padding: $padding__dropdown__gallery__item;
+        }
+
+        img {
+          #{$direction--opposite}: auto;
+        }
+      }
+    }
+
+    @include mq(nav-transform-point-width) {
+      .dropdown__secondary {
+        .nav-link {
+          text-align: $direction--opposite;
+        }
+      }
+    }
+
+    .nav-link--has-icon > li > .nav-link {
+      span {
+        &:last-child {
+          padding-#{$direction--default} : 0;
+          padding-#{$direction--opposite}: 45%;
+          text-align                     : $direction--opposite;
+        }
+      }
+
+      .icon {
+        #{$direction--default}: 65%;
+      }
+    }
+  }
+}
+
+
+
+
+
+// ----------------------------------------------------------
+//     direct relative dropdowns positioning on .nav-side
+// ----------------------------------------------------------
+
+// .nav-side--expanded-dropdown {
+//   .dropdown--relative {
+//     @include mq(nav-transform-point-width) {
+//       .has--dropdown {
+//         > .has--dropdown__branch {
+//           // so that the first dropdown branch gets positioned relative to its direct parent not his grandpa
+//           // -----------------------------------------------------------------------------------------------
+//           position: relative;
+//         }
+
+//         .dropdown__simple-wrapper {
+//           height: auto;
+
+//           ul {
+//             display: block;
+//             height : auto;
+//           }
+//         }
+
+//         .dropdown__simple {
+//           .has--dropdown__branch {
+//             position: relative;
+//           }
+//         }
+//       }
+
+//       .dropdown__branch-wrapper {
+//         display   : block;
+//         min-height: auto;
+
+//         > ul {
+//           display: inline-block;
+//         }
+//       }
+//     }
+//   }
+// }
+
+
+
+
+
+// ------------------
+//     skewed nav
+// ------------------
+
+.nav--skewed {
+  .nav {
+    top: -2vh;
+    height: 104vh;
+    transform: translateX($offset__nav) skewY($skew__nav);
+  }
+
+  &.nav-side--opposite {
+    .nav {
+      transform: translateX(-$offset__nav) skewY($skew__nav);
+    }
+  }
+
+  &.visible {
+    .nav {
+      transform: translateX(0) skewY($skew__nav);
+    }
+  }
+}
+
+
+
+
+
+// ------------------------------
+//     nav-link hover effects
+// ------------------------------
+
+// simple nav-link hover effect
+// -----------------------------
+.hover--simple {
+  a {
+    position: relative;
+
+    &:hover,
+    &.is-active {
+      .hover-bg {
+        transform: scaleX(1);
+        opacity  : 1;
+      }
+    }
+
+    .hover-bg {
+      display               : block;
+      position              : absolute;
+      top                   : 0;
+      #{$direction--default}: 0;
+      width                 : 100%;
+      height                : 100%;
+      transform             : scaleX(.8);
+      transition            : opacity 300ms $out-cubic, transform 300ms $out-cubic;
+      opacity               : 0;
+
+      .no-willchange.csstransforms3d & {
+        transform: translateZ(0);
+      }
+    }
+  }
+
+  .active {
+    a {
+      .hover-bg {
+        transform: scaleX(1);
+        opacity  : 1;
+      }
+    }
+  }
+
+  .has--dropdown__branch {
+    &:hover {
+      > .nav-link {
+        .hover-bg {
+          transform: scaleX(1);
+          opacity  : 1;
+        }
+      }
+    }
+  }
+}
+
+// split background on hover effect
+// --------------------------------
+.hover--bg-split {
+  .nav-link {
+    display : block;
+    position: relative;
+    opacity : .7;
+    // Lowering down the opacity to achieve some subtle style
+    // ------------------------------------------------------
+    overflow: hidden;
+
+    &::after {
+      display               : block;
+      position              : absolute;
+      top                   : -1px;
+      #{$direction--default}: 0;
+      width                 : 100%;
+      height                : calc(100% + 1px);
+      transform             : scaleX(.5);
+      background-color      : $color-bg__nav;
+      content               : '';
+      opacity               : 0;
+    }
+
+    &:hover {
+      &::after {
+        transform : scaleX(1);
+        transition: opacity 400ms $out-cubic 0ms, transform 400ms $out-cubic 0ms;
+        opacity   : 1;
+      }
+
+      .hover-bg {
+        &::before,
+        &::after {
+          transform : translateX(0);
+          transition: 0s;
+          opacity   : 0;
+        }
+      }
+    }
+  }
+
+  .has--dropdown__branch {
+    &:hover {
+      > .nav-link {
+        &::after {
+          transform : scaleX(1);
+          transition: opacity 400ms $out-cubic 0ms, transform 400ms $out-cubic 0ms;
+          opacity   : 1;
+        }
+
+        .hover-bg {
+          &::before,
+          &::after {
+            transform : translateX(0);
+            transition: 0s;
+            opacity   : 0;
+          }
+        }
+      }
+    }
+  }
+
+  .hover-bg {
+    &::after,
+    &::before {
+      display         : block;
+      position        : absolute;
+      top             : -1px;
+      width           : 50%;
+      height          : calc(100% + 1px);
+      transition      : transform 400ms cubic-bezier(.55, .31, .15, .93) 0ms;
+      background-color: $color-bg__nav;
+      content         : '';
+    }
+
+    &::before {
+      #{$direction--default}: 0;
+      transform             : translateX(-102%);
+      transform-origin      : 0 50%;
+    }
+
+    &::after {
+      #{$direction--opposite}: 0;
+      transform              : translateX(102%);
+      transform-origin       : 100% 50%;
+    }
+  }
+
+  .nav-link::after,
+  .hover-bg::before,
+  .hover-bg::after {
+    will-change: transform, opacity;
+  }
+
+  .no-willchange.csstransforms3d & {
+    .nav-link::after,
+    .hover-bg::before,
+    .hover-bg::after,
+    .hover-bg span {
+      transform: translateZ(0);
+    }
+  }
+}
+
+// flowing background on hover effect
+// ----------------------------------
+.hover--bg-flow {
+  a,
+  .hover--bg-flow__el {
+    display : block;
+    position: relative;
+  }
+
+  .hover-bg {
+    top    : -1px;
+    #{$direction--default}: 0;
+    width  : 100%;
+    height : calc(100% + 2px);
+    z-index: 3;
+
+    &::before,
+    &::after {
+      display                   : block;
+      position                  : absolute;
+      top                       : 0;
+      #{$direction--default}    : 0;
+      width                     : 100%;
+      height                    : 100%;
+      transform                 : scaleX(0);
+      transform-origin          : $transform-origin__hover--bg-flow--end;
+      transition-property       : transform;
+      transition-timing-function: $out-cubic;
+      background-color          : $color-bg__nav;
+      content                   : '';
+    }
+
+    &::before {
+      transition-duration: 0ms;
+    }
+
+    &::after {
+      transition-duration: 300ms;
+    }
+
+    // + span {
+    //   &:not(.cart-counter),
+    //   &:not(.icon) {
+    //     position: relative;
+    //     z-index: 4;
+    //   }
+    // }
+  }
+
+  // nav-side neede horizontal movement of hover-bg and specified transform-origin, so be it .. regular hover
+  // --------------------------------------------------------------------------------------------------------
+  a:hover,
+  a.active,
+  a.selected,
+  .active > a,
+  .hover--bg-flow__el:hover,
+  .hover--bg-flow__el.active,
+  .hover--bg-flow__el.selected,
+  .active > .hover--bg-flow__el {
+    .hover-bg {
+      &::before {
+        transform          : scaleX(1);
+        transform-origin   : $transform-origin__hover--bg-flow--start;
+        transition-duration: 300ms;
+        transition-property: transform, opacity;
+        opacity            : 1;
+      }
+
+      &::after {
+        transform          : scaleX(1);
+        transition-duration: 0ms;
+        opacity            : 0;
+      }
+    }
+  }
+
+  a.opposite,
+  .hover--bg-flow__el.opposite {
+    .hover-bg {
+      &::before,
+      &::after {
+        transform-origin: 0% 0%;
+      }
+    }
+
+    &:hover {
+      .hover-bg {
+        &::before {
+          transform-origin: 100% 100%;
+        }
+      }
+    }
+  }
+
+  // links with sub-menu should stay active when hovering over the sub-menu
+  // ----------------------------------------------------------------------
+  .has--dropdown__branch {
+    &:hover > .nav-link {
+      .hover-bg {
+        &::before {
+          transform: scaleX(1);
+          opacity  : 1;
+        }
+
+        &::after {
+          transform: scaleX(1);
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  // nav-bar neede vertical movement of hover-bg and specified transform-origin, so be it ..
+  // --------------------------------------------------------------------------------------
+   &.nav-bar-wrapper {
+    .nav-bar,
+    .nav-header {
+      > ul,
+      .dropdown__secondary {
+        > li {
+
+          // regular hover
+          // ------------
+          > .nav-link {
+            .hover-bg {
+              &::before,
+              &::after {
+                transform: scaleY(0);
+              }
+            }
+
+            &:hover {
+              .hover-bg {
+                &::before {
+                  transform: scaleY(1);
+                }
+
+                &::after {
+                  transform: scaleY(1);
+                }
+              }
+            }
+          }
+        }
+
+        // links with sub-menu should stay active when hovering over the sub-menu
+        // -----------------------------------------------------------------------
+        > .has--dropdown__branch {
+          &:hover,
+          &.hovered {
+            > .nav-link {
+              .hover-bg {
+                &::before {
+                  transform: scaleY(1);
+                  opacity  : 1;
+                }
+
+                &::after {
+                  transform: scaleY(1);
+                  opacity  : 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.hover--bg-flow--horizontal {
+  .hover-bg {
+    &::before,
+    &::after {
+      transform: scaleY(0);
+    }
+  }
+
+  a:hover,
+  a.active,
+  a.selected,
+  .active > a,
+  .hover--bg-flow__el:hover,
+  .hover--bg-flow__el.active,
+  .hover--bg-flow__el.selected,
+  .active > .hover--bg-flow__el {
+    .hover-bg {
+      &::before {
+        transform: scaleY(1);
+      }
+
+      &::after {
+        transform: scaleY(1);
+      }
+    }
+  }
+}
+
+
+
+
+// -------------------------------------------------------------------------------------
+//     navbar layout: means the order of the links, logos and button in the .nav-bar
+// -------------------------------------------------------------------------------------
+
+.navbar--layout--01 {
+  @media only screen and (max-width: $nav-transform-point-width) {
+    .logo--header {
+      position : absolute;
+      left     : 50%;
+      transform: translateX(-50%);
+    }
+
+    .logo__title {
+      display: none;
+    }
+
+    .nav-header {
+      > ul {
+        > li {
+          > .nav-link {
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &.nav-side-wrapper {
+    .logo--header {
+      position : absolute;
+      left     : 50%;
+      top      : 0;
+      transform: translateX(-50%);
+    }
+
+    .logo__title {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: $xs) {
+    .nav-header {
+      padding: 0 10px;
+    }
+
+    .hamburger__name {
+      display: none;
+    }
+
+    .nav__toggle.clicked .hamburger__lines span:nth-child(2),
+    .search-toggle.clicked .search-toggle__icon__handle {
+      opacity: 0;
+    }
+
+    .search-toggle__name {
+      display: none;
+    }
+  }
+}

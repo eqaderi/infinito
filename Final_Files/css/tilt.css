@@ -1,0 +1,28 @@
+.hero  {
+	background-image: url(../images/backgrounds/photo-1479150328630-b0307b442238.jpg);
+    background-size: 100vw auto;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;;
+}
+
+/*.hero__background {
+	position: absolute;
+	top: calc(10vh + 88px) !important;
+	right: calc(5vw + 105px) !important;
+	bottom: calc(10vh + 88px) !important;
+	left: calc(5vw + 88px) !important;
+	height: auto !important;
+	width: auto !important;
+	background: none !important;
+
+}*/
+
+.tilt > div {
+	background-image: url(../images/backgrounds/photo-1479150328630-b0307b442238.jpg);
+    /*background-size: 100vw auto !important;*/
+}
+
+.hero.mask::after {
+    background-color: rgb(1, 72, 112);
+    mix-blend-mode: soft-light;
+}

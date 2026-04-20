@@ -1,0 +1,27 @@
+
+.hero__background {
+	background: none !important;
+}
+
+.background--fluid canvas {
+	left: 50% !important;
+	transform: translateX(-50%) !important;
+}
+
+#displacementMap {
+	display: none;
+}
+
+.hero {
+	background: #fff;
+}
+
+.hero .mask::after {
+	background-color: rgba(79, 126, 139, 0.69);
+    opacity: 1;
+    mix-blend-mode: overlay;
+}
+
+.xs-mt-300 {
+	margin-top: 300px;
+}

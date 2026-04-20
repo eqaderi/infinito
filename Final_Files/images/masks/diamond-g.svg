@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="1600"
+   height="900"
+   viewBox="0 0 423.33332 238.12501"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="matrix(0.56297639,0,0,0.56297639,93.051625,95.872611)">
+    <g
+       id="layer1-21"
+       transform="translate(-108.13052,-22.945678)">
+      <g
+         id="layer1-8"
+         transform="translate(133.86451,-208.56671)">
+        <g
+           id="layer1-7"
+           transform="matrix(1.3538914,0,0,1.3538914,-85.235592,-36.069273)">
+          <g
+             id="layer1-2"
+             transform="matrix(0.26458333,0,0,0.26458333,-117.92842,15.916707)">
+            <g
+               transform="matrix(4.4857154,0,0,4.4857154,588.21353,355.21933)"
+               id="symbol"
+               class="logo-entity focused">
+              <g
+                 id="g3341"
+                 class="logo-entity-inner"
+                 transform="matrix(1.3503185,0,0,1.3503185,-15.781993,-12.420398)">
+                <g
+                   id="g3343"
+                   transform="scale(1.104313,1.104313)"
+                   data-attribution=""
+                   data-noun-id="114557"
+                   class="[object Object]">
+                  <g
+                     id="g3803" />
+                  <g
+                     id="g3796" />
+                  <g
+                     id="g3772" />
+                  <g
+                     id="g3818" />
+                  <g
+                     id="g3767" />
+                  <g
+                     id="g3757">
+                    <g
+                       id="g3800" />
+                  </g>
+                  <g
+                     id="g3777">
+                    <g
+                       id="g3792">
+                      <path
+                         style="fill:#0000ff;stroke-width:1.02550817"
+                         d="m 139.98966,36.884571 4.26014,-6.043053 4.0576,14.383671 -4.27446,71.035241 -10.38653,15.88568 -1.87231,-47.644653 z"
+                         id="polygon3369" />
+                    </g>
+                  </g>
+                  <g
+                     id="g3809" />
+                  <g
+                     id="g3787" />
+                  <g
+                     id="g3806" />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

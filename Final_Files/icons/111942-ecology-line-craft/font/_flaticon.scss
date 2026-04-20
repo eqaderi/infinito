@@ -1,0 +1,139 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 19/02/2016 14:52
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-apple:before { content: "\f100"; }
+.flaticon-atomic-energy:before { content: "\f101"; }
+.flaticon-bee:before { content: "\f102"; }
+.flaticon-bicycle:before { content: "\f103"; }
+.flaticon-bin:before { content: "\f104"; }
+.flaticon-biofuel:before { content: "\f105"; }
+.flaticon-biomass:before { content: "\f106"; }
+.flaticon-blue-whale:before { content: "\f107"; }
+.flaticon-co2:before { content: "\f108"; }
+.flaticon-earth:before { content: "\f109"; }
+.flaticon-eco-house:before { content: "\f10a"; }
+.flaticon-electric-car:before { content: "\f10b"; }
+.flaticon-electrical-tower:before { content: "\f10c"; }
+.flaticon-electricity:before { content: "\f10d"; }
+.flaticon-eolic-energy:before { content: "\f10e"; }
+.flaticon-factory:before { content: "\f10f"; }
+.flaticon-forest:before { content: "\f110"; }
+.flaticon-geothermal-energy:before { content: "\f111"; }
+.flaticon-green-certification:before { content: "\f112"; }
+.flaticon-green-planet:before { content: "\f113"; }
+.flaticon-greenhouse:before { content: "\f114"; }
+.flaticon-growing-plant:before { content: "\f115"; }
+.flaticon-iceberg:before { content: "\f116"; }
+.flaticon-landscape:before { content: "\f117"; }
+.flaticon-leaf:before { content: "\f118"; }
+.flaticon-leaf-1:before { content: "\f119"; }
+.flaticon-leaft:before { content: "\f11a"; }
+.flaticon-light-bulb:before { content: "\f11b"; }
+.flaticon-nuclear:before { content: "\f11c"; }
+.flaticon-petrol:before { content: "\f11d"; }
+.flaticon-pot:before { content: "\f11e"; }
+.flaticon-rain:before { content: "\f11f"; }
+.flaticon-recycle:before { content: "\f120"; }
+.flaticon-recycle-1:before { content: "\f121"; }
+.flaticon-recycled-bottle:before { content: "\f122"; }
+.flaticon-recycled-paper:before { content: "\f123"; }
+.flaticon-recycled-plastic-bag:before { content: "\f124"; }
+.flaticon-recycling-bin:before { content: "\f125"; }
+.flaticon-science:before { content: "\f126"; }
+.flaticon-smiling-sun:before { content: "\f127"; }
+.flaticon-socket:before { content: "\f128"; }
+.flaticon-solar-energy:before { content: "\f129"; }
+.flaticon-sunflower:before { content: "\f12a"; }
+.flaticon-think-green:before { content: "\f12b"; }
+.flaticon-tidal-energy:before { content: "\f12c"; }
+.flaticon-toxic-waste:before { content: "\f12d"; }
+.flaticon-tree:before { content: "\f12e"; }
+.flaticon-truck:before { content: "\f12f"; }
+.flaticon-water:before { content: "\f130"; }
+.flaticon-watering-can:before { content: "\f131"; }
+    
+    $font-Flaticon-apple: "\f100";
+    $font-Flaticon-atomic-energy: "\f101";
+    $font-Flaticon-bee: "\f102";
+    $font-Flaticon-bicycle: "\f103";
+    $font-Flaticon-bin: "\f104";
+    $font-Flaticon-biofuel: "\f105";
+    $font-Flaticon-biomass: "\f106";
+    $font-Flaticon-blue-whale: "\f107";
+    $font-Flaticon-co2: "\f108";
+    $font-Flaticon-earth: "\f109";
+    $font-Flaticon-eco-house: "\f10a";
+    $font-Flaticon-electric-car: "\f10b";
+    $font-Flaticon-electrical-tower: "\f10c";
+    $font-Flaticon-electricity: "\f10d";
+    $font-Flaticon-eolic-energy: "\f10e";
+    $font-Flaticon-factory: "\f10f";
+    $font-Flaticon-forest: "\f110";
+    $font-Flaticon-geothermal-energy: "\f111";
+    $font-Flaticon-green-certification: "\f112";
+    $font-Flaticon-green-planet: "\f113";
+    $font-Flaticon-greenhouse: "\f114";
+    $font-Flaticon-growing-plant: "\f115";
+    $font-Flaticon-iceberg: "\f116";
+    $font-Flaticon-landscape: "\f117";
+    $font-Flaticon-leaf: "\f118";
+    $font-Flaticon-leaf-1: "\f119";
+    $font-Flaticon-leaft: "\f11a";
+    $font-Flaticon-light-bulb: "\f11b";
+    $font-Flaticon-nuclear: "\f11c";
+    $font-Flaticon-petrol: "\f11d";
+    $font-Flaticon-pot: "\f11e";
+    $font-Flaticon-rain: "\f11f";
+    $font-Flaticon-recycle: "\f120";
+    $font-Flaticon-recycle-1: "\f121";
+    $font-Flaticon-recycled-bottle: "\f122";
+    $font-Flaticon-recycled-paper: "\f123";
+    $font-Flaticon-recycled-plastic-bag: "\f124";
+    $font-Flaticon-recycling-bin: "\f125";
+    $font-Flaticon-science: "\f126";
+    $font-Flaticon-smiling-sun: "\f127";
+    $font-Flaticon-socket: "\f128";
+    $font-Flaticon-solar-energy: "\f129";
+    $font-Flaticon-sunflower: "\f12a";
+    $font-Flaticon-think-green: "\f12b";
+    $font-Flaticon-tidal-energy: "\f12c";
+    $font-Flaticon-toxic-waste: "\f12d";
+    $font-Flaticon-tree: "\f12e";
+    $font-Flaticon-truck: "\f12f";
+    $font-Flaticon-water: "\f130";
+    $font-Flaticon-watering-can: "\f131";

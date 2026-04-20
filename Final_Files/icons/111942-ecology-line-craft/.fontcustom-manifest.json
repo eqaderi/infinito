@@ -1,0 +1,248 @@
+{
+  "checksum": {
+    "previous": "88b0c593902d32b7024d2f70ea31cde0b9e8f4011fbe7752b68d4cc4848e2736",
+    "current": "88b0c593902d32b7024d2f70ea31cde0b9e8f4011fbe7752b68d4cc4848e2736"
+  },
+  "fonts": [
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/Flaticon.ttf",
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/Flaticon.svg",
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/Flaticon.woff",
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/Flaticon.eot"
+  ],
+  "glyphs": {
+    "apple": {
+      "codepoint": 61696,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/apple.svg"
+    },
+    "atomic-energy": {
+      "codepoint": 61697,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/atomic-energy.svg"
+    },
+    "bee": {
+      "codepoint": 61698,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/bee.svg"
+    },
+    "bicycle": {
+      "codepoint": 61699,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/bicycle.svg"
+    },
+    "bin": {
+      "codepoint": 61700,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/bin.svg"
+    },
+    "biofuel": {
+      "codepoint": 61701,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/biofuel.svg"
+    },
+    "biomass": {
+      "codepoint": 61702,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/biomass.svg"
+    },
+    "blue-whale": {
+      "codepoint": 61703,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/blue-whale.svg"
+    },
+    "co2": {
+      "codepoint": 61704,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/co2.svg"
+    },
+    "earth": {
+      "codepoint": 61705,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/earth.svg"
+    },
+    "eco-house": {
+      "codepoint": 61706,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/eco-house.svg"
+    },
+    "electric-car": {
+      "codepoint": 61707,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/electric-car.svg"
+    },
+    "electrical-tower": {
+      "codepoint": 61708,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/electrical-tower.svg"
+    },
+    "electricity": {
+      "codepoint": 61709,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/electricity.svg"
+    },
+    "eolic-energy": {
+      "codepoint": 61710,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/eolic-energy.svg"
+    },
+    "factory": {
+      "codepoint": 61711,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/factory.svg"
+    },
+    "forest": {
+      "codepoint": 61712,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/forest.svg"
+    },
+    "geothermal-energy": {
+      "codepoint": 61713,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/geothermal-energy.svg"
+    },
+    "green-certification": {
+      "codepoint": 61714,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/green-certification.svg"
+    },
+    "green-planet": {
+      "codepoint": 61715,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/green-planet.svg"
+    },
+    "greenhouse": {
+      "codepoint": 61716,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/greenhouse.svg"
+    },
+    "growing-plant": {
+      "codepoint": 61717,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/growing-plant.svg"
+    },
+    "iceberg": {
+      "codepoint": 61718,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/iceberg.svg"
+    },
+    "landscape": {
+      "codepoint": 61719,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/landscape.svg"
+    },
+    "leaf": {
+      "codepoint": 61720,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/leaf.svg"
+    },
+    "leaf-1": {
+      "codepoint": 61721,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/leaf-1.svg"
+    },
+    "leaft": {
+      "codepoint": 61722,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/leaft.svg"
+    },
+    "light-bulb": {
+      "codepoint": 61723,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/light-bulb.svg"
+    },
+    "nuclear": {
+      "codepoint": 61724,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/nuclear.svg"
+    },
+    "petrol": {
+      "codepoint": 61725,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/petrol.svg"
+    },
+    "pot": {
+      "codepoint": 61726,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/pot.svg"
+    },
+    "rain": {
+      "codepoint": 61727,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/rain.svg"
+    },
+    "recycle": {
+      "codepoint": 61728,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/recycle.svg"
+    },
+    "recycle-1": {
+      "codepoint": 61729,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/recycle-1.svg"
+    },
+    "recycled-bottle": {
+      "codepoint": 61730,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/recycled-bottle.svg"
+    },
+    "recycled-paper": {
+      "codepoint": 61731,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/recycled-paper.svg"
+    },
+    "recycled-plastic-bag": {
+      "codepoint": 61732,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/recycled-plastic-bag.svg"
+    },
+    "recycling-bin": {
+      "codepoint": 61733,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/recycling-bin.svg"
+    },
+    "science": {
+      "codepoint": 61734,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/science.svg"
+    },
+    "smiling-sun": {
+      "codepoint": 61735,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/smiling-sun.svg"
+    },
+    "socket": {
+      "codepoint": 61736,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/socket.svg"
+    },
+    "solar-energy": {
+      "codepoint": 61737,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/solar-energy.svg"
+    },
+    "sunflower": {
+      "codepoint": 61738,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/sunflower.svg"
+    },
+    "think-green": {
+      "codepoint": 61739,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/think-green.svg"
+    },
+    "tidal-energy": {
+      "codepoint": 61740,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/tidal-energy.svg"
+    },
+    "toxic-waste": {
+      "codepoint": 61741,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/toxic-waste.svg"
+    },
+    "tree": {
+      "codepoint": 61742,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/tree.svg"
+    },
+    "truck": {
+      "codepoint": 61743,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/truck.svg"
+    },
+    "water": {
+      "codepoint": 61744,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/water.svg"
+    },
+    "watering-can": {
+      "codepoint": 61745,
+      "source": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg/watering-can.svg"
+    }
+  },
+  "options": {
+    "autowidth": false,
+    "config": false,
+    "css_selector": ".flaticon-{{glyph}}",
+    "debug": false,
+    "font_ascent": 448,
+    "font_descent": 64,
+    "font_design_size": 16,
+    "font_em": 512,
+    "font_name": "Flaticon",
+    "force": true,
+    "input": {
+      "templates": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg",
+      "vectors": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/svg"
+    },
+    "no_hash": true,
+    "output": {
+      "css": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font",
+      "fonts": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font",
+      "preview": "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font"
+    },
+    "preprocessor_path": null,
+    "quiet": true,
+    "templates": [
+      "../../../../../sites/flaticon/libraries/webfont/templates/flaticon.html",
+      "../../../../../sites/flaticon/libraries/webfont/templates/_flaticon.scss",
+      "../../../../../sites/flaticon/libraries/webfont/templates/flaticon.css"
+    ]
+  },
+  "templates": [
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/flaticon.html",
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/_flaticon.scss",
+    "/var/www/static/flaticon/zip_packs/111942-ecology-line-craft/font/flaticon.css"
+  ]
+}

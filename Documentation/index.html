@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Josefin+Sans:300,300i,400,400i,600,700,700i' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/reset.css">
+  <!-- CSS reset -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Resource style -->
+  <link rel="stylesheet" href="css/prism.css">
+  <link rel="stylesheet" href="css/prism-okaidia.css">
+  <!-- Resource style -->
+  <script src="js/modernizr.js"></script>
+  <!-- Modernizr -->
+  <title>infinito Template Documentation | summitThemes</title>
+</head>
+
+<body>
+  <header>
+    <h1>Infinito Documentation</h1>
+  </header>
+  <section class="cd-faq">
+    <ul class="cd-faq-categories">
+      <li><a class="selected" href="#basics"><span>Basics</span></a></li>
+      <li><a href="#navigation"><span>Navigation</span></a></li>
+      <li><a href="#portfolio"><span>portfolio</span></a></li>
+      <li><a href="#hover-items"><span>Hover items</span></a></li>
+      <li><a href="#animations"><span>Animations</span></a></li>
+      <li><a href="#other-elements"><span>Other elements</span></a></li>
+    </ul>
+    <!-- cd-faq-categories -->
+    <div class="cd-faq-items">
+      <ul id="basics" class="cd-faq-group">
+        <li class="cd-faq-title">
+          <h2>Basics</h2>
+        </li>
+        <li>
+          <a class="cd-faq-trigger opened" href="#0">Start</a>
+          <div class="cd-faq-content">
+            <ul>
+              <li>Created at<span class="seperator"> : </span><span>2019-10-07</span></li>
+              <li>Creator<span class="seperator"> : </span><span>Ershad Qaderi</span></li>
+              <li>Contact<span class="seperator"> : </span><span>ershad.qaderi@gmial.com</span></li>
+            </ul>
+            <p>Hello and thanks for purchasing Infinito template. You can ask your questions through comments section. You can also find a lot of useful information there. Please read this guide  completely as you can find the answers to most of probable questions here. Thank you again!</p>
+            <p><span class="label label-warning">Quick Tip:</span> In your code editor software you can finde any words by pressing <span class="label label-info">Ctrl + F</span> to find what's need to be found!</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Installing the template</a>
+          <div class="cd-faq-content">
+            <p>The simplest way of using this template is by choosing the demo that suits your needs, and then if there are multiple theme options you can select the one which you like. they could be found in here: <span class="label label-success">css/theme--color</span></p>
+            <p><span class="label label-warning">Quick Tip:</span> demo--04 and demo--10 don't have theme change option, you can customize them yourself though. also demo--09 and demo--12 have 6 different theme each, and each of them has a unique html file.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Enabling & disabling the animations</a>
+          <div class="cd-faq-content">
+            <P>you can enable or disable most of the animations through the js codes in script.js</P>
+            <pre class="language-js match-braces"><code><!--animations__enabled = true,
+animations__on_mouse_move__enabled = true,
+animations__on_scroll__enabled = true,
+animations__on_page_load = true;--></code></pre>
+            <P><span class="label label-warning">Quick Tip:</span> Toggling<code class="language-javascript"><!--animations__enabled--></code> to <code class="language-js"><!--false--></code> will make the others <code class="language-js"><!--false--></code> too.</P>
+            <p>You can disable all the animations in the html file too by using <code class="language-html"><!--animation--disabled--></code> class like this:</p>
+            <pre class="language-html match-braces"><code><!--<html lang="en-US" class="no-js animation--disabled">--></code></pre>
+            <p>or each animation type individually using these classes:</p>
+            <pre><code class="language-html"><!--<html lang="en-US" class="no-js animation--on-page-load--disabled">--></code></pre>
+            <pre><code class="language-html"><!--<html lang="en-US" class="no-js animation--on-scroll--disabled">--></code></pre>
+            <pre><code class="language-html"><!--<html lang="en-US" class="no-js animation--on-mouse-move--disabled">--></code></pre>
+            <p><span class="label label-warning">Quick Tip:</span> Toggling animations using the classes will override javascript settings.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Round corners</a>
+          <div class="cd-faq-content">
+            <p>By adding<code class="language-css">.round-corners</code>class to the<code class="language-html">&lt;body> .. &lt;/body></code>element, nearly all the elements get this style:<code class="language-css">border-radius: 20px;</code>, which means softer edges for them or round corners.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+      </ul>
+      <!-- cd-faq-group -->
+      <ul id="navigation" class="cd-faq-group">
+        <li class="cd-faq-title">
+          <h2>navigation</h2></li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Navigation menu structure</a>
+          <div class="cd-faq-content">
+            <p>Navigation markup consists of 3 major parts:</p>
+            <ol>
+              <li><code class="language-css">.nav-header</code>: its parts could be the toggle-button, the logo, a search button and in some cases links with drop-downs.</li>
+              <li><code class="language-css">.nav-bg</code>: is simply the background of the <code class="language-css">.nav-header</code>.</li>
+              <li><code class="language--css">.nav</code>: contains navigation links and drop-downs.</li>
+            </ol>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        
+        <li>
+          <a class="cd-faq-trigger" href="#0">.nav-side & .nav-bar</a>
+          <div class="cd-faq-content">
+            <p>There are two styles for navigation menu, each of them can have drop-downs:</p>
+            <ol>
+              <li>
+                <code class="language-css">.nav-side</code>, the markup looks like this:
+              </li>
+              <pre data-line="1,3"><code class="language-html"><!--<div id="nav-wrapper" class="nav-side-wrapper ... ">
+    ...
+  <nav id="nav" class="nav nav-side ... ">
+    ...
+  </nav>
+</div>--></code></pre>
+              <li>
+                <code class="language-css">.nav-bar</code>, the markup:
+              </li>
+              <pre data-line="1,3"><code class="language-html"><!--<div id="nav-wrapper" class="nav-bar-wrapper ... ">
+    ...
+  <nav id="nav" class="nav nav-bar ... ">
+    ...
+  </nav>
+</div>--></code></pre>
+            </ol>
+            <ul>
+              <li>
+                <p>Example of <code class="language-css">.nav-side</code> without drop-downs: <code class="language-html">index__03</code> and <code class="language-html">index__06</code>
+                </p>
+              </li>
+              <li>
+                <p>Example of <code class="language-css">.nav-side</code> with drop-downs: <code class="language-html">index__02</code> and <code class="language-html">index__11</code></p>
+              </li>
+              <li>
+                <p>Example of <code class="language-css">.nav-bar</code> without drop-downs: <code class="language-html">index__04</code>
+                </p>
+              </li>
+              <li>
+                <p>Example of <code class="language-css">.nav-bar</code> with drop-downs: <code class="language-html">index__01</code>, <code class="language-html">index__05</code>, <code class="language-html">index__07</code>, <code class="language-html">index__08</code>, <code class="language-html">index__09</code>, <code class="language-html">index__10</code>, <code class="language-html">index__12</code> and <code class="language-html">index__13</code></p>
+              </li>
+            </ul>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        
+        <li>
+          <a class="cd-faq-trigger" href="#0">.nav-side special styles</a>
+          <div class="cd-faq-content">
+            <p>There are two special effects for <code class="language-css">.nav-side</code>:</p>
+            <ol >
+              <li>Skewed style with this class <code class="language-css">.nav--skewed</code></li>
+              <li>Sliced background image with this class <code class="language-css">.nav--has-sliced-bg-img</code></li>
+              <li>Simple background image with this class <code class="language-css">.nav--has-bg-img</code></li>
+            </ol>
+            <ul>
+              <li>Example of skewed style: the intro page of the template <code class="language-html">intro.html</code></li>
+              <li>Example of sliced background image: <code class="language-html">index__04</code>
+              </li>
+            </ul>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        
+        <li>
+          <a class="cd-faq-trigger" href="#0">Sliding or Static</a>
+          <div class="cd-faq-content">
+            <p><code class="language-css">.nav-side</code> also has an uncomplete special style called <code class="language-css">.nav-static</code>, for now it only works on desktops.</p>
+            <p>Here's the supposed html structure:</p>
+            <pre data-line="1,2"><code class="language-html"><!--<div id="stage" class="nav-static--down-there">
+  <div id="nav-wrapper" class="nav-side-wrapper nav-static ... ">
+      ...
+    <nav id="nav" class="nav nav-side ... ">
+        ...
+    </nav>
+  </div>
+    ...
+</div>--></code></pre>
+            <p><span class="label label-warning">Quick Tip:</span> <code class="language-css">.container</code> classes must be changed to <code class="language-css">.container-fluid</code> inside the html markup of the page.</p>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        
+        <li>
+          <a class="cd-faq-trigger" href="#0">.nav-side drop-down styles</a>
+          <div class="cd-faq-content">
+            <p><code class="language-css">.nav-side</code> with drop-down has 2 styles for the drop-downs: </p>
+            <ol>
+              <li>Sliding; which was designed for mobile devices. but colud be used on larger screens too.<span class="seperator"> | </span><span>Default</span></li>
+              <li>Adding this class <code class="language-css">.nav-side--expanded-dropdown</code> will activate expanded dropdown style which is designed for desktops only. here's the html structure:</li>
+            </ol>
+            <pre data-line="1"><code class="language-html"><!--<div id="nav-wrapper" class="nav-side-wrapper nav-side--expanded-dropdown ... ">
+    ...
+  <nav id="nav" class="nav nav-side ... ">
+    <ul class="has--dropdown">
+      ...
+    </ul>
+  </nav>
+</div>--></code></pre>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        
+        <li>
+          <a class="cd-faq-trigger" href="#0">Hover styles</a>
+          <div class="cd-faq-content">
+            <p><code class="language-css">.nav-link</code> s have 2 hover styles; one of these 2 should be added to <code class="language-css">#nav</code> element.</p>
+            <ol>
+              <li><code class="language-css">.hover--bg-flow</code></li>
+              <li><code class="language-css">.hover--bg-split</code></li>
+            </ol>
+            <p>Example:</p>
+            <pre data-line="1"><code class="language-html"><!--<nav id="nav" class="nav hover--bg-split ... ">
+  ...
+</nav>--></code></pre>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll spy</a>
+          <div class="cd-faq-content">
+            <p>Scroll spy can be activated when there are no drop-downs inside<code class="language-css">#nav</code>element. it gets activated with this attribute:<code class="language-html">data-scroll-spy-active="true"</code>. Here's the structure:</p>
+            <pre data-line="1"><code class="language-html"><!--<div id="nav-wrapper" data-scroll-spy-active="true" class="nav-wrapper">
+  ...
+</div>--></code></pre>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">.nav-bg effects</a>
+          <div class="cd-faq-content">
+            <p>There are two main effects for nav-bg which you can use each of them individually or combine them together</p>
+            <ol>
+              <li><code class="language-css">.nav--fade</code>: animates the<code class="language-css">.nav--bg</code>element on top of the page from transparent to opaque on first scroll</li>
+              <li><code class="language-css">.nav--elastic</code>: scales the the<code class="language-css">.nav--bg</code>element and animates it to normal on first scroll</li>
+            </ol>
+            <p>These classes should be added to<code class="language-css">#nav-wrapper</code>element. and the effect will be on <code class="language-css">.nav--bg</code> mostly</p>
+            <p>here's the structure:</p>
+            <pre data-line="1"><code class="language-html"><!--<div id="nav-wrapper" class="nav--fade nav--elastic navbar-transparent-white-text ... ">
+    ...
+  <div class="nav-bg"></div>
+  <div class="nav-header clearfix">
+    ...
+  </div>
+  <nav id="nav" class="nav ... ">
+    ...
+  </nav>
+</div>--></code></pre>
+            <p>When<code class="language-css">.nav--fade</code> is in effect, the background of the navigation header is transparent, at least before the first scroll.</p>
+            <p>So we need so set the text color of the element in respect to the hero backgrouns so that they could be read.</p>
+            <p>There are 2 predefined colors:</p>
+            <ol>
+              <li><code class="language-css">.navbar-transparent-white-text</code>, should be added to<code class="language-css">#nav-wrapper</code>element.</li>
+              <li><code class="language-css">.navbar-transparent-dark-text</code>, should be added to<code class="language-css">#nav-wrapper</code>element.</li>
+            </ol>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Dark theme</a>
+          <div class="cd-faq-content">
+            <p>You can apply a dark theme to the navigation by adding this class:<code class="language-css">.nav--theme-dark</code>to the<code class="language-css">#nav-wrapper</code>elements.</p>
+          </div>
+          <!--cd-faq-content-->
+        </li>
+      </ul>
+      <!-- cd-faq-group -->
+      <ul id="portfolio" class="cd-faq-group">
+        <li class="cd-faq-title">
+          <h2>portfolio</h2></li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Porttfolio types</a>
+          <div class="cd-faq-content">
+            <p>There are 2 types of portfolio section:</p>
+            <ol>
+              <li>Dynamic: which has a load more button. Examples: <code class="language-html">index__01</code>,<code class="language-html">index__02</code>,<code class="language-html">index__07</code> and ..</li>
+              <li>Static: which is well, static. Examples: <code class="language-html">index__03</code>,<code class="language-html">index__05</code> and ..</li>
+            </ol>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Porttfolio layouts</a>
+          <div class="cd-faq-content">
+            <p>There are various layouts for the portfolio which you can see by exploring the demos.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Sorting portfolio items</a>
+          <div class="cd-faq-content">
+            <p>If there is a sorter group button in the portfolio, each of them has a specific data-attribute:<code class="language-html">data-filter</code>, which is related to the portfolio item with that class. Portfolio items can have multiple classes and that means that they can be in multiple groups.</p>
+            <p><span class="label label-warning">Quick Tip:</span><code class="language-html">data-filter="*"</code>means all items.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Sorting styles</a>
+          <div class="cd-faq-content">
+            <p>There are 2 styles for sorting:</p>
+            <ol>
+              <li>Moving elements of sorting action, which is the default style.</li>
+              <li>Fading in and out the elements on sorting; which gets activated bay adding<code class="language-css">.isotope--fade-in-out</code>calss to <code class="language-css">#js-portfolio</code>element:</li>
+              <pre data-line="1"><code class="language-html"><!--<div class="portfolio__container">
+  <div id="js-portfolio" class="portfolio isotope--fade-in-out ..">
+  </div>
+</div>--></code></pre>
+            </ol>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Pop-up media</a>
+          <div class="cd-faq-content">
+            <p>In order to enable the popup media for a button you need to add<code class="language-css">.js-lightgallery</code>class to a parent of the buttons as an album and <code class="language-css">.js-lightgallery__el</code> to the button that shows the media as an element of the album</p>
+            <p>You can see the examples in the portfolio section of all demos.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Load more items using ajax methods</a>
+          <div class="cd-faq-content">
+            <p>To enable load more feature you have to make separate HTML files with the contents which you wish to be loaded afterwards on a button click, the names of the HTML files have to follow an order with numbers at the end, examples: <code class="language-html">index__02</code>,<code class="language-html">index__03</code> ..  or <code class="language-html">blog-ajax-2</code>,<code class="language-html">blog-ajax-3</code> ...</p>
+            <p><span class="label label-warning">Quick Tip:</span> Numbers start from 2 and the last HTML file with the last number at the end must be an empty HTML file.</p>
+            <p>Also, you need to specify the URL of the HTML files as<code class="language-html">data-appn</code>on the<code class="language-css">#js-portfolio</code>element, the last part must be the common name of the HTML files whithout the numbers. structure is like this:</p>
+            <pre data-line="1"><code class="language-html"><!--<div class="portfolio__container">
+  <div id="js-portfolio" data-appn="portfolio__ajax-els/index/portfolio" class="portfolio  ..">
+  </div>
+</div>--></code></pre>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+      </ul>
+      <!-- cd-faq-group -->
+      <ul id="hover-items" class="cd-faq-group">
+        <li class="cd-faq-title">
+          <h2>Hover items</h2></li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Hover items contents layout</a>
+          <div class="cd-faq-content">
+            <p>it is called hover styles:<code class="language-css">.hover-style--01</code>and<code class="language-css">.hover-style--02</code>, they should be applied to one parent of the<code class="language-css">.hover-item</code> elements. in order to use each of these you have to use the correct html layout for<code class="language-css">.hover-item</code>too. in other words, each class requires its own HTML structure for<code class="language-css">.hover-item</code></p>
+            <p>Examples could be found in all the demo files</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Hover items outer layouts & cover variations</a>
+          <div class="cd-faq-content">
+            <p>There are some css classes that make different cover variations when they are applied to a parent element of the<code class="language-css">.hover-item</code>elements and one that change the outer layout of them:</p>
+            <ul>
+              <li><code class="language-css">.hover-items--gapped</code>: Creates a gap between the<code class="language-css">.hover-item</code>elements and seperates them from each other.</li>
+            </ul>
+            <p>By default the cover of the<code class="language-css">.hover-item</code>taht appears on mouse hover cover all of the element surface, edge to edge. You can change this using these classes:</p>
+            <ul>
+              <li><code class="language-css">.cover-less</code>: Shrinks the cover so that it covers less than all of the element's surface.</li>
+              <li><code class="language-css">.cover-extra</code>: Expands the cover to reach outside of the<code class="language-css">.hover-item</code>borders, but doesn't get to the other element's border</li>
+              <li><code class="language-css">.cover-extra--full</code>: Expands the cover all the way to the other elements' borders.</li>
+            </ul>
+            <p>Here's an HTML example that covers most of the subjects above:</p>
+            <pre data-line="1,2,4"><code class="language-html"><!--<div class="hover-style--01 .. ">
+    <div class="hover-items hover-items--gapped cover-extra cover-extra--full">
+        ..
+            <div class="hover-item ..">
+              ..
+            </div>
+        ..
+    </div>
+</div>--></code></pre>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+      </ul>
+      <!-- cd-faq-group -->
+      <ul id="animations" class="cd-faq-group">
+        <li class="cd-faq-title">
+          <h2>Animations</h2>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Main animation types</a>
+          <div class="cd-faq-content">
+            <p>There are 3 main types of animation:</p>
+            <ol>
+              <li>Scroll animations</li>
+              <li>Move-hover animations</li>
+              <li>Intro animation</li>
+            </ol>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li class="cd-faq-title">
+          <h2>Animations: Scroll</h2>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animations</a>
+          <div class="cd-faq-content">
+            <p>Scroll animations are in 4 types:</p>
+            <ol>
+              <li>Parallax</li>
+              <li>Bars</li>
+              <li>Odometers</li>
+              <li>Reveal animations</li>
+            </ol>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animations: Parallax</a>
+          <div class="cd-faq-content">
+            <p>Parallax: In order to activate parallax effect you should add<code class="language-css">.parallax</code>class to a parent element and<code class="language-css">.parallax__el</code>the element you want to achieve the effect here's the HTML structure:</p>
+            <pre data-line="1,2"><code class="language-html"><!--<section class="section--small parallax background--image ..">
+    <div class="parallax__el"></div>
+    <div class="container">
+      ..
+    </div>
+</section>--></code></pre>
+             <p>Now this was for elements in the middle of the page. to activate parallax effect for the hero background, classes only apply on one element and that's the element that gets the parallax effect. the classes are </p>
+             <ul>
+               <li><code class="language-css">.hero__parallax--simple</code></li>
+               <li><code class="language-css">.hero__parallax--zoom</code></li>
+               <li><code class="language-css">.hero__parallax--blur</code></li>
+             </ul>
+             <p>HTML structure example: </p><pre data-line="1,2"><code class="language-html"><!--<header id="hero" class="hero ..">
+    <div class="hero__parallax hero__parallax--simple">
+        ..
+    </div>
+    <div class="hero__content-wrapper">
+        <div class="hero__content">
+            ..
+        </div>
+    </div>
+</header>--></code></pre>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Bars</a>
+          <div class="cd-faq-content">
+            <p>There are 2 types of bars; vertical and horizontal and they animate in on a scoll by deault; the function that makes them animate is called<code class="language-js">linear_bar_draw_animation();</code>if you want to turn off the bars animation on scroll go to the JavaScript file on comment out the call for the function.</p>
+            <p>Horizontal bar html structure:</p>
+            <pre><code class="language-html"><!--<section class="section horizontal-bars .. " data-horizontal-bars-delay="1">
+  ..
+      ..
+          <div class="bar-wrapper">
+              <div class="bar__title"><span class="">satisified clients</span></div>
+              <div class="bar__percnt"><span class="">96%</span></div>
+              <div class="bar" style="width: 96%"></div>
+          </div>
+      ..
+  ..
+</section>--></code></pre>
+              <p>Vertical bars HTML structure:</p>
+              <pre data-line="1,4,7"><code class="language-html"><!--<section class="section--small bars--vertical">
+    ..
+        ..
+            <div class="bars--75 bars--gradient">
+            <div>
+                <div class="bar-wrapper ">
+                    <div class="bar " style="height: 75% "></div>
+                </div>
+                ..
+            </div>
+        ..
+    ..
+</section>--></code></pre>
+              <p><span class="label label-warning">Quick Tip:</span> Notice that for vertical bars you can only use:<code class="language-css">.bars--46</code>,<code class="language-css">.bars--70</code>,<code class="language-css">.bars--75</code>. the numbers mean you can only have that many bar elements.</p>
+              <p><span class="label label-warning">Quick Tip 2:</span><code class="language-css">.horizontal-bars</code>and<code class="language-css">.bars--vertical</code>are the parent elements that the animation starts as soon as the come to view on scroll.</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Odometers</a>
+          <div class="cd-faq-content">
+              <p>Odometers are numbers that can be animated on scroll, HTML structure of an odometer is like this:</p>
+              <pre><code class="language-html"><!--<div class="js-odometer__letters-inside">
+    <div class="number-fact__number">
+        <div class="js-odometer__el" data-number-end="999999">999999</div>
+    </div>
+    <div class="number-fact__number js-odometer__letters">~1 Million+</div>
+</div>--></code></pre>
+              <p>In order to activate the animation you have to add one of these classes to a parent element:</p>
+              <ul>
+                <li><code class="language-css">.js-odometer</code>: numbers rotate with a blur effect but may cause not so smooth animation</li>
+                <li><code class="language-css">.js-odometer--simple</code>: lightweight animation without blur effect</li>
+              </ul>
+          </div>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Reveal</a>
+          <div class="cd-faq-content">
+            <p>Reveal animations: there are two types of reveal animations:</p>
+            <ol>
+              <li>Cover animations:<code class="language-js">cover_animation();</code></li>
+              <li>Fade move animations:<code class="language-js">fade_move();</code></li>
+              <li>Blur text animations:<code class="language-js">blur_text_animation();</code></li>
+              <li>SVG animations:<code class="language-js">svg_draw_animation();</code></li>
+            </ol>
+            <p>You can use the first 2 of these animations on endless number of HTML elements and the 3rd one on Endless texts and the 4th on SVGs.</p>
+            <p>To use each animation style you need to add 2 classes to some related elements; one to a parent element which the animation starts when it comes into view and the other one to the element itself which you are going to animate on scroll.</p>
+            <p>The parent class name could be anything that you like but the element itself must have the same class as the parent +<code class="language-css">__el</code>at the end of it.</p>
+            <p>For the first 2 functions class name +<code class="language-css">__el</code>will animate an entire block, you can also animate letters, words; to do so use these instead of<code class="language-css">__el</code>use:<code class="language-css">__letters</code>,<code class="language-css">__words</code>and<code class="language-css">__lines</code>here is an example:</p>
+            <pre><code class="language-html"><!--<section class="section slide-up slide-up2 rotate-in blurred-words svg-draw" data-slide-up2-delay="0.3" data-rotate-in-offset="50">
+    ..
+      <h2 class=".. slide-up__el">Whatever</h2>
+      <h2 class=".. slide-up__lines">very important text - VIT</h2>
+      <p class=".. slide-up2__lines cover-transp ..">Anything here</p>
+      <div class="rotate-in__el">
+          ..
+      </div>
+      <div class="blurred-words__el ..">Some texts here</div>
+      <svg class="svg svg--filled svg-draw__el .. ">
+        ..
+      </svg>
+    ..
+</section>--></code></pre>
+            <p>You can change some of the functions directly inside the HTML, this includes: delays, offsets, and paddings. Just add data attributes to the parent element.</p>
+            <p>The data attributes which you can use inside HTML for the first 2 functions are:</p>
+            <ul>
+              <li><code class="language-html">data-whatEverAnimationNameIs-delay</code>: adds delay in seconds.</li>
+              <li><code class="language-html">data-whatEverAnimationNameIs-offset</code>: changes the starting point position in pixels, can have negative amounts.</li>
+              <li><code class="language-html">data-trigger-hook</code>: means which part of the parent element should cpme to view in order to start the animation. can have one of these values:
+                <ol>
+                  <li><code class="language-css">onEnter</code></li>
+                  <li><code class="language-css">onCnter</code></li>
+                  <li><code class="language-css">onLeave</code></li>
+                </ol>
+              </li>
+              <li><code class="language-html">data-pt</code>: add<code class="language-css">padding-top</code>in pixels.</li>
+              <li><code class="language-html">data-pr</code>: add<code class="language-css">padding-right</code>in pixels.</li>
+              <li><code class="language-html">data-pb</code>: add<code class="language-css">padding-bottom</code>in pixels.</li>
+              <li><code class="language-html">data-pl</code>: add<code class="language-css">padding-left</code>in pixels.</li>
+            </ul>
+            <p>The data attributes which you can use inside HTML for the 3rd function<code class="language-js">blur_text_animation();</code>are:</p>
+            <ul>
+              <li><code class="language-html">data-whatEverAnimationNameIs-time</code>: adds animation running time in seconds.</li>
+              <li><code class="language-html">data-whatEverAnimationNameIs-stagger</code>: adds stagger time in seconds.</li>
+              <li><code class="language-html">data-whatEverAnimationNameIs-delay</code>: adds delay in seconds.</li>
+              <li><code class="language-html">data-whatEverAnimationNameIs-offset</code>: changes the starting point position in pixels, can have negative amounts.</li>
+            </ul>
+            <p>The data attributes which you can use inside HTML for the 4th function<code class="language-js">svg_draw_animation();</code>are:</p>
+            <ul>
+              <li><code class="language-html">data-whatEverAnimationNameIs-delay</code>: adds delay in seconds.</li>
+              <li><code class="language-html">data-whatEverAnimationNameIs-offset</code>: changes the starting point position in pixels, can have negative amounts.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Reveal: Cover</a>
+          <div class="cd-faq-content">
+            <p>They cover the elements and when the parent element comes to view on scrolling, that cover goes away and the element animates in.</p>
+            <p>The covers can be semi transparent or opaque; they can have the same colour as the background or have different colours; there could be one 1, 2 or 3 covers for each element.</p>
+            <p>The JavaScript function for cover animations is shown below you can also see the default options.</p>
+            <pre><code class="language-js"><!--cover_animation({
+  class_Name: ".xcdf",
+  onScroll: true,
+  deferred: false,
+  deferred_function_name: "playAnim",
+  el_set_function_name: "el_set",
+  el__Time: 1,
+  el_Content__Time: 1,
+  cover__Time: 1,
+  el__Stagger_Time: 0.3,
+  el_Content__Stagger_Time: 0.3,
+  cover__Stagger_Time: 0.3,
+  each_Group_Delay: 0.2,
+  cover_Addtional_Delay: 0.2,
+  initial_Delay: 0,
+  cover__Anim_Dir__To_Default: false,
+  cover__Anim_Dir__To_Default_Bounce: false,
+  el__Anim_Dir__From_Default: false,
+  cover__Draw_From_0: true,
+  no_Cover: false,
+  double_Reveal: false,
+  double_Cover: false,
+  triple_Cover: true,
+  scale_Ini: "1",
+  anim_Dir: "x",
+  el__Pos_Ini: "-100%",
+  el__opacity_ini: "1",
+  el__Easing: Power4.easeOut,
+  el_Content__Pos_Ini: "20%",
+  el__content__opacity_ini: "1",
+  el_Content__Easing: Power4.easeOut,
+
+  cover__Easing: Power4.easeOut,
+  element_class_remove: "default", // the element which the below class will be 
+  //  aded and then removed. default = [parent] otherwise it shoud be a child 
+  //  of the parent
+  onComplete_class_remove: false, // add a class to the parent alement and
+  //  remove it after animation is done
+  c_offset: 0, // start this scene after scrolling for 0px
+  trigger_hook: "onCenter", //"onEnter", "onLeave",
+  to_add_class_to: false, // if this is undefined or false and below variable
+  //  is defined then the class will be applied to the parent element
+  //  itself; here ".xcdf"
+  class_to_be_added: false // define a class to ba added to the element
+  // defind up when the animation completes.
+});--></code></pre>
+            <p>As you should already know you can make your own functions by altering the options. currently there are 13 premade function variations which their <code class="language-js">class_Name</code>s are:</p>
+            <ul>
+              <li><code class="language-js">class_Name: ".slide-cover",</code></li>
+              <li><code class="language-js">class_Name: ".double-cover-right",</code></li>
+              <li><code class="language-js">class_Name: ".double-cover",</code></li>
+              <li><code class="language-js">class_Name: ".cover-bounce",</code></li>
+              <li><code class="language-js">class_Name: ".cover-bounce-up",</code></li>
+              <li><code class="language-js">class_Name: ".cover-up",</code></li>
+              <li><code class="language-js">class_Name: ".cover-d-r-img",</code></li>
+              <li><code class="language-js">class_Name: ".cover-d-t-img",</code></li>
+              <li><code class="language-js">class_Name: ".slide-up",</code></li>
+              <li><code class="language-js">class_Name: ".slide-upx",</code></li>
+              <li><code class="language-js">class_Name: ".slide-up2",</code></li>
+              <li><code class="language-js">class_Name: ".slide-up2x",</code></li>
+              <li><code class="language-js">class_Name: ".text-cover",</code></li>
+            </ul>
+            <p>You can also add these classes to the parent element:</p>
+            <ul>
+              <li><code class="language-css">.cover-transp</code>: makes the cover semi-transparent.</li>
+              <li><code class="language-css">.cover--colored</code>: makes the cover colored.</li>
+              <li><code class="language-css">.cover--iso</code>: makes color of the cover the same as the background.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Reveal: fade-move</a>
+          <div class="cd-faq-content">
+          <p>
+            With fade-move as the name suggests the elements fade Into the screen without covers, we can also move them while fading; that's why it's called fade-move.</p>
+            <p>The JavaScript function for fade-move animation is shown here; you can see the default options too:</p>
+            <pre><code class="language-js"><!--fade_move({
+  parent: ".errr",
+  element: ".errr__el",
+  onScroll: true,
+  deferred: false,
+  deferred_function_name: "playAnim", // This should be unique for each function run
+  el_set_function_name: "fade_move__el_set_func",
+  offset: 0,
+  trigger_hook: "onCenter", //"onEnter", "onLeave",
+  x: 0,
+  y: 25,
+  z: 0,
+  opacity: 0,
+  rotateX: -25,
+  rotateY: 0,
+  scale: 1,
+  blur_start: "0px",
+  blur_end: "0px",
+  time: 0.8,
+  initial_delay: 0,
+  stagger_delay: 0.1,
+  each_set_delay: 0.3,
+  perspective: "1000",
+  transformOrigin: "50% 0% -50", // x y z
+  easing: Power1.easeOut,
+});--></code></pre>
+            <p>As always you can make your own functions with your own options: there are some pre-made functions which you can find them in the JS file.</p>
+          </p>
+          </div>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Reveal: Blur text</a>
+          <div class="cd-faq-content">
+            <p>Like of before you need to specify a parent element which the animation sars as soon as it comes to view and also the text elements which you want to animate while the user scrolls.</p>
+            <p>Inside this function you have to decide how do you want the text to be animated, do you want to break the text into line, words or letters? set the option with this property:<code class="language-js">l_type: "letters",</code>. here it is letters.</p>
+            <p>Blur text function with it default options:</p>
+            <pre><code class="language-js"><!--blur_text_animation({
+  parent: ".blurred-letters",
+  element: ".blurred-letters__el",
+  l_type: "letters",
+  time: 1,
+  offset: 0,
+  onScroll: true,
+  // if it is deferred it means that the timeline and initial styles
+  // of elements will be set and they wait to be animated by
+  // blur_text_animation.playAnim() func;
+  deferred: false,
+  deferred_function_name: "playAnim",
+  random: true,
+  percent: 100, // the percent of the letters that you want to be animated
+  initial_delay: 0,
+  stagger_delay: 0.2,
+  easing: Sine.easeOut,
+});--></code></pre>
+          </div>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Reveal: Svg draw</a>
+          <div class="cd-faq-content">
+            <p>Also like of before you need to specify a parent element which the animation sars as soon as it comes to view and also the text elements which you want to animate while the user scrolls.</p>
+            <p>There are 2 classes which you can add to the parent element:</p>
+            <ol>
+              <li><code class="language-css">.whatEverAnimationNameIs--filled</code>: When you want the SVG element to have a filling animation at the end.</li>
+              <li><code class="language-css">.whatEverAnimationNameIs--fast</code>: Run the animation faster</li>
+            </ol>
+            <p>Blur text function with it default options:</p>
+            <pre><code class="language-js"><!--svg_draw_animation({
+  class_Name: ".svg-draw",
+  onScroll: true,
+  deferred: false,
+  deferred_function_name: "playAnim", // This should be unique foe each function run
+  offset: 0,
+  draw_time: 2,
+  draw_stagger_time: 0.2,
+  fill_time: 0.8,
+  fill_overlap_time: "-=0.5",
+  initial_delay: 0,
+  each_group_delay: 0,
+  easing: Power2.easeIn,
+});--></code></pre>
+          </div>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Fixed position</a>
+          <div class="cd-faq-content">
+            <p>Well thsi is not an animation when you see it in effect, but actually the fixed positioned element animates exactly like the scroll-bar when you scroll, so that;s why it's included here.</p>
+            <p>Below you can see the JS function, read the comments there, it should get you started on fixing elments throughout the page:</p>
+            <pre><code class="language-js"><!--fixed_position({
+    reverse: true,
+    hook: 'onCenter', //'onEnter' or 'onCenter'or 'onLeave',
+    element: ".timeline__bar div", // The element that fixes
+    course_element: ".timeline", // The element that the fixed element is fixed along it
+    course_adjustment_bottom: 0, // The product__amount to be added or removed from the course element height
+    element_with_event: ".timeline", // The element that the function must be refereshed on its event
+    the_event: "height-changed", // The event that make us to referesh the function
+    ourse_adjustment_top: -30, // 60 is the height of the page navbar and 115 is the outerHeight ..
+    // .. of the element plus the space between it and the start of the cousrse elemnt - Ajust this carefully
+});--></code></pre>
+          </div>
+        </li>
+        <li class="cd-faq-title">
+          <h2>Animations: Move hover</h2>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Move hover animation types</a>
+          <div class="cd-faq-content">
+
+            <p>There are two types of move hover animations:</p>
+            <ol>
+              <li><code class="language-css">.td-hover</code>: Gets activated by adding this class to a parent element which will be the field that is sensitive to mouse move, and<code class="language-css">.td-hover__item</code>class to the elements that are going to be animated.</li>
+              <p>HTML structure example:</p>
+              <pre><code class="language-html"><!--<div class="illusional-field .. ">
+  ..
+    <div class="td-hover__item">
+      ..
+    </div>
+  ..
+</div>--></code></pre>
+              <p>JS function with default options:</p>
+              <pre><code class="language-js"><!--threeD_hover({
+  parent: ".td-hover",
+  element: ".td-hover__item",
+  convex: true, // if not set it is false or concave
+  maxRotateDegreeX: 40,
+  maxRotateDegreeY: 40,
+  xSensitivity: 5, // Min: 1  |  Max: 10
+  ySensitivity: 10, // Min: 1  |  Max: 10
+  perspective: 1000,
+  transform_origin: 0,
+  mouseSensitiveArea: false, // if not set it's the parent element
+  easing: Power4.easeOut,
+  movementTime: 1,
+  easingBack: Elastic.easeOut.config(1, 0.3), // when the mouse leaves the area
+  movementTimeBack: 1.5 //// when the mouse leaves the area
+});--></code></pre>
+              <li><code class="language-css">.illusional-field</code>: Gets activated by adding this class to a parent element which will be the field that is sensitive to mouse move, and then placing this HTML structure inside of it:</li>
+              <pre><code class="language-html"><!--<div class="illusional-field .. ">
+  ..
+    <div class="illusional-object">
+        <div class="illusion__effect"></div>
+        <div class="illusional-object__media">
+            ..
+        </div>
+    </div>
+  ..
+</div>--></code></pre>
+              <p><span class="label label-warning">Quick Tip:</span> You can remove this element if you’re not intersted:<code class="language-html">&lt;div class="illusion__effect">&lt;/div></code>just adds a light effect.</p>
+              <p>JS function is the same as previous but some optins have changed:</p>
+              <pre><code class="language-js"><!--threeD_hover({
+  parent: ".illusional-field",
+  element: ".illusional-object",
+  maxRotateDegreeX: 20,
+  maxRotateDegreeY: 20,
+  xSensitivity: 4, // Min: 1  |  Max: 10
+  ySensitivity: 4, // Min: 1  |  Max: 10
+  perspective: 1200,
+  transform_origin: 120,
+  movementTime: 0.7,
+  movementTimeBack: 1.5
+});--></code></pre>
+            </ol>
+          </div>
+        </li>
+        <li class="cd-faq-title">
+          <h2>Animations: intro</h2>
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Scroll animationos: Intro</a>
+          <div class="cd-faq-content">
+            <p>There are 13 different styles for loading screen. each demo has a different style. some of them have special CSS styles and HTML structure.</p>
+            <p>The HTML structure should be at the end of the page.</p>
+            <p>A class should be added to<code class="language-html">&lt;html></code>element for each loading screen style. The classes are:<code class="language-css">.animation-loading--01</code>,<code class="language-css">.animation-loading--02</code>all the way up to<code class="language-css">.animation-loading--13</code></p>
+            <p>After the loading screen goes away, elements of the page can have landing animations. You can apply each of these animations on an endless number of elements.</p>
+            <p>It works exactly like reveal animations:<code class="language-js">cover_animation();</code>and<code class="language-js">fade_move();</code>. In fact, they are exactly those functions, except for that they run when the loading screen goes away.</p>
+            <p>So everything is like before, for any more information head back to Reveal animations.</p>
+            <p>The simplest HTML structure for loading screen is like this:</p>
+            <pre><code class="language-html"><!--<div id="loading-screen" class="loading-screen svg-draw-intro svg-draw-intro--filled svg-draw-intro--stroke" data-opacity="1" data-y-percent="-100" data-time-last-watch="1000" data-time-page_els_overtake="100">
+    <div id="loading-bar"></div>
+    <div class="loader" data-top="150%" data-opacity="1">
+        <div class="infinito__loader">
+            <svg class="svg-draw-intro--stroke__el" ..>
+                ..
+            </svg>
+        </div>
+        <div class="infinito__word" data-total-drawing-time-milisec="6000" data-drawing-time-sec="3" data-stagger-time-sec="1">
+            <svg class="svg-draw-intro__el" ..>
+                ..
+            </svg>
+        </div>
+    </div>
+    <div id="pace-local-styles" data-top="150%" data-scale-x="0" data-scale-y="1" data-opacity="1"></div>
+</div>--></code></pre>
+            <p>Here we explain the data-attributes:</p>
+            <ol>
+              <li>data-attributes on<code class="language-html">&lt;div id="loading-screen" .. > .. &lt;/div></code>:</li>
+              <ul>
+                <li><code class="language-html">data-opacity</code>: determines how the fading animation of<code class="language-css">#loading-screen</code>will be when it starts to go away. "1" means it wont fade away.</li>
+                <li><code class="language-html">data-y-percent</code>: determines how the<code class="language-css">translateY</code>animation of<code class="language-css">#loading-screen</code>will be when it goes away, in percents</li>
+                <li><code class="language-html">data-time-last-watch</code>: Imagine that the loading process has been finished. Now you like to have some time to watch the elements inside the<code class="language-css">#loading-screen</code>before the it goes away. This is that time in miliseconds</li>
+                <li><code class="language-html">data-time-page_els_overtake</code>: If you choose for the elements of the page to animate in after the<code class="language-css">#loading-screen</code>goes away; you can specify this time which will allow those elements to start animating in even before the<code class="language-css">#loading-screen</code>starts to go away. so that the whole animation will be more consistent. in miliseconds of course.</li>
+              </ul>
+              <br>
+              <li>data-attributes on<code class="language-html">&lt;div class="loader" .. > .. &lt;/div></code>:</li>
+              <ul>
+                <li><code class="language-html">data-top</code>: determines how the<code class="language-css">top</code>animation of<code class="language-css">.loader</code>will be when it goes away</li>
+                <li><code class="language-html">data-opacity</code>: determines how the fading animation of<code class="language-css">.loader</code>will be when it starts to go away. "1" means it wont fade away.</li>
+              </ul>
+              <br>
+              <li>data-attributes on<code class="language-html">&lt;div class="infinito__word" .. ></code>on assumption that there is an SVG element there:</li>
+              <ul>
+                <li><code class="language-html">data-drawing-time-sec</code>: determines the time of the SVG draw animation for each of the SVG parts.</li>
+                <li><code class="language-html">data-total-drawing-time-milisec</code>: determines the cumulative time of the SVG draw animation for all of SVG parts. all together</li>
+                <li><code class="language-html">data-stagger-time-sec</code>: determines the stagger time of the SVG draw animation for each of the SVG parts.</li>
+              </ul>
+              <br>
+              <li>data-attributes on<code class="language-html">&lt;div id="pace-local-styles" .. > .. &lt;/div></code>, these will apply on<code class="language-html">&lt;div class="pace" .. > .. &lt;/div></code>element:</li>
+              <ul>
+                <li><code class="language-html">data-top</code>: determines how the<code class="language-css">top</code>animation of<code class="language-css">.pace</code>will be when it goes away.</li>
+                <li><code class="language-html">data-scale-x</code>: determines how the<code class="language-css">scaleY</code>animation of<code class="language-css">.pace</code>will be when it goes away.</li>
+                <li><code class="language-html">data-scale-y</code>: determines how the<code class="language-css">scaleY</code>animation of<code class="language-css">.pace</code>will be when it goes away.</li>
+                <li><code class="language-html">data-opacity</code>: determines how the fading animation of<code class="language-css">.pace</code>will be when it starts to go away. "1" means it wont fade away.</li>
+              </ul>
+            </ol>
+          </div>
+        </li>
+      </ul>
+      <!-- cd-faq-group -->
+      <ul id="other-elements" class="cd-faq-group">
+        <li class="cd-faq-title">
+          <h2>Other elements</h2></li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Quick info items</a>
+          <div class="cd-faq-content">
+            <p>There are 2 types of quick info items outer layout. A default one and a side by side style. You can see both styles below:</p>
+            <p>Default:</p>
+            <pre><code class="language-html"><!--<div class="quick-info .. ">
+    <div class="quick-info__icon">
+      ..
+    </div>
+    <h4 class="quick-info__header .. ">
+        <span class=" slide-up__el">Web Applications</span>
+    </h4>
+    <div class="quick-info__text .. ">
+        From a business catalog to an administrative system
+    </div>
+</div>--></code></pre>
+            <br>
+            <p>Side by Side, which is exactly the previous structure, only add this class<code class="language-css">.quick-infos--side-by-side</code>to a arent element:</p>
+            <pre><code class="language-html"><!--<section class="quick-infos--side-by-side .. ">
+  ..
+  <div class="quick-info .. ">
+      <div class="quick-info__icon">
+          ..
+      </div>
+      <h4 class="quick-info__header .. ">Web Applications</h4>
+      <div class="quick-info__text .. ">
+          From a business catalog to an administrative system.
+      </div>
+      ..
+  </div>
+  ..
+</section>--></code></pre>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Process slider</a>
+          <div class="cd-faq-content">
+            <p>The process slider structure is very easy to understand, There are process labels and process items, the labels must be exactly as many as items, you can also change the horizontal position of labels directly inside the HTML structure.</p>
+            <p>Simple HTML structure example:</p>
+            <script type="text/plain" class="language-markup"><div class="process-wrapper process--theme-01">
+  <div class="container">
+      <div class="process__labels">
+          <ul>
+              <li style="left: 0%;" class="has-active">
+                  <button class="btn btn--letters btn--bare to-be-active">
+                      <span class="letters">1st label</span>
+                  </button>
+              </li>
+              <li style="left: 18%;" class="">
+                  <button class="btn btn--letters btn--bare to-be-active">
+                      <span class="letters">2nd label</span>
+                  </button>
+              </li>
+              <li style="left: 53%;" class="">
+                  <button class="btn btn--letters btn--bare to-be-active">
+                      <span class="letters">3rd label</span>
+                  </button>
+              </li>
+              <!-- The last mus be positioned with "right" property NOT "letf" -->
+              <li style="right: 0%;" class="">
+                  <button class="btn btn--letters btn--bare to-be-active">
+                      <span class="letters">4th label</span>
+                  </button>
+              </li>
+          </ul>
+          <!-- process bar -->
+          <div class="process__line">
+              <div></div>
+          </div>
+          <!--/ End of process bar -->
+      </div>
+  </div>
+  <!-- process contents -->
+  <div id="process" class="process owl-carousel dots--filling-circle">
+      <div class="process-item">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        tempor incididunt</p>
+      </div>
+      <div class="process-item">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        tempor incididunt</p>
+      </div>
+      <div class="process-item">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        tempor incididunt</p>
+      </div>
+      <div class="process-item">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        tempor incididunt</p>
+      </div>
+  </div>
+</div></script>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Timeline</a>
+          <div class="cd-faq-content">
+            <p>The HTML structure is shown below, just follow its order:</p>
+            <script type="text/plain" class="language-markup"><ul class="timeline dots--filling-circle">
+    <li data-added-class="has-active">
+        <div class="timeline__badge">
+            <button class="btn btn--letters btn--bare to-be-active">
+                <span class="letters">1st label</span>
+            </button>
+        </div>
+        <div class="dot">
+            <button type="button" data-role="none" role="button"></button>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                <circle cx="500" cy="500" r="400"></circle>
+            </svg>
+        </div>
+        <div class="timeline__panel">
+            <div class="timeline__heading">
+                <h4 class="timeline__title font--04 slide-cover__el">1st label title</h4>
+            </div>
+            <div class="row center-child--vertically-sm xs-mt-30">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="timeline__media .. ">
+                        ..
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 xs-mt-30 sm-mt-0">
+                    <div class="timeline__body">
+                        <p>Mussum ipsum cacilds, vidis litro abertis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="timeline__inverted" data-added-class="has-active">
+        <div class="timeline__badge">
+            <button class="btn btn--letters btn--bare to-be-active">
+                <span class="letters">1st label</span>
+            </button>
+        </div>
+        <div class="dot">
+            <button type="button" data-role="none" role="button"></button>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                <circle cx="500" cy="500" r="400"></circle>
+            </svg>
+        </div>
+        <div class="timeline__panel">
+            <div class="timeline__heading">
+                <h4 class="timeline__title font--04 slide-cover__el">1st label title</h4>
+            </div>
+            <div class="row center-child--vertically-sm xs-mt-30">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="timeline__media .. ">
+                        ..
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 xs-mt-30 sm-mt-0">
+                    <div class="timeline__body">
+                        <p>Mussum ipsum cacilds, vidis litro abertis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    ..
+</ul>
+<div class="timeline__bar">
+    <div></div>
+</div></script>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Contact forms</a>
+          <div class="cd-faq-content">
+            <p>First, let’s have a look at the codes:</p>
+            <br>
+            <p>HTML function:</p>
+            <pre data-line="1,23"><code class="language-html"><!--<form class="contact-form form-style--02" action=" .. " method="post">
+  <fieldset class="fieldset">
+      <input type="text" value="" name="FNAME" class="" id="FNAME" required>
+      <label class="fieldset__label" for="FNAME"><span><span data-content="First Name">First Name</span></span>
+      </label>
+  </fieldset>
+  <fieldset class="fieldset">
+      <input type="text" value="" name="LNAME" class="" id="LNAME">
+      <label class="fieldset__label" for="LNAME"><span><span data-content="Last Name ">Last Name </span></span>
+      </label>
+  </fieldset>
+  
+  ..
+
+  <fieldset class="fieldset textarea__field">
+      <textarea type="text" value="" name="MESSAGE" class="message required" id="MESSAGE" required></textarea>
+      <label class="textarea__label" for="MESSAGE"><span><span data-content="Message">Message</span></span>
+      </label>
+  </fieldset>
+  <button class="submit .. " type="submit" name="subscribe">
+    ..
+  </button>
+  <div id="subscribe-result">
+  </div>
+</form>--></code></pre>
+            <br>
+            <p>JavaScript function:</p>
+            <pre data-line="9"><code class="language-js"><!--var submit_form = function(params) {
+    var default_opts = {
+        form__el: ".contact-form",
+        result__el: ".submit",
+        loader__el: ".btn--ajax__svg-icon",
+        result_width: 600,
+        btn_width: 170,
+        loader_width: 50,
+        mailchimp: true,
+        mailchimp_msg__error: "Sorry. Unable to subscribe. Please try again later.",
+        mailchimp_msg__double: "You're already subscribed. Thank you.",
+        mailchimp_msg__success: "Thank you! You must confirm the subscription in your inbox.",
+
+    };
+
+    params = $.extend({}, default_opts, params);
+
+    var form = $(params.form__el);
+    if (form.length) {
+        // Hijack the submission. We'll submit the form manually.
+        form.submit(function(e) {
+            e.preventDefault();
+
+            var $this = $(this),
+                result = $this.find(params.result__el),
+                loader = $this.find(params.loader__el);
+            // if (!isValidEmail(form)) {
+            //     var error = "A valid email address must be provided.";
+            //     result.html(error);
+            //     result.css("color", "red");
+            // } else {
+            result.css("color", "black");
+            // result.html("Subscribing...");
+            result.addClass("loading").width(params.loader_width).prop("disabled", true);
+            loader.addClass("loading");
+
+            if (params.mailchimp) {
+                submit_form_mailchimp({
+                    formElement: form,
+                    resultElement: result,
+                    loaderElement: loader,
+                    resultWidth: params.result_width,
+                    btnWidth: params.btn_width,
+                    MsgError: params.mailchimp_msg__error,
+                    MsgDouble: params.mailchimp_msg__double,
+                    MsgSuccess: params.mailchimp_msg__success
+                });
+            } else {
+                submit_form_custom({
+                    formElement: form,
+                    resultElement: result,
+                    loaderElement: loader,
+                    resultWidth: params.result_width,
+                    btnWidth: params.btn_width,
+                });
+            }
+        });
+    }
+};--></code></pre>
+            <br>
+            <p>PHP function:</p>
+            <pre data-line="19"><code class="language-php"><!--<?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get the form fields and remove whitespace.
+        $name = strip_tags(trim($_POST["name"]));
+                $name = str_replace(array("\r","\n"),array(" "," "),$name);
+        $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+        $message = trim($_POST["message"]);
+
+        // Check that data was sent to the mailer.
+        if ( empty($name) OR empty($message) OR !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            // Set a 400 (bad request) response code and exit.
+            // http_response_code(400);
+            echo "Oops! There was a problem with your submission. Please complete the form and try again.";
+            exit;
+        }
+
+        // Set the recipient email address.
+        // FIXME: Update this to your desired email address.
+        $recipient = "ershad.qaderi@gmail.com";
+
+        // Set the email subject.
+        $subject = "New contact from $name";
+
+        // Build the email content.
+        $email_content = "Name: $name\n";
+        $email_content .= "Email: $email\n\n";
+        $email_content .= "Message:\n$message\n";
+
+        // Build the email headers.
+        $email_headers = "From: $name <$email>";
+
+        // Send the email.
+        if (mail($recipient, $subject, $email_content, $email_headers)) {
+            // Set a 200 (okay) response code.
+            // http_response_code(200);
+            echo "Thank You! Your message has been sent.";
+        } else {
+            // Set a 500 (internal server error) response code.
+            // http_response_code(500);
+            echo "Oops! Something went wrong and we couldn't send your message.";
+        }
+
+    } else {
+        // Not a POST request, set a 403 (forbidden) response code.
+        // http_response_code(403);
+        echo "There was a problem with your submission, please try again.";
+    }
+
+?>
+--></code></pre>
+            <p>You can use custom local PHP script for the contact form or use Mailchimp service:</p>
+            <ul>
+              <li>Local:
+                <ol>
+                  <li>Set the value of<code class="language-php">action</code>property on the<code class="language-html">&lt;form .. > .. &lt;/form></code>element to<code class="language-html">mailer.php</code></li>
+                  <li>Now in<code class="language-js">submit_form()</code>function, disable mailchimp option:<code class="language-js">mailchimp: false,</code></li>
+                  <li>In<code class="language-html">mailer.php</code>set your email<code class="language-html">$recipient = "whatever_your_email_is@some_email_sevrice.com";</code></li>
+                </ol>
+              </li>
+              <br>
+              <li>Mailchimp:
+                <ol>
+                   <li>Set the value of<code class="language-php">action</code>property on the<code class="language-html">&lt;form .. > .. &lt;/form></code>element to your own from the MailChimp supplied embed code</li>
+                   <li>Within the<code class="language-php">action</code>url, replace<code class="language-php">"subscribe/post"</code>with<code class="language-php">"subscribe/post-json"</code></li>
+                   <li>Be sure the<code class="language-php">action</code>url starts with<code class="language-php">http://</code>. If it doesn't, the form will hang when testing the html as a local file in your browser.</li>
+                   <li>Inside<code class="language-js">submit_form()</code>function, enable mailchimp option:<code class="language-js">mailchimp: true,</code></li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+        <li>
+          <a class="cd-faq-trigger" href="#0">Map</a>
+          <div class="cd-faq-content">
+            <p>HTML structure:</p>
+            <pre><code class="language-html"><!--<div class="map-container .. ">
+    <div id="map" class="map" data-address="799-701 Pomona Ave Albany, CA 94706" data-style="9" data-color--01="#303F9F" data-color--02="#232e76" data-type="roadmap"></div>
+</div>--></code></pre>
+            <ol>
+              <li>
+                <code class="language-html">data-address</code>: Give the map you address and it will show up in the amp, using Google Maps to find the address is highly recommended.
+              </li>
+              <li>
+                <code class="language-html">data-style</code>: There are 11 style from 1 to 11, choose the one that you like most.
+              </li>
+              <li>
+                <code class="language-html">data-color--01</code>,<code class="language-html">data-color--02</code>: If you choose style no 5 in<code class="language-html">data-style</code> Then you can set both<code class="language-html">data-color--01</code>and<code class="language-html">data-color--02</code>, and the color of the map will change.
+                <br>
+                And if you choose style no 10 in<code class="language-html">data-style</code> Then you can set<code class="language-html">data-color--01</code>, and the color of the map will change accordingly.
+              </li>
+              <li>
+                <code class="language-html">data-address</code>: Give the map you address and it will show up in the amp, using Google Maps to find the address is highly recommended.
+              </li>
+              <li>
+                <code class="language-html">data-type</code>: Can have 3 values,<code class="language-html">roadmap</code>,<code class="language-html">terrian</code>and<code class="language-html">satelite</code>.
+              </li>
+            </ol>
+            <p><span class="label label-warning">Quick Tip:</span> The map function is stored at the end of <span class="label label-info">js/plugins/gmaps.js</span>. to do js related stuff and modify the function go there. it wont be found in <span class="label label-info">scripts.js</span> file</p>
+          </div>
+          <!-- cd-faq-content -->
+        </li>
+      </ul>
+      <!-- cd-faq-group -->
+    </div>
+    <!-- cd-faq-items -->
+    <a href="#0" class="cd-close-panel">Close</a>
+  </section>
+  <!-- cd-faq -->
+  <script src="js/jquery-2.1.1.js"></script>
+  <script src="js/jquery.mobile.custom.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/clipboard.min.js"></script>
+  <script src="js/prism.js"></script>
+</body>
+
+</html>

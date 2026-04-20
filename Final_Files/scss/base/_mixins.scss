@@ -1,0 +1,298 @@
+// ========================================================================
+//  MIXINS
+// ========================================================================
+
+// Typography mixins
+@mixin typography-smoother-font {
+  font-size: 100%;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@mixin typography-is-title {
+  font-family: $font--02;
+  font-weight: bold;
+  text-align: center;
+}
+
+// Clearfix
+@mixin clearfix {
+  &::before,
+  &::after {
+    display: table;
+    content: ' ';
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+// button default text styles
+@mixin text--btn-style($font-size: $font-size__btn) {
+  font-family: $font-family__btn;
+  font-size: $font-size;
+  font-weight: $font-weight__btn;
+  letter-spacing: $letter-spacing__btn;
+  text-transform: uppercase;
+}
+
+// css gradient generator
+@mixin text--gradient($from: $color--01--gradient, $to: $color--02--gradient) {
+  background:  -webkit-linear-gradient(45deg, $from, $to);
+  color: mix($from, $to, 50%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    color: transparent;
+  }
+}
+
+@mixin background--gradient($from: $color--01--gradient, $to: $color--02--gradient, $deg: 45deg) {
+  background-color: mix($from, $to, 50%);
+  background-image: linear-gradient($deg, $from, $to);
+  background-size: 100%;
+
+  .backgroundcliptext & {
+    background-color: transparent;
+  }
+}
+
+@mixin border--gradient($from: $color--01--gradient, $from-percent: 0%, $to: $color--02--gradient, $to-percent: 100%, $deg: 70deg) {
+  border-color: mix($from, $to, 50%);
+  border-image: linear-gradient($deg, $from $from-percent, $to $to-percent);
+  border-image-slice: 1;
+
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    border-color: transparent;
+  }
+}
+
+// momentum scrolling for devices
+@mixin native-scroll {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+// center vertically and/or horizontally an absolute positioned element
+@mixin center($coordinates: xy) {
+  @if $coordinates == xy {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  } @else if $coordinates == x {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if $coordinates == y {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+}
+
+// media queries
+@mixin mq($canvas) {
+  @if $canvas == xs {
+    @media only screen and (min-width: $xs) {
+      @content;
+    }
+  } @else if $canvas == sm {
+    @media only screen and (min-width: $sm) {
+      @content;
+    }
+  } @else if $canvas == md {
+    @media only screen and (min-width: $md) {
+      @content;
+    }
+  } @else if $canvas == lg {
+    @media only screen and (min-width: $lg) {
+      @content;
+    }
+  } @else if $canvas == nav-transform-point-width {
+    @media only screen and (min-width: $nav-transform-point-width) {
+      @content;
+    }
+  }
+}
+
+@mixin container-width {
+  @include mq(sm) {
+    width: 750px;
+  }
+
+  @include mq(md) {
+    width: 970px;
+  }
+
+  @include mq(lg) {
+    width: 1170px;
+  }
+}
+
+@mixin container-max-width {
+  @include mq(sm) {
+    max-width: 750px;
+  }
+  @include mq(md) {
+    max-width: 970px;
+  }
+  @include mq(lg) {
+    max-width: 1170px;
+  }
+}
+
+@mixin nav-bar-dd-width-modified {
+  @include mq(sm) {
+    width: 720px;
+  }
+  @include mq(md) {
+    width: 940px;
+  }
+  @include mq(lg) {
+    width: 1140px;
+  }
+}
+
+@mixin container-width-padding {
+  width: 100%;
+
+  @include mq(sm) {
+    padding-right: calc(50% - 360px);
+    padding-left: calc(50% - 360px);
+  }
+  @include mq(md) {
+    padding-right: calc(50% - 470px);
+    padding-left: calc(50% - 470px);
+  }
+  @include mq(lg) {
+    padding-right: calc(50% - 570px);
+    padding-left: calc(50% - 570px);
+  }
+}
+
+// nav header styles
+@mixin nav-header-text {
+  // display    : block;
+  transition: color $transition-duration__nav__hamburger--color $out-cubic;
+  font-size: .9em;
+  // line-height: 0;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@mixin dropdown__secondary-first-divider {
+  @if $rows__dropdown__secondary == 2 {
+    display: block;
+  } @else if $rows__dropdown__secondary == 3 {
+    display: block;
+  }
+}
+
+@mixin dropdown__secondary-second-divider {
+  @if $rows__dropdown__secondary == 3 {
+    display: block;
+  }
+}
+
+// The mixins to remove top-border of first dropdown items on dropdown__icons
+@mixin no-top-border-on-first-items {
+  @if $cols__dropdown__icons == 2 {
+    &:nth-child(3),
+    &:nth-child(4) {
+      a {
+        border-top: 0;
+      }
+    }
+  } @else if $cols__dropdown__icons == 3 {
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5) {
+      a {
+        border-top: 0;
+      }
+    }
+  } @else if $cols__dropdown__icons == 4 {
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6) {
+      a {
+        border-top: 0;
+      }
+    }
+  } @else if $cols__dropdown__icons == 5 {
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6),
+    &:nth-child(7) {
+      a {
+        border-top: 0;
+      }
+    }
+  } @else if $cols__dropdown__icons == 6 {
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6),
+    &:nth-child(7),
+    &:nth-child(8) {
+      a {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+// change to false if its not imported into bootstrap
+$use-bootstrap: false;
+
+// margin and padding values array
+$space-values: -20, -18, -16, -14, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 115, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 400, 500 !default;
+
+// margin and padding shorthands
+$space-prefixes: (p: padding, pt: padding-top, pr: padding-right, pb: padding-bottom, pl: padding-left, m: margin, mt: margin-top, mr: margin-right, mb: margin-bottom, ml: margin-left) !default;
+
+// change these values if its not imported into bootstrap
+$grid-breakpoints-custom: (xs: 0, sm: 768px, md: 992px, lg: 1200px) !default;
+
+$breakpoints: $grid-breakpoints-custom;
+
+@if $use-bootstrap {
+  $breakpoints: $grid-breakpoints;
+}
+
+// main function definition
+@mixin make-space($values, $prefixes, $breakpoints) {
+  @each $breakpoint-name, $breakpoint-value in $breakpoints {
+    // if xs value = 0, set it global without media queries
+    @if $breakpoint-value == 0 {
+      @each $attr-short, $attr-long in $prefixes {
+        @each $value in $values {
+          .#{$breakpoint-name}-#{$attr-short}-#{$value} {
+            #{$attr-long}: #{$value}px;
+          }
+        }
+      }
+    } @else {
+      @media screen and (min-width: $breakpoint-value) {
+        @each $attr-short, $attr-long in $prefixes {
+          @each $value in $values {
+            .#{$breakpoint-name}-#{$attr-short}-#{$value} {
+              #{$attr-long}: #{$value}px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// @include make-space($space-values, $space-prefixes, $breakpoints);
+

@@ -1,0 +1,3710 @@
+//  ------ Below are vars which get changed over and over again ------- //
+
+// $color--01;
+// $color--02;
+// $mix-blend-mode__hover-item__cover;
+// $color-text__hover-item;
+// $color-text__section--gradient;
+// $color-text__section--colored;
+
+
+// $color--01--gradient;
+// $color--02--gradient;
+// $color__btn--gradient;
+
+
+// $color-bg__hover-item__cover--01--gradient;
+// $color-bg__hover-item__cover--02--gradient;
+
+
+// $color--01--gradient--bars;
+// $color--02--gradient--bars;
+
+
+// $color--success;
+// $color--gradient_success__1;
+// $color--gradient_success__2;
+
+
+// $color--alert;
+// $color--gradient_alert__1;
+// $color--gradient_alert__2;
+
+
+// $color__btn;
+
+
+// $color--primary;
+
+
+// $color__tabs--vertical__nav-tabs--highlight;
+
+
+// $color-text__link;
+// $color-text__nav-link--hovered;
+// $color__nav--highlight;
+// $color__nav--alert;
+
+
+// $color-bg__hover-item__cover;
+
+
+.title--side {
+  background-color: $color--01;
+}
+
+.quote {
+  &.border--gradient {
+    @include border--gradient;
+  }
+}
+
+.text--gradient {
+  @include text--gradient;
+}
+
+.nav--theme-02 {
+
+  .btn--bare {
+    color: $color__nav--highlight;
+  }
+
+  input {
+    &:required {
+      + .fieldset__label {
+        span {
+          span {
+            &::before {
+              color: $color__nav--alert;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .search__btn {
+    path {
+      fill: $color__nav--highlight;
+    }
+  }
+
+  .nav-link {
+    &:hover,
+    &.is-active {
+      color: $color-text__nav-link--hovered;
+
+      &::before {
+        border-color: $color-text__nav-link--hovered;
+      }
+    }
+
+    .cart-counter  {
+      @include background--gradient;
+      @include border--gradient;
+
+      color           : $color-text__section--gradient;
+      background-color: $color__nav--alert;
+      box-shadow      : 0 0 16px -4px $color__nav--alert;
+    }
+  }
+
+  // On links with dropdown brnash hover status must be on the parent li
+  .has--dropdown__branch {
+    &:hover {
+      > .nav-link {
+        color: $color-text__nav-link--hovered;
+
+        &::before {
+          border-color: $color-text__nav-link--hovered;
+        }
+      }
+    }
+  }
+
+  // Different style for the See all links
+  .see-all {
+    .nav-link {
+      color: $color-text__nav-link--hovered;
+    }
+  }
+
+  // This is go back arrow
+  .go-back {
+    &:hover {
+      &::before {
+        border-color: $color-text__nav-link--hovered;
+      }
+    }
+  }
+
+  @include mq(nav-transform-point-width) {
+    &.nav-bar-wrapper {
+      .dropdown__secondary {
+        > li {
+          &:hover {
+            > .nav-link {
+              color: $color-text__nav-link--hovered;
+            }
+          }
+        }
+      }
+
+      .dropdown__icons {
+        .dropdown__item {
+          &:hover {
+            .icon {
+              color: $color-text__nav-link--hovered;
+            }
+          }
+        }
+      }
+    }
+
+    &.nav-side-wrapper {
+      &.nav-side--expanded-dropdown {
+        .dropdown__secondary {
+          > .has--dropdown__branch {
+            > a {
+              color: $color__nav--highlight;
+            }
+          }
+        }
+
+        .dropdown__icons {
+          .dropdown__item {
+            h3 {
+              color: $color__nav--highlight;
+            }
+
+            &:hover {
+              .icon {
+                color: $color__nav--highlight;
+              }
+            }
+          }
+        }
+
+        .dropdown__gallery {
+          .dropdown__item {
+            &:hover {
+              color: $color__nav--highlight;
+            }
+          }
+        }
+
+        .hover--simple {
+          .dropdown__secondary,
+          .dropdown__gallery,
+          .dropdown__icons {
+            > .see-all {
+              a {
+                &:hover {
+                  color: $color-text__nav-link--hovered;
+                }
+
+                .hover-bg {
+                  background-color: $color-bg__nav-link--hovered;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.box-shadow--btn-gradient {
+  box-shadow: 0 0 40px -10px mix($color--01--gradient, $color--02--gradient, 50%);
+}
+
+.text--color {
+  color: $color--primary;
+}
+
+.anim-scroll__el-cover {
+  .cover--colored & {
+    // 01 cover
+    // ---------
+    &:nth-child(2) {
+      background-color: $color--primary;
+    }
+  }
+
+  // .cover--iso & {  // the first cover color is same with the background color
+  //   // 01 cover
+  //   // ---------
+  //   &:nth-child(2) {
+  //     background-color: $color-bg__body;
+  //   }
+
+  //   // 02 cover
+  //   // ---------
+  //   &:nth-child(3) {
+  //     background-color: darken(desaturate($color-bg__body, 5%), 5%);
+  //   }
+
+  //   // 03 cover
+  //   // --------
+  //   &:nth-child(4) {
+  //     background-color: darken(desaturate($color-bg__body, 8%), 8%);
+  //   }
+  // }
+
+  .cover--colored & {
+    // 02 cover
+    // ---------
+    &:nth-child(3) {
+      background-color: darken(desaturate($color--primary, 5%), 5%);
+    }
+
+    // 03 cover
+    // --------
+    &:nth-child(4) {
+      background-color: darken(desaturate($color--primary, 8%), 8%);
+    }
+  }
+}
+
+.search-screen--overlay__input {
+  color: $color--primary;
+}
+
+.search-screen--overlay__results__item {
+
+  &:hover,
+  &:focus {
+    background-color: $color--primary;
+  }
+}
+
+.pricing-table__toggle {
+  ul {
+    li {
+      a {
+        &::before {
+          color: $color--01;
+          @include text--gradient;
+        }
+      }
+    }
+  }
+}
+
+.gradient {
+  li {
+    a,
+    span,
+    .icon {
+      @include text--gradient($from: $color__tabs--vertical__nav-tabs--primary, $to: $color__tabs--vertical__nav-tabs--primary);
+    }
+
+    &.active {
+      a,
+      span,
+      .icon  {
+        @include text--gradient;
+      }
+    }
+
+    a {
+      &::after {
+        @include border--gradient;
+      }
+    }
+  }
+
+  button {
+    &,
+    span {
+      @include text--gradient($from: $color__tabs--vertical__nav-tabs--primary, $to: $color__tabs--vertical__nav-tabs--primary);
+    }
+
+    &.selected,
+    &.active {
+      &,
+      span {
+        @include text--gradient;
+      }
+    }
+  }
+
+  > li {
+    &.active {
+      > a {
+        &,
+        &:hover,
+        &:focus {
+          @include text--gradient;
+
+          span {
+            @include text--gradient;
+          }
+        }
+      }
+    }
+  }
+
+  // .nav-tabs--line {
+  &:not(.hover--move) {
+    li {
+      &::before {
+        @include background--gradient;
+      }
+    }
+  }
+  // }
+
+  .magic-box {
+    @include border--gradient;
+  }
+
+  &.nav-tabs--line-vertical {
+    .magic-box {
+      @include border--gradient($deg: 90deg);
+    }
+  }
+}
+
+.quick-info-items {
+  .icon {
+    color: $color--primary;
+  }
+
+  .icon--filled {
+    path,
+    polyline,
+    line,
+    polygon,
+    rect,
+    circle,
+    ellipse {
+      fill: $color--primary;
+    }
+  }
+
+  path,
+  polyline,
+  line,
+  polygon,
+  rect,
+  circle,
+  ellipse {
+    stroke: $color--primary;
+  }
+}
+
+.quick-info__icon {
+  .svg {
+    path,
+    polyline,
+    line,
+    polygon,
+    rect,
+    circle,
+    ellipse {
+      stroke: $color--primary;
+    }
+
+    &.svg--filled {
+      path,
+      polyline,
+      line,
+      polygon,
+      rect,
+      circle,
+      ellipse {
+        fill: $color--primary;
+      }
+    }
+  }
+}
+
+.panel-heading {
+  &::after {
+    @include border--gradient($from: $color--01--gradient, $to: $color-bg__body);
+  }
+
+  .panel-title {
+    &:hover,
+    &:focus,
+    &:active {
+      a {
+        @include text--gradient;
+      }
+
+      span {
+        @include text--gradient;
+      }
+    }
+  }
+}
+
+.panel-group {
+  .in {
+    + .panel-heading {
+
+      a {
+        @include text--gradient;
+      }
+
+      span {
+        @include border--gradient;
+      }
+    }
+  } 
+}
+
+.quick-info-items {
+  .icon {
+    color: $color--primary;
+  }
+
+  .icon--filled {
+    path,
+    polyline,
+    line,
+    polygon,
+    rect,
+    circle,
+    ellipse {
+      fill: $color--primary;
+    }
+  }
+
+  path,
+  polyline,
+  line,
+  polygon,
+  rect,
+  circle,
+  ellipse {
+    stroke: $color--primary;
+  }
+}
+
+.quick-info__icon {
+  .svg {
+    path,
+    polyline,
+    line,
+    polygon,
+    rect,
+    circle,
+    ellipse {
+      stroke: $color--primary;
+    }
+
+    &.svg--filled {
+      path,
+      polyline,
+      line,
+      polygon,
+      rect,
+      circle,
+      ellipse {
+        fill: $color--primary;
+      }
+    }
+  }
+}
+
+.svg--gradient {
+  #svg__grad {
+    stop {
+      &:first-child {
+        stop-color: $color--02--gradient;
+      }
+
+      &:nth-child(2) {
+        stop-color: $color--01--gradient;
+      }
+    }
+  }
+
+  path,
+  polyline,
+  line,
+  polygon,
+  rect,
+  circle,
+  ellipse {
+    stroke: url('#svg__grad') !important;
+  }
+
+  &.svg--filled {
+    path,
+    polyline,
+    line,
+    polygon,
+    rect,
+    circle,
+    ellipse {
+      fill: url('#svg__grad') !important;
+    }
+  }
+}
+
+.svg--gradient-stroke {
+  #svg__grad {
+    stop {
+      &:first-child {
+        stop-color: $color--02--gradient;
+      }
+
+      &:nth-child(2) {
+        stop-color: $color--01--gradient;
+      }
+    }
+  }
+
+  path,
+  polyline,
+  line,
+  polygon,
+  rect,
+  circle,
+  ellipse {
+    stroke: url('#svg__grad') !important;
+  }
+}
+
+.bars--gradient {
+  .bar {
+    border-image: linear-gradient(90deg, $color--01--gradient--bars, $color--02--gradient--bars) no-repeat;
+    background: linear-gradient(90deg, $color--01--gradient--bars, $color--02--gradient--bars) no-repeat;
+
+    .bars--vertical & {
+      border-image: linear-gradient(0deg, $color--02--gradient--bars, $color--01--gradient--bars) no-repeat;
+      background: linear-gradient(0deg, $color--02--gradient--bars, $color--01--gradient--bars) no-repeat;
+    }
+  }
+}
+
+.process--theme-01 {
+  .process__labels {
+    .to-be-active {
+      color: mix($color--01--gradient, $color--02--gradient, 50%);
+    }
+  }
+
+  .process__line {
+    border-image: linear-gradient(to 45deg, $color--01--gradient, $color--02--gradient);
+    background  : linear-gradient(to 45deg, $color--01--gradient, $color--02--gradient);
+  }
+
+  .process {
+    &.dots--filling-circle {
+      .owl-dot {
+        &.passed {
+          button {
+            &::before {
+              background: mix($color--01--gradient, $color--02--gradient, 50%);
+            }
+          }
+        }
+
+        circle {
+          stroke: mix($color--01--gradient, $color--02--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  .background--dark & {
+    .process__labels {
+      .to-be-active {
+        color: mix($color--01--gradient, $color--02--gradient, 50%);
+      }
+    }
+
+    .process {
+      &.dots--filling-circle {
+        .owl-dot {
+          &.passed {
+            button {
+              &::before {
+                background: mix($color--01--gradient, $color--02--gradient, 50%);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.timeline {
+  > li {
+    > .dot {
+      circle {
+        stroke: mix($color--01--gradient, $color--02--gradient, 50%);
+      }
+    }
+  }
+}
+
+.timeline__bar {
+  border-image: linear-gradient(45deg, $color--01--gradient 200px, $color--02--gradient);
+  background: linear-gradient(45deg, $color--01--gradient 200px, $color--02--gradient);
+}
+
+.nav-tabs {
+  li {
+    &.active {
+      .icon {
+        color: $color__tabs--vertical__nav-tabs--highlight;
+      }
+    }
+  }
+
+  > li {
+    &.active {
+      > a {
+        &,
+        &:hover,
+        &:focus {
+          color: $color__tabs--vertical__nav-tabs--highlight;
+        }
+      }
+    }
+  }
+}
+
+.nav-tabs--box,
+.nav-tabs--box-vertical {
+  li {
+    a::after {
+      border-color: $color__tabs--vertical__nav-tabs--highlight;
+    }
+  }
+}
+
+.nav-tabs--line {
+  &:not(.hover--move) {
+    li {
+      &::before {
+        background-color: $color__tabs--vertical__nav-tabs--highlight;
+      }
+    }
+  }
+}
+
+.nav-tabs--line-vertical {
+  li {
+    &::before {
+      background-color: $color__tabs--vertical__nav-tabs--highlight;
+    }
+  }
+}
+
+.hover-theme-1 {
+  .hover-item {
+    &::after {
+      mix-blend-mode: $mix-blend-mode__hover-item__cover;
+      background: $color-bg__hover-item__cover;
+    }
+
+    .icon,
+    h3,
+    span {
+      color: $color-text__hover-item;
+    }
+  }
+
+  .hover-item__link {
+    &::after {
+      border-color: $color-text__hover-item;
+    }
+  }
+}
+
+.hover-theme-2 {
+  .hover-item {
+    &::after {
+      mix-blend-mode: $mix-blend-mode__hover-item__cover;
+      background: $color-bg__hover-item__cover;
+    }
+
+    .icon,
+    h3,
+    span {
+      color: $color-text__hover-item;
+    }
+
+    .btn--read-more__arrow {
+      background: $color-text__hover-item;
+
+      &::before,
+      &::after {
+        background-color: $color-text__hover-item;
+      }
+    }
+  }
+
+  .hover-item__link {
+    &::after {
+      border-color: $color-text__hover-item;
+    }
+  }
+}
+
+.btn--color {
+  border-color    : $color__btn;
+  background-color: $color__btn;
+  color           : $color__btn--02;
+
+  .btn--read-more__arrow {
+    background: $color__btn--02;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--02;
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: transparent;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          border-color    : $color__btn;
+          background-color: $color__btn;
+          color           : $color__btn--02;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn--02;
+          background-color: $color__btn--02;
+          color           : $color__btn;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      background-color: transparent;
+
+      span {
+        &:nth-child(1) {
+          border-color    : $color__btn;
+          background-color: $color__btn;
+          color           : $color__btn--02;
+        }
+
+        &:nth-child(2) {
+          border-color    : $color__btn--02;
+          background-color: $color__btn--02;
+          color           : $color__btn;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    border-color    : $color__btn--02;
+    background-color: $color__btn--02;
+    color           : $color__btn;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background-color: transparent;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background-color: $color__btn;
+
+      &::before,
+      &::after {
+        background-color: $color__btn;
+      }
+    }
+  }
+}
+
+.btn--color--invert {
+  border-color    : $color__btn--02;
+  background-color: $color__btn--02;
+  color           : $color__btn;
+
+  .btn--read-more__arrow {
+    background: $color__btn;
+
+    &::before,
+    &::after {
+      background-color: $color__btn;
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: transparent;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          border-color    : $color__btn--02;
+          background-color: $color__btn--02;
+          color           : $color__btn;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn;
+          background-color: $color__btn;
+          color           : $color__btn--02;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      background-color: transparent;
+
+      span {
+        &:nth-child(1) {
+          border-color    : $color__btn--02;
+          background-color: $color__btn--02;
+          color           : $color__btn;
+        }
+
+        &:nth-child(2) {
+          border-color    : $color__btn;
+          background-color: $color__btn;
+          color           : $color__btn--02;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    border-color    : $color__btn;
+    background-color: $color__btn;
+    color           : $color__btn--02;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background-color: transparent;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background-color: $color__btn--02;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--02;
+      }
+    }
+  }
+}
+
+.btn--color-to-white {
+  border-color    : $color__btn;
+  background-color: $color__btn;
+  color           : $color__btn--white;
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: transparent;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          border-color    : $color__btn;
+          background-color: $color__btn;
+          color           : $color__btn--white;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn--white;
+          background-color: $color__btn--white;
+          color           : $color__btn;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      background-color: transparent;
+
+      span {
+        &:nth-child(1) {
+          border-color    : $color__btn;
+          background-color: $color__btn;
+          color           : $color__btn--white;
+        }
+
+        &:nth-child(2) {
+          border-color    : $color__btn--white;
+          background-color: $color__btn--white;
+          color           : $color__btn;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    border-color    : $color__btn--white;
+    background-color: $color__btn--white;
+    color           : $color__btn;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background-color: transparent;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background-color: $color__btn;
+
+      &::before,
+      &::after {
+        background-color: $color__btn;
+      }
+    }
+  }
+}
+
+.btn--color-to-transparent {
+  border-color    : $color__btn;
+  background-color: $color__btn;
+  color           : $color__btn--text-on--colored-bg;
+
+  &.btn--slide {
+    .desktop & {
+      background-color: transparent;
+      color: $color__btn;
+
+      > span {
+        border-width: 0;
+
+        &:nth-child(1) {
+          background-color: $color__btn;
+          color           : $color__btn--text-on--colored-bg;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          background-color: transparent;
+          color           : $color__btn;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      background-color: transparent;
+
+      span {
+        border-color: $color__btn;
+
+        &:nth-child(1) {
+          background-color: $color__btn;
+          color           : $color__btn--text-on--colored-bg;
+        }
+
+        &:nth-child(2) {
+          background-color: transparent;
+          color           : $color__btn;
+        }
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background: $color__btn--text-on--colored-bg;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--text-on--colored-bg;
+    }
+  }
+
+  &:hover {
+    background-color: transparent;
+    color           : $color__btn;
+
+    .btn--read-more__arrow {
+      background: $color__btn;
+
+      &::before,
+      &::after {
+        background-color: $color__btn;
+      }
+    }
+  }
+}
+
+.btn--transparent-to-color {
+  border-color    : $color__btn;
+  background-color: transparent;
+  color           : $color__btn;
+
+  &.btn--slide {
+    .desktop & {
+      > span {
+        border-width: 0;
+
+        &:nth-child(1) {
+          background-color: transparent;
+          color           : $color__btn;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          background-color: $color__btn;
+          color           : $color__btn--text-on--colored-bg;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      span {
+        border-color: $color__btn;
+
+        &:nth-child(1) {
+          background-color: transparent;
+          color           : $color__btn;
+        }
+
+        &:nth-child(2) {
+          background-color: $color__btn;
+          color           : $color__btn--text-on--colored-bg;
+        }
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background: $color__btn;
+
+    &::before,
+    &::after {
+      background-color: $color__btn;
+    }
+  }
+
+  &:hover {
+    background-color: $color__btn;
+    color           : $color__btn--text-on--colored-bg;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background-color: transparent;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background: $color__btn--text-on--colored-bg;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--text-on--colored-bg;
+      }
+    }
+  }
+}
+
+.btn--bare--colored {
+  color: $color__btn;
+
+  &:hover {
+    color: $color__btn;
+  }
+
+  .btn--read-more__arrow {
+    background: $color__btn;
+
+    &::before,
+    &::after {
+      background-color: $color__btn;
+    }
+  }
+
+  .btn--ajax__dots {
+    span {
+      background-color: $color__btn !important;
+    }
+  }
+}
+
+.btn--dark-to-gradient {
+  @include background--gradient($from: $color__btn--dark, $to: $color__btn--dark);
+
+  transition  : background-image .3s ease-out;
+  border-color: $color__btn--dark;
+  color       : mix($color__btn, $color__btn--gradient, 50%);
+
+  .btn--read-more__arrow {
+    background: mix($color__btn, $color__btn--gradient, 50%);
+
+    &::before,
+    &::after {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: $color__btn--dark;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          border-color    : $color__btn--dark;
+          background-color: $color__btn--dark;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--dark;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border: 0;
+      background: none;
+
+      span {
+        &:nth-child(1) {
+          border-color: $color__btn--dark;
+          background  :  $color__btn--dark;
+          color       : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--dark;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+    @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+    color: $color__btn--dark;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background: none;
+      }
+    }
+
+    &.btn--cube {
+      .desktop & {
+        border: 0;
+        -webkit-text-fill-color: initial;
+        -webkit-background-clip: initial;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background: $color__btn--dark;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--dark;
+      }
+    }
+  }
+}
+
+.btn--white-to-gradient {
+  @include background--gradient($from: $color__btn--white, $to: $color__btn--white);
+
+  transition  : background-image .3s ease-out;
+  border-color: $color__btn--white;
+  color       : mix($color__btn, $color__btn--gradient, 50%);
+
+  .btn--read-more__arrow {
+    background: mix($color__btn, $color__btn--gradient, 50%);
+
+    &::before,
+    &::after {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: $color__btn--white;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          border-color    : $color__btn--white;
+          background-color: $color__btn--white;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--white;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border: 0;
+      background: none;
+
+      span {
+        &:nth-child(1) {
+          border-color: $color__btn--white;
+          background  :  $color__btn--white;
+          color       : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--white;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+    @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+    color: $color__btn--white;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background: none;
+      }
+    }
+
+    &.btn--cube {
+      .desktop & {
+        border: 0;
+        -webkit-text-fill-color: initial;
+        -webkit-background-clip: initial;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background: $color__btn--white;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--white;
+      }
+    }
+  }
+}
+
+.btn--gray-to-gradient {
+  @include background--gradient($from: $color__btn--gray, $to: $color__btn--gray);
+
+  transition  : background-image .3s ease-out;
+  border-color: $color__btn--gray;
+  color       : mix($color__btn, $color__btn--gradient, 50%);
+
+  .btn--read-more__arrow {
+    background: mix($color__btn, $color__btn--gradient, 50%);
+
+    &::before,
+    &::after {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: $color__btn--gray;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          border-color    : $color__btn--gray;
+          background-color: $color__btn--gray;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--gray;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border: 0;
+      background: none;
+
+      span {
+        &:nth-child(1) {
+          border-color: $color__btn--gray;
+          background  :  $color__btn--gray;
+          color       : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--gray;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+    @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+    color: $color__btn--gray;
+
+    &.btn--slide,
+    &.btn--cube {
+      .desktop & {
+        background: none;
+      }
+    }
+
+    &.btn--cube {
+      .desktop & {
+        border: 0;
+        -webkit-text-fill-color: initial;
+        -webkit-background-clip: initial;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background: $color__btn--gray;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--gray;
+      }
+    }
+  }
+}
+
+.btn--gradient {
+  @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out; 
+  color     : $color__btn--text-on--gradient-bg;
+
+  .btn--read-more__arrow {
+    background: $color__btn--text-on--gradient-bg;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--text-on--gradient-bg;
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: transparent;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--text-on--gradient-bg;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn--text-on--gradient-bg;
+          background-color: $color__btn--text-on--gradient-bg;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border-width: 0;
+      background  : transparent;
+
+      span {
+        @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+        @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+        color: $color__btn--text-on--gradient-bg;
+      }
+    }
+  }
+
+  &:hover {
+    background-size: 150%;
+    color          : $color__btn--text-on--gradient-bg;
+  }
+
+  &.btn.active,
+  &.btn:active {
+    @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+  }
+}
+
+.btn--gradient-to-white {
+  @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out, border-color .3s ease-out;
+  color     : $color__btn--white;
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: $color__btn--white;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--white;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn--white;
+          background-color: $color__btn--white;
+          color           : mix($color__btn, $color__btn--gradient, 50%);;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border-width: 0;
+      background  : transparent;
+      transition  : 0s;
+
+      span {
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--white;
+        }
+
+        &:nth-child(2) {
+          border-color    : $color__btn--white;
+          background-color: $color__btn--white;
+          color           : mix($color__btn, $color__btn--gradient, 50%);;
+        }
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background-color: $color__btn--white;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--white;
+    }
+  }
+
+  &:hover {
+    @include background--gradient($from: $color__btn--white, $to: $color__btn--white);
+
+    border-color    : $color__btn--white;
+    border-image    : none;
+
+    color           : mix($color__btn, $color__btn--gradient, 50%);
+
+    .btn--read-more__arrow {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+
+      &::before,
+      &::after {
+        background-color: mix($color__btn, $color__btn--gradient, 50%);
+      }
+    }
+  }
+}
+
+.btn--gradient-to-dark {
+  @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out, border-color .3s ease-out;
+  color     : $color__btn--dark;
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: $color__btn--dark;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--dark;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn--dark;
+          background-color: $color__btn--dark;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border-width: 0;
+      background  : transparent;
+      transition  : 0s;
+
+      span {
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--dark;
+        }
+
+        &:nth-child(2) {
+          border-color: $color__btn--dark;
+          background-color: $color__btn--dark;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background-color: $color__btn--dark;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--dark;
+    }
+  }
+
+  &:hover {
+    border-color    : $color__btn--dark;
+    border-image    : none;
+    background      : none;
+    background-color: $color__btn--dark;
+    color           : mix($color__btn, $color__btn--gradient, 50%);
+
+    .btn--read-more__arrow {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+
+      &::before,
+      &::after {
+        background-color: mix($color__btn, $color__btn--gradient, 50%);
+      }
+    }
+  }
+}
+
+.btn--gradient-to-gray {
+  @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out, border-color .3s ease-out;
+  color     : $color__btn--text-on--gradient-bg;
+
+  &.btn--slide {
+    .desktop & {
+      border-width    : 0;
+      background-color: $color__btn--gray;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--text-on--gradient-bg;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color__btn--gray;
+          background-color: $color__btn--gray;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border-width: 0;
+      background  : transparent;
+      transition  : 0s;
+
+      span {
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--text-on--gradient-bg;
+        }
+
+        &:nth-child(2) {
+          border-color: $color__btn--gray;
+          background-color: $color__btn--gray;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background-color: $color__btn--text-on--gradient-bg;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--text-on--gradient-bg;
+    }
+  }
+
+  &:hover {
+    border-color    : $color__btn--gray;
+    border-image    : none;
+    background      : none;
+    background-color: $color__btn--gray;
+    color           : mix($color__btn, $color__btn--gradient, 50%);
+
+    .btn--read-more__arrow {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+
+      &::before,
+      &::after {
+        background-color: mix($color__btn, $color__btn--gradient, 50%);
+      }
+    }
+  }
+}
+
+.btn--gradient-border {
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out;
+  background: transparent;
+  color     : mix($color__btn, $color__btn--gradient, 50%);
+
+  &:not(.btn--letters):not(.btn--cube) {
+    .desktop & {
+      @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+    }
+  }
+
+  &.btn--read-more {
+    > span:first-child {
+      @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      border-width: 0;
+      background-color: transparent;
+
+      > span {
+        border-width: $border-width__btn--cube;
+
+        &:nth-child(1) {
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color--white;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          border-color    : $color--white;
+          background-color: $color--white;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      border-width: 0;
+      background  : transparent;
+
+      span {
+        @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+        @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+        background-color: transparent;
+        color           : mix($color__btn, $color__btn--gradient, 50%);
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background-color: $color__btn--gradient;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--gradient;
+    }
+  }
+}
+
+.btn--gradient-to-transparent {
+  @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out;
+  color     : $color__btn--text-on--gradient-bg;
+
+  &.btn--cube {
+    .desktop & {
+      background: transparent;
+
+      span {
+
+        &:nth-child(1) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--text-on--gradient-bg;
+        }
+
+        &:nth-child(2) {
+          @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          background-color: $color__btn--text-on--gradient-bg;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+      }
+    }
+  }
+
+  .btn--read-more__arrow {
+    background-color: $color__btn--text-on--gradient-bg;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--text-on--gradient-bg;
+    }
+  }
+
+  &:hover {
+    @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+    background: transparent;
+    color     : mix($color__btn, $color__btn--gradient, 50%);
+
+    &:not(.btn--letters) {
+      @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+    }
+
+    &.btn--read-more {
+      > span:first-child {
+        @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+      }
+    }
+
+    .btn--read-more__arrow {
+      background-color: $color__btn--gradient;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--gradient;
+      }
+    }
+  }
+}
+
+.btn--transparent-to-gradient {
+  @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+  transition: background .3s ease-out;
+  background-image: transparent;
+  color     : mix($color__btn, $color__btn--gradient, 50%);
+
+  &:not(.btn--letters):not(.btn--slide):not(.btn--cube) {
+    .desktop & {
+      @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+    }
+  }
+
+  &.btn--read-more {
+    > span:first-child {
+      @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+    }
+  }
+
+  .btn--read-more__arrow {
+    background: $color__btn--gradient;
+
+    &::before,
+    &::after {
+      background-color: $color__btn--gradient;
+    }
+  }
+
+  &.btn--slide {
+    .desktop & {
+      background: transparent;
+
+      > span {
+        border-width: 0;
+
+        &:nth-child(1) {
+          background: transparent;
+
+          > span {
+            @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+          }
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--text-on--gradient-bg;
+        }
+      }
+    }
+  }
+
+  &.btn--cube {
+    .desktop & {
+      background: transparent;
+
+      span {
+        &:nth-child(1) {
+          @include text--gradient($from: $color__btn, $to: $color__btn--gradient);
+          
+          border: 2px solid $color__btn--gradient;
+          background-color: transparent;
+          color           : mix($color__btn, $color__btn--gradient, 50%);
+        }
+
+        &:nth-child(2) {
+          @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+          @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+          color: $color__btn--text-on--gradient-bg;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+    @include border--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+
+    &:not(.btn--slide):not(.btn--cube) {
+      .desktop & {
+        -webkit-text-fill-color: initial;
+        -webkit-background-clip: initial;
+        color: $color__btn--text-on--gradient-bg;
+      }
+    }
+
+    &.btn--read-more {
+      > span:first-child {
+        -webkit-text-fill-color: initial;
+        -webkit-background-clip: initial;
+        color: $color__btn--text-on--gradient-bg;
+      }
+    }
+
+    .btn--read-more__arrow {
+      background: $color__btn--text-on--gradient-bg;
+
+      &::before,
+      &::after {
+        background-color: $color__btn--text-on--gradient-bg;
+      }
+    }
+  }
+}
+
+.btn--bare--gradient {
+  color: mix($color__btn, $color__btn--gradient, 50%);
+
+  &:hover {
+    color: mix($color__btn, $color__btn--gradient, 50%);
+  }
+
+  .btn--read-more__arrow {
+    background: mix($color__btn, $color__btn--gradient, 50%);
+
+    &::before,
+    &::after {
+      background-color: mix($color__btn, $color__btn--gradient, 50%);
+    }
+  }
+
+  .btn--ajax__dots {
+    span {
+      background-color: mix($color__btn, $color__btn--gradient, 50%) !important;
+    }
+  }
+}
+
+.btn--ajax--dark {
+  .btn--ajax {
+    .background--colored & {
+      .btn--ajax__text {
+        color: $color--01;
+      }
+    }
+  }
+
+  .btn--ajax__text--loaded {
+    background: $color-text__portfolio__btn-ajax--success;
+  }
+
+  .btn--ajax__message--error {
+    .btn--ajax__text {
+      background: $color-text__portfolio__btn-ajax--error;
+    }
+  }
+}
+
+.btn--ajax--gradient {
+  .btn--ajax {
+    color: $color__btn--02;
+
+    &::after {
+      border : 2px solid mix($color__btn, $color__btn--gradient, 50%);
+      z-index: -2;
+    }
+
+    &::before {
+      @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+      transition: background-size .3s ease-out;
+    }
+
+    .btn--ajax__text {
+      color: $color__btn--02;
+    }
+
+    .btn--ajax__dots {
+      span {
+        background-color: $color__btn--02;
+      }
+    }
+  }
+
+  &:hover {
+    .btn--ajax {
+      &::before {
+        background-size: 150%;
+      }
+    }
+  }
+
+  .btn--ajax__svg-icon {
+    path {
+      stroke: mix($color__btn, $color__btn--gradient, 50%);
+    }
+  }
+
+  .btn--ajax__text--loaded {
+    @include background--gradient($from: $color--gradient_success__1, $to: $color--gradient_success__2);
+
+    color: $color__btn--02;
+  }
+
+  .btn--ajax__message--error {
+    .btn--ajax__text {
+      @include background--gradient($from: $color--gradient_alert__1, $to: $color--gradient_alert__2);
+
+      color: $color__btn--02;
+    }
+  }
+
+  .btn--ajax__message--no-more {
+    .btn--ajax__text {
+      @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+      color: $color__btn--02;
+    }
+  }
+}
+
+.btn--ajax--gradient-to-dark {
+  .btn--ajax {
+    color: $color__btn--dark;
+
+    &::after {
+      border : 2px solid mix($color__btn, $color__btn--gradient, 50%);
+      z-index: -2;
+    }
+
+    &::before {
+      @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+      transition: background-image .3s ease-out;
+    }
+
+    .btn--ajax__text {
+      color: $color__btn--dark;
+    }
+
+    .btn--ajax__dots {
+      span {
+        background-color: $color__btn--dark;
+      }
+    }
+  }
+
+  &:hover {
+    .btn--ajax {
+      color: $color__btn--white;
+
+      &::before {
+        @include background--gradient($from: $color__btn--dark, $to: $color__btn--dark);
+      }
+
+      .btn--ajax__text {
+        color: $color--white;
+      }
+    }
+  }
+
+  .btn--ajax__svg-icon {
+    path {
+      stroke: $color__btn--dark;
+    }
+  }
+
+  .btn--ajax__text--loaded {
+    @include background--gradient($from: $color--gradient_success__1, $to: $color--gradient_success__2);
+
+    color: $color__btn--dark;
+  }
+
+  .btn--ajax__message--error {
+    .btn--ajax__text {
+      @include background--gradient($from: $color--gradient_alert__1, $to: $color--gradient_alert__2);
+
+      color: $color__btn--dark;
+    }
+  }
+
+  .btn--ajax__message--no-more {
+    .btn--ajax__text {
+      @include background--gradient($from: $color__btn, $to: $color__btn--gradient);
+
+      color: $color__btn--dark;
+    }
+  }
+}
+
+.btn--ajax--white {
+  .btn--ajax {
+    color: $color__btn--dark;
+
+    &::after {
+      border : 2px solid $color--white;
+      z-index: -2;
+    }
+
+    &::before {
+      background-color: $color--white;
+    }
+
+    .btn--ajax__text {
+      color: $color__btn--dark;
+    }
+
+    .btn--ajax__dots {
+      span {
+        background-color: $color__btn--dark;
+      }
+    }
+  }
+
+  .btn--ajax__svg-icon {
+    path {
+      stroke: $color--white;
+    }
+  }
+
+  .btn--ajax__text--loaded {
+    background: $color-text__portfolio__btn-ajax--success;
+    color     : $color__btn--dark;
+  }
+
+  .btn--ajax__message--error {
+    .btn--ajax__text {
+      background: $color-text__portfolio__btn-ajax--error;
+      color     : $color__btn--dark;
+    }
+  }
+
+  .btn--ajax__message--no-more {
+    .btn--ajax__text {
+      background-color: $color--white;
+      color           : $color__btn--dark;
+    }
+  }
+}
+
+.btn--ajax--dark {
+  .btn--ajax {
+    color: $color__btn--white;
+
+    &::after {
+      border : 2px solid $color__btn--dark;
+      z-index: -2;
+    }
+
+    &::before {
+      background: $color__btn--dark;
+    }
+
+    .btn--ajax__text {
+      color: $color__btn--dark--02;
+    }
+
+    .btn--ajax__dots {
+      span {
+        background-color: $color__btn--dark--02;
+      }
+    }
+    
+    // when the button is on a dark background element, 
+    // its dark color must be darker than the background of the element
+    .background--dark & {
+      .btn--ajax__text {
+        color: $color__btn--dark--02;
+      }
+    }
+
+    .background--colored & {
+      .btn--ajax__text {
+        color: $color--01;
+      }
+    }
+  }
+
+  .btn--ajax__svg-icon {
+    path {
+      stroke: $color__btn--dark;
+    }
+  }
+
+  .btn--ajax__text--loaded {
+    background: $color-text__portfolio__btn-ajax--success;
+    color     : $color__btn--dark--02;
+  }
+
+  .btn--ajax__message--error {
+    .btn--ajax__text {
+      background: $color-text__portfolio__btn-ajax--error;
+      color     : $color__btn--dark--02;
+    }
+  }
+
+  .btn--ajax__message--no-more {
+    .btn--ajax__text {
+      background: $color__btn--dark;
+      color     : $color__btn--dark--02;
+    }
+  }
+}
+
+.background--gray {
+  .cover--colored {
+    .anim-scroll__el-cover {
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: $color--primary;
+      }
+    }
+  }
+
+  // // the first cover color is same with the background color
+  // .cover--iso {
+  //   .anim-scroll__el-cover {
+  //     // 01 cover
+  //     // ---------
+  //     &:nth-child(2) {
+  //       background-color: $color-bg__section--gray;
+  //     }
+
+  //     // 02 cover
+  //     // ---------
+  //     &:nth-child(3) {
+  //       background-color: darken(desaturate($color-bg__section--gray, 7%), 7%);
+  //     }
+
+  //     // 03 cover
+  //     // --------
+  //     &:nth-child(4) {
+  //       background-color: darken(desaturate($color-bg__section--gray, 11%), 11%);
+  //     }
+  //   }
+  // }
+
+  .cover--colored {
+    .anim-scroll__el-cover {
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--primary, 7%), 7%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--primary, 11%), 11%);
+      }
+    }
+  }
+}
+
+.background--dark {
+  // .anim-scroll__el-cover {
+  //   &:nth-child(2) {
+  //     background-color:  darken(desaturate($color-bg__section--dark, 2%), 2%);
+  //   }
+
+  //   &:nth-child(3) {
+  //     background-color:  darken(desaturate($color-bg__section--dark, 4%), 4%);
+  //   }
+
+  //   &:nth-child(4) {
+  //     background-color:  darken(desaturate($color-bg__section--dark, 6%), 6%);
+  //   }
+  // }
+
+  .cover--colored {
+    .anim-scroll__el-cover {
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: $color--primary;
+      }
+    }
+  }
+
+  // // the first cover color is same with the background color
+  // .cover--iso {
+  //   .anim-scroll__el-cover {
+  //     // 01 cover
+  //     // ---------
+  //     &:nth-child(2) {
+  //       background-color: $color-bg__section--dark;
+  //     }
+
+  //     // 02 cover
+  //     // ---------
+  //     &:nth-child(3) {
+  //       background-color: darken(desaturate($color-bg__section--dark, 5%), 5%);
+  //     }
+
+  //     // 03 cover
+  //     // --------
+  //     &:nth-child(4) {
+  //       background-color: darken(desaturate($color-bg__section--dark, 6.5%), 6.5%);
+  //     }
+  //   }
+  // }
+
+  .cover--colored {
+    .anim-scroll__el-cover {
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--primary, 5%), 5%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--primary, 8%), 8%);
+      }
+    }
+  }
+}
+
+.background--colored {
+  color   : $color-text__section--colored;
+  background-color: $color--01;
+
+
+  .blog-preview--style-02 {
+    .blog-preview {
+      + .blog-preview {
+        border-top-color: darken($color--01, 10%);
+      }
+    }
+  }
+
+  .anim-scroll__el-cover {
+    &:nth-child(2) {
+      background-color:  darken(desaturate($color--01, 2%), 2%);
+    }
+
+    &:nth-child(3) {
+      background-color:  darken(desaturate($color--01, 4%), 4%);
+    }
+
+    &:nth-child(4) {
+      background-color:  darken(desaturate($color--01, 6%), 6%);
+    }
+  }
+
+  .cover--colored {
+    .anim-scroll__el-cover {
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: $color--primary;
+      }
+    }
+  }
+
+  // the first cover color is same with the background color
+  .cover--iso {
+    .anim-scroll__el-cover {
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: $color--01;
+      }
+
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--01, 5%), 5%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--01, 6.5%), 6.5%);
+      }
+    }
+  }
+
+  .cover--colored {
+    .anim-scroll__el-cover {
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--primary, 5%), 5%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--primary, 8%), 8%);
+      }
+    }
+  }
+
+  .cover-transp {
+    .anim-scroll__el-cover {
+      background-color: $color--01;
+    }
+  }
+
+  .loaded--visible::before {
+    background-color: $color--01;
+  }
+
+  text {
+    fill: $color-text__section--colored;
+  }
+
+  .form-style--02 {
+    .fieldset__label,
+    .textarea__label {
+      &::before {
+        background: $color-text__section--colored;
+      }
+    }
+  }
+
+  .text--gradient {
+    @include text--gradient($from: lighten($color-text__section--colored, 20%), $to: darken($color-text__section--colored, 20%));  }
+
+  .icon,
+  .quote-highlighted footer {
+    color: $color-text__section--colored;
+  }
+
+  .quote-highlighted {
+    footer {
+      &::before {
+        background-color: $color-text__section--colored;
+      }
+    }
+  }
+
+  .icon--filled {
+    path,
+    polyline,
+    line,
+    polygon,
+    rect,
+    circle,
+    ellipse {
+      fill: $color-text__section--colored;
+    }
+  }
+
+  path,
+  polyline,
+  line,
+  polygon,
+  rect,
+  circle,
+  ellipse {
+    stroke: $color-text__section--colored;
+  }
+
+  .hover-theme-1 {
+    .hover-item {
+      .icon,
+      h3,
+      span {
+        color: $color--primary;
+      }
+    }
+
+    .hover-item__link {
+      &::after {
+        border-color: $color--primary;
+      }
+    }
+  }
+}
+
+.background--gradient {
+  @include background--gradient;
+
+  color: $color-text__section--gradient;
+
+  .loaded--visible::before {
+    @include background--gradient;
+  }
+
+  .form-style--02 {
+    .fieldset__label,
+    .textarea__label {
+      &::before {
+        background: $color-text__section--gradient;
+      }
+    }
+  }
+}
+
+.footer--dark {
+  .footer__social {
+    &.footer__social--gradient {
+      a {
+        opacity: 1;
+
+        i {
+          @include text--gradient($from: rgba($color-text--on-bg-dark, $opacity__section__text--thin), $to: rgba($color-text--on-bg-dark, $opacity__section__text--thin));
+        }
+
+        &:hover {
+
+          i {
+            @include text--gradient;
+          }
+        }
+      }
+    }
+  }
+}
+
+.footer--gray {
+  .footer__social {
+    &.footer__social--gradient {
+      a {
+        opacity: 1;
+
+        i {
+          @include text--gradient($from: rgba($color-text, $opacity__section__text--thin), $to: rgba($color-text, $opacity__section__text--thin));
+        }
+
+        &:hover {
+
+          i {
+            @include text--gradient;
+          }
+        }
+      }
+    }
+  }
+}
+
+.footer--white {
+  .footer__social {
+    &.footer__social--gradient {
+      a {
+        opacity: 1;
+
+        i {
+          @include text--gradient($from: rgba($color-text, $opacity__section__text--thin), $to: rgba($color-text, $opacity__section__text--thin));
+        }
+
+        &:hover {
+
+          i {
+            @include text--gradient;
+          }
+        }
+      }
+    }
+  }
+}
+
+.footer--colored {
+  background-color: $color--02;
+  color           : $color-text__section--colored;
+
+  .logo__figure {
+    path {
+      fill: $color-text__section--colored;
+    }
+  }
+
+  a {
+    color: $color-text__section--colored;
+  }
+
+  .footer__social {
+    a {
+      opacity: $opacity__section__text--thin;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  hr {
+    border-color: $color-text__section--colored;
+  }
+
+  .btn--scroll__arrow {
+    span {
+      background-color: rgba($color-text__section--colored, $opacity__section__text--thin);
+
+      &::before,
+      &::after {
+        background-color: $color-text__section--colored;
+      }
+    }
+  }
+}
+
+.mask__darken--gradient,
+.mask__exclusion--gradient,
+.mask__hard-light--gradient {
+  &::after {
+    @include background--gradient;
+  }
+}
+
+.map-container--colored {
+  &::before {
+    background-color: $color--primary;
+  }
+}
+
+.map-container--gradient {
+  &::before {
+    @include background--gradient;
+  }
+}
+
+// -----------. 02 .------------
+.video-text-rotaror {
+  .mobile &,
+  .not-chrome & {
+    .page-contents {
+      background-color: $color--02;
+    }
+  }
+
+  .mask::after {
+    @include background--gradient;
+    background: linear-gradient(to 90deg, $color--02, $color--01);
+  }
+
+  .hero + .section {
+    background-image: -webkit-linear-gradient(90deg, $color--02 60%, transparent);
+
+    .bar-wrapper {
+      box-shadow: inset 0 -2px 0 -1px rgba(darken($color--02, 30%), .3);
+    }
+  }
+
+  .background--gradient__twin--02 {
+    background-image: -webkit-linear-gradient(90deg, $color--02 75%, transparent);
+  }
+
+  .hero + .section,
+  .background--gradient__twin--02 {
+    .bars--gradient {
+      .bar {
+        border-image: linear-gradient(90deg, $color--01--gradient--bars, $color--white) no-repeat;
+        background: linear-gradient(90deg, $color--01--gradient--bars, $color--white) no-repeat;
+      }
+    }
+
+    .bars--vertical {
+      .bar {
+        border-image: linear-gradient(0deg, $color--white, $color--01--gradient--bars) no-repeat;
+        background: linear-gradient(0deg, $color--white, $color--01--gradient--bars) no-repeat;
+      }
+    }
+
+    .text--gradient {
+      @include text--gradient($from: $color--02--gradient, $to: $color--white);
+    }
+
+    .anim-scroll__el-cover {
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: darken(desaturate($color--02, 3%), 3%);
+      }
+
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--02, 7%), 7%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--02, 10%) ,10%);
+      }
+    }
+
+    .cover-transp .anim-scroll__el-cover {
+      // background-color: #1990cf;
+      background-color: $color--02;
+    }
+
+    .cover--iso .anim-scroll__el-cover {  // the first cover color is same with the background color
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: $color--02;
+      }
+
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--02, 5%), 5%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--02, 8%), 8%);
+      }
+    }
+  }
+
+  .background--gradient__twin--01 {
+    background-image: -webkit-linear-gradient(270deg, $color--01 60%, transparent);
+
+    .text--gradient {
+      @include text--gradient($from: $color--01--gradient, $to: $color--white);
+    }
+    
+    .anim-scroll__el-cover {
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: darken(desaturate($color--01, 3%), 3%);
+      }
+
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--01, 7%), 7%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--01, 10%) ,10%);
+      }
+    }
+
+    .cover-transp .anim-scroll__el-cover {
+      // background-color: #1990cf;
+      background-color: $color--01;
+    }
+
+    .cover--iso .anim-scroll__el-cover {  // the first cover color is same with the background color
+      // 01 cover
+      // ---------
+      &:nth-child(2) {
+        background-color: $color--01;
+      }
+
+      // 02 cover
+      // ---------
+      &:nth-child(3) {
+        background-color: darken(desaturate($color--01, 5%), 5%);
+      }
+
+      // 03 cover
+      // --------
+      &:nth-child(4) {
+        background-color: darken(desaturate($color--01, 8%), 8%);
+      }
+    }
+  }
+
+  .map-container {
+    &::before {
+      @include background--gradient;
+    }
+  }
+}
+
+
+
+// // -----------. 04 .------------
+// .distort {
+//   .hero {
+//     color: $color--primary;
+//   }
+
+//   .hero .mask,
+//   .parallax__el.mask {
+//     &::after {
+//       background    : $color--02;
+//     }
+//   }
+
+//   .text--display,
+//   .featured-item .title--small,
+//   .blog-preview--style-02 .blog-preview__visible h4 {
+//     color: $color--02;
+//   }
+
+//   .signiture {
+//     svg path {
+//       stroke: $color--02;
+//     }
+//   }
+
+//   .number-fact__number {
+//     color: $color--primary;
+//     opacity: 1;
+
+//     text {
+//       fill: $color--primary;
+//     }
+//   }
+
+//   .btn--portfolio {
+//     color: $color--02;
+//   }
+
+//   .magic-box {
+//     border-color: $color--02;
+//   }
+
+//   .background--colored {
+//     .btn--ajax--dark {
+//       .btn--ajax {
+//         &::before {
+//           background: $color--02;
+//         }
+//       }
+//     }
+//   }
+
+//   .hover-theme-1,
+//   .hover-theme-2 {
+//     .hover-item {
+//       &::after {
+//         background: $color--primary;
+//       }
+
+//       .icon, h3, span {
+//         color: $color--02;
+//       }
+
+//     }
+
+//     .hover-item__link {
+//       &::after {
+//         border-color: $color--02;
+//       }
+//     }
+//   }
+
+//   .btn--ajax--gradient {
+//     .btn--ajax {
+//       &::after {
+//         border-color: $color__btn;
+//       }
+
+//       &::before {
+//         background: $color__btn;
+//       }
+
+//       .btn--ajax__text {
+//         color: $color__btn--02;
+//       }
+
+//       .btn--ajax__dots {
+//         span {
+//           background-color: $color__btn--02;
+//         }
+//       }
+//     }
+
+//     .btn--ajax__svg-icon {
+//       path {
+//         stroke: $color__btn;
+//       }
+//     }
+
+//     .btn--ajax__text--loaded {
+//       background: $color--success;
+//       color     : $color__btn--02;
+//     }
+
+//     .btn--ajax__message--error {
+//       .btn--ajax__text {
+//         background: $color--alert;
+//         color     : $color__btn--02;
+//       }
+//     }
+
+//     .btn--ajax__message--no-more {
+//       .btn--ajax__text {
+//         background: $color__btn;
+//         color     : $color__btn--02;
+//       }
+//     }
+//   }
+
+//   .background--dark {
+//     .btn--ajax__handlers {
+//       .btn--ajax {
+//         &::after {
+//           border-color: $color--primary;
+//         }
+
+//         &::before {
+//           background: $color--primary;
+//         }
+//       }
+
+//       .btn--ajax__svg-icon {
+//         path {
+//           stroke: $color--primary;
+//         }
+//       }
+
+//       .btn--ajax__message--no-more {
+//         .btn--ajax__text {
+//           background: $color--primary;
+//         }
+//       }
+//     }
+//   }
+
+//   .btn--color-to-white {
+//     border-color    : $color__btn;
+//     background-color: $color__btn;
+
+//     &.btn--slide {
+//       .desktop & {
+//         > span {
+//           &:nth-child(1) {
+//             border-color    : $color__btn;
+//             background-color: $color__btn;
+//           }
+
+//           &:nth-child(2),
+//           &:nth-child(3) {
+//             color           : $color__btn;
+//           }
+//         }
+//       }
+//     }
+
+//     &.btn--cube {
+//       .desktop & {
+//         span {
+//           &:nth-child(1) {
+//             border-color    : $color__btn;
+//             background-color: $color__btn;
+//           }
+
+//           &:nth-child(2) {
+//             color: $color__btn;
+//           }
+//         }
+//       }
+//     }
+
+//     &:hover {
+//       color: $color__btn;
+
+//       .btn--read-more__arrow {
+//         background-color: $color__btn;
+
+//         &::before,
+//         &::after {
+//           background-color: $color__btn;
+//         }
+//       }
+//     }
+//   }
+
+//   .pricing-table__toggle {
+//     ul {
+//       li {
+//         a {
+//           &::before {
+//             color: $color--01;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .pricing-table--theme-01 {
+//     .pricing-table__header {
+//       background-color: $color--primary;
+//       color: $color--02;
+
+//       .svg {
+//         path,
+//         polyline,
+//         line,
+//         polygon,
+//         rect,
+//         circle,
+//         ellipse {
+//           stroke: $color--02;
+//         }
+
+//         &.svg--filled {
+//           path,
+//           polyline,
+//           line,
+//           polygon,
+//           rect,
+//           circle,
+//           ellipse {
+//             fill: $color--02;
+//           }
+//         }
+//       }
+//     }
+    
+//     .icon {
+//       color: $color--02;
+//     }
+
+//     .pricing-table__tag-value {
+//       color: $color--02;
+//     }
+
+//     @include mq(md) {
+//       .pricing-table {
+//         &::before {
+//           background-color: lighten($color--primary, 5%);
+//         }
+
+//         &:hover,
+//         &.featured {
+//           &,
+//           .pricing-table__header {
+//             color: $color--02;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .quote {
+//     footer {
+//       span {
+//         color: lighten(saturate($color--02, 20%), 20%);
+//       }
+//     }
+//   }
+
+//   .quick-info--contact {
+//     h4 {
+//       color: $color--02;
+//     }
+//   }
+// }
+
+
+
+
+// -----------. 05 .------------
+.shine {
+  $color-dark__shine-demo: #262626;
+  
+  .background--dark {
+    background-color: $color-dark__shine-demo;
+
+    .anim-scroll__el-cover {
+      &:nth-child(2) {
+        background-color:  darken(desaturate($color-dark__shine-demo, 2%), 2%);
+      }
+
+      &:nth-child(3) {
+        background-color:  darken(desaturate($color-dark__shine-demo, 4%), 4%);
+      }
+
+      &:nth-child(4) {
+        background-color:  darken(desaturate($color-dark__shine-demo, 6%), 6%);
+      }
+    }
+
+    // the first cover color is same with the background color
+    .cover--iso {
+      .anim-scroll__el-cover {
+        // 01 cover
+        // ---------
+        &:nth-child(2) {
+          background-color: $color-dark__shine-demo;
+        }
+
+        // 02 cover
+        // ---------
+        &:nth-child(3) {
+          background-color: darken(desaturate($color-dark__shine-demo, 5%), 5%);
+        }
+
+        // 03 cover
+        // --------
+        &:nth-child(4) {
+          background-color: darken(desaturate($color-dark__shine-demo, 6.5%), 6.5%);
+        }
+      }
+    }
+
+    .cover-transp {
+      .anim-scroll__el-cover {
+        background-color: $color-dark__shine-demo;
+      }
+    }
+
+    .illusional-object {
+      .desktop & {
+        &::before {
+          border-color: $color-dark__shine-demo;
+        }
+      }
+    }
+
+    .hover--bg-flow--horizontal {
+      .hover-bg {
+        &::before,
+        &::after {
+          background-color: darken(desaturate($color-dark__shine-demo, 2%), 2%);
+        }
+      }
+    }
+
+    &.blog-preview--style-02 {
+      .blog-preview {
+        + .blog-preview {
+          border-color: darken(desaturate($color-dark__shine-demo, 10%), 5%);
+        }
+      }
+    }
+
+    .portfolio__header {
+      background-color: rgba($color-dark__shine-demo, $opacity__portfolio-header--bg);
+    }
+
+    .dots--filling-circle {
+      .ms-bullet,
+      .owl-dot,
+      .dots > li,
+      .dot {
+        circle {
+          fill  : $color-dark__shine-demo;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+// // -----------. 06 .------------
+// // 
+
+$tilt-demo--color-bg__section--dark: #232228;
+
+.tilt-demo {
+
+  .hero {
+    &.mask {
+      &::after {
+        background-color: rgb(1, 72, 112);
+      }
+    }
+
+    + .background--transparent {
+      .mobile & {
+        background-color: $tilt-demo--color-bg__section--dark !important;
+      }
+    }
+  }
+
+  .background--dark {
+    background-color: $tilt-demo--color-bg__section--dark;
+
+    .blog-preview--style-02 {
+      .blog-preview {
+        + .blog-preview {
+          border-top-color: darken( $tilt-demo--color-bg__section--dark, 10%);
+        }
+      }
+    }
+
+    .anim-scroll__el-cover {
+      &:nth-child(2) {
+        background-color:  darken(desaturate($tilt-demo--color-bg__section--dark, 2%), 2%);
+      }
+
+      &:nth-child(3) {
+        background-color:  darken(desaturate($tilt-demo--color-bg__section--dark, 4%), 4%);
+      }
+
+      &:nth-child(4) {
+        background-color:  darken(desaturate($tilt-demo--color-bg__section--dark, 6%), 6%);
+      }
+    }
+
+    .cover--iso {
+      .anim-scroll__el-cover {
+        &:nth-child(2) {
+          background-color: $tilt-demo--color-bg__section--dark;
+        }
+
+        &:nth-child(3) {
+          background-color: darken(desaturate($tilt-demo--color-bg__section--dark, 5%), 5%);
+        }
+
+        &:nth-child(4) {
+          background-color: darken(desaturate($tilt-demo--color-bg__section--dark, 6.5%), 6.5%);
+        }
+      }
+    }
+
+    .cover-transp {
+      .anim-scroll__el-cover {
+        background-color: $tilt-demo--color-bg__section--dark;
+      }
+    }
+
+    .illusional-object {
+      .desktop & {
+        &::before {
+          border-color: $tilt-demo--color-bg__section--dark;
+        }
+      }
+    }
+
+    .hover--bg-flow--horizontal {
+      .hover-bg {
+        &::before,
+        &::after {
+          background-color: darken(desaturate($tilt-demo--color-bg__section--dark, 2%), 2%);
+        }
+      }
+    }
+
+    &.blog-preview--style-02 {
+      .blog-preview {
+        + .blog-preview {
+          border-color: darken(desaturate($tilt-demo--color-bg__section--dark, 10%), 5%);
+        }
+      }
+    }
+
+    .portfolio__header {
+      background-color: rgba($tilt-demo--color-bg__section--dark, $opacity__portfolio-header--bg);
+    }
+
+    .dots--filling-circle {
+      .ms-bullet,
+      .owl-dot,
+      .dots > li,
+      .dot {
+        circle {
+          fill  : $tilt-demo--color-bg__section--dark;
+        }
+      }
+    }
+  }
+
+  .hero__parallax--cover,
+  .page-contents,
+  .footer--dark {
+    background-color: $tilt-demo--color-bg__section--dark;
+  }
+}
+
+
+
+
+// -----------. 07 .------------
+// 
+.master-slider-demo {
+  .hero__text--03,
+  .text--display,
+  .featured-item h2 {
+    color: $color--01--gradient;
+  }
+}
+
+
+
+
+
+// // -----------. 09 .------------
+// // 
+// .text-rotator-demo {
+//   .fade-up-intro__el,
+//   .fade-down-intro__el {
+//     opacity: 0;
+//   }
+
+//   .hero {
+//     color: $color-text__section--colored;
+
+//     .mask {
+//       &::after {
+//         .mixblendmode & {
+//           // theme__index-09--01:
+//           background-color: #ff4400;
+//           mix-blend-mode: exclusion;
+//           opacity: .93;
+
+//           // // theme__index-12--02:
+//           // background-color: hsla(114, 100%, 62%, 1);
+//           // mix-blend-mode: difference;
+//           // opacity: 1;
+
+//           // // theme__index-12--03:
+//           // background-color: #808080;
+//           // mix-blend-mode: luminosity;
+//           // opacity: 1;
+
+//           // theme__index-09--04:
+//           // background-color: #1eff00;
+//           // mix-blend-mode: exclusion;
+//           // opacity: .93;
+          
+//           // // theme__index-09--05:
+//           // background-color: #600a0a;
+//           // mix-blend-mode: lighten;
+//           // opacity: .93;
+          
+//           // // theme__index-09--06:
+//           // background-color: #ea5323;
+//           // mix-blend-mode: hard-light;
+//           // opacity: .93;
+//         }
+//       }
+//     }
+
+//     + .section {
+//       .mixblendmode & {
+//         background: linear-gradient(0deg, $color--02 79%, transparent 100%);
+
+//         .anim-scroll__el-cover {
+//           &:nth-child(2) {
+//             background-color:  darken(desaturate($color--02, 2%), 2%);
+//           }
+
+//           &:nth-child(3) {
+//             background-color:  darken(desaturate($color--02, 4%), 4%);
+//           }
+
+//           &:nth-child(4) {
+//             background-color:  darken(desaturate($color--02, 6%), 6%);
+//           }
+//         }
+//         // the first cover color is same with the background color
+//         .cover--iso {
+//           .anim-scroll__el-cover {
+//             // 01 cover
+//             // ---------
+//             &:nth-child(2) {
+//               background-color: $color--02;
+//             }
+
+//             // 02 cover
+//             // ---------
+//             &:nth-child(3) {
+//               background-color: darken(desaturate($color--02, 5%), 5%);
+//             }
+
+//             // 03 cover
+//             // --------
+//             &:nth-child(4) {
+//               background-color: darken(desaturate($color--02, 6.5%), 6.5%);
+//             }
+//           }
+//         }
+
+//         .cover-transp {
+//           .anim-scroll__el-cover {
+//             background-color: $color--02;
+//           }
+//         }     
+//       }
+
+//       .mixblendmode.not-chrome & {
+//         background: $color--02;
+//       }
+//     }
+//   }
+// }
+
+
+
+
+// // -----------. 10 .------------
+// // 
+// .dark-demo {
+//   .mask {
+//     &::after {
+//       @include background--gradient($from: $color--01--gradient, $to: $color--02--gradient);
+//     }
+//   }
+
+//   .btn--ajax--gradient {
+//     .btn--ajax {
+//       color: $color__btn--dark;
+
+//       .btn--ajax__text {
+//         color: $color__btn--dark;
+//       }
+
+//       .btn--ajax__dots {
+//         span {
+//           background-color: $color__btn--dark;
+//         }
+//       }
+//     }
+
+//     .btn--ajax__text--loaded {
+//       color: $color__btn--dark;
+//     }
+
+//     .btn--ajax__message--error {
+//       .btn--ajax__text {
+//         color: $color__btn--dark;
+//       }
+//     }
+
+//     .btn--ajax__message--no-more {
+//       .btn--ajax__text {
+//         color: $color__btn--dark;
+//       }
+//     }
+//   }
+// }
+
+
+
+
+// -----------. 13 .------------
+// 
+.white-hero-demo {
+  .hero {
+    + .section {
+      .mixblendmode.not-chrome & {
+        background: $color--02;
+      }
+    }
+  }
+
+
+  .hero__text--03,
+  .text--display,
+  .featured-item h2 {
+    color: $color--primary;
+  }
+
+  .background--image {
+    .section__btn--play {
+      &::after {
+        box-shadow: inset 0 0 0 14px $color--primary;
+      }
+
+      path {
+        fill: $color--primary;
+      }
+    }
+  }
+
+  .logo--client {
+    color: $color--primary;
+  }
+}
+
+
+
+
+// -----------. 14 .------------
+// 
+
+
+// -----------. 15 .------------
+// 
+
+
+.round-corners {
+
+  .bt--colored {
+    &::before {
+      background-color: $color--01;
+    }
+  }
+
+  .bt--colored--02 {
+    &::before {
+      background-color: $color--02;
+    }
+  }
+
+  .bb--colored {
+    &::after {
+      background-color: $color--01;
+    }
+  }
+
+  .bb--colored--02 {
+    &::after {
+      background-color: $color--02;
+    }
+  }
+
+  .magic-box {
+    border-color: mix($color--01--gradient, $color--02--gradient, 50%);
+  }
+
+  // .gradient {
+  //   .magic-box {
+  //     border: double 2px transparent;
+  //     border-radius: 80px;
+  //     background-image: linear-gradient(white, white), radial-gradient(circle at top left, $color--01--gradient, $color--02--gradient);
+  //     background-origin: border-box;
+  //     background-clip: content-box, border-box;
+  //   }
+  // }
+
+  .nav-tabs button.selected {
+    color: $color--02;
+  }
+
+  .btn {
+    -webkit-mask-image: -webkit-radial-gradient(circle, $color__btn--white 100%, $color__btn--dark 100%);
+  }
+}
+
+.animation-loading--01 {
+  .pace {
+    @include background--gradient;
+  }
+}
+
+.animation-loading--04 {
+  .curtain__line {
+    background: $color--02;
+  }
+
+  .pace {
+    background      : $color--01;
+  }
+
+  .loading-screen {
+    .loader {
+      color: $color--02;
+    }
+  }
+
+  .infinito__word path,
+  .infinito__loader__snake {
+    stroke: $color--02;
+  }
+
+  .infinito__word path {
+    fill: $color--02;
+  }
+
+  .infinito__loader__bg {
+    stroke: rgba($color--02, .1);
+  }
+}
+
+.animation-loading--06 {
+  .infinito__word {
+    color: $tilt-demo--color-bg__section--dark;
+  }
+}
+
+.animation-loading--07 {
+  &.mixblendmode {
+    .infinito__loader::after {
+      @include background--gradient;
+    }
+  }
+}
+
+.animation-loading--10 {
+  .pace {
+    @include background--gradient;
+  }
+}
+
+.animation-loading--12 {
+  .loading-screen,
+  .curtain,
+  .pace-progress {
+    background: $color-text__heading--cd;
+  }
+
+  .curtain__line {
+    background: $color-bg--cd;
+  }
+
+  .pace {
+    @include background--gradient($color-bg--cd, darken($color-bg--cd, 15%));
+  }
+
+  .loading-screen {
+    .loader {
+      color: $color-bg--cd;
+    }
+  }
+
+  .infinito__word path,
+  .infinito__loader__snake {
+    stroke: $color-bg--cd;
+  }
+
+  .infinito__word {
+    path {
+      fill: $color-bg--cd;
+    }
+
+    + div {
+      color: $color-text__heading--cd;
+    }
+  }
+
+  .infinito__loader__bg {
+    stroke: darken($color-bg--cd, 5%);
+  }
+}
+
+.animation-loading--13 {
+  &.mixblendmode {
+    .infinito__loader {
+      &::after {
+        @include background--gradient;
+      }
+    }
+  }
+}

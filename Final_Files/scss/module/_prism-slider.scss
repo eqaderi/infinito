@@ -1,0 +1,130 @@
+ // article layout 
+.wrapper {
+  width              : 100%;
+  background         : #fff;
+
+  &::after {
+    display          : block;
+    clear            : both;
+    content          : '';
+  }
+
+  .copy {
+    position         : relative;
+    width            : 40%;
+    float            : left;
+
+    .demo-2 & {
+      float          : right;
+    }
+
+    &::before {
+      width          : 0;
+      height         : 0;
+      padding-bottom : 119%;
+      float          : left;
+      content        : '';
+    }
+
+    article {
+      position       : absolute;
+      top            : 0;
+      right          : 0;
+      bottom         : 0;
+      left           : 0;
+      margin         : auto;
+      padding        : 4vw;
+    }
+
+    h2 {
+      margin         : 0;
+      font-size      : 3em;
+      font-size      : 4vw;
+    }
+
+    p {
+      &:first-of-type {
+        margin-bottom: 1.5em;
+        color        : #b1b6ba;
+        font-size    : 1.5em;
+        font-size    : 2vw;
+      }
+    }
+  }
+
+  .prism-slider {
+    width            : 100%;
+    float            : right;
+    user-select      : none;
+    overflow         : hidden;
+
+    .demo-2 & {
+      float          : left;
+    }
+  }
+}
+
+// prism slider
+.cache {
+  display            : none;
+}
+
+.prism-slider {
+  position           : relative;
+  min-width          : 100%;
+  height             : 100vh;
+
+  canvas {
+    position         : absolute;
+    top              : 0;
+    left             : 50%;
+    width            : 100%;
+    height           : auto;
+    transform        : translateX(-50%);
+  }
+}
+
+// media queries
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    &::after {
+      display        : none;
+    }
+
+    .copy,
+    .prism-slider {
+      width          : 100%;
+      float          : none;
+    }
+
+    .copy {
+      &::before {
+        display      : none;
+      }
+
+      article {
+        display      : block;
+        position     : relative;
+        padding      : 50px;
+      }
+
+      h2 {
+        font-size    : 8vw;
+      }
+
+      p {
+        &:first-of-type {
+          font-size  : 4vw;
+        }
+      }
+    }
+
+    .prism-slider {
+      canvas {
+        min-width    : auto;
+        height       : 100%;
+      }
+    }
+  }
+}
+
