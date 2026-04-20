@@ -1,0 +1,46 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  align?: 'left' | 'center';
+  inverse?: boolean;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  align = 'left',
+  inverse = false,
+  class: className = '',
+} = Astro.props;
+
+const alignCls = align === 'center' ? 'text-center' : 'text-left';
+const titleColor = inverse ? 'text-paper' : 'text-ink';
+const eyebrowColor = inverse ? 'text-paper/70' : 'text-ink-muted';
+---
+
+<header class={`${alignCls} ${className}`}>
+  {
+    eyebrow && (
+      <p
+        class={`mb-3 font-ui text-xs uppercase tracking-[0.28em] ${eyebrowColor}`}
+        data-anim="slide-up"
+      >
+        {eyebrow}
+      </p>
+    )
+  }
+  {
+    title && (
+      <h2
+        class={`font-display text-4xl leading-[1.15] nav:text-5xl lg:text-[3.25rem] ${titleColor}`}
+        data-anim="slide-up"
+        data-anim-delay="0.1"
+      >
+        {title}
+      </h2>
+    )
+  }
+  <slot />
+</header>

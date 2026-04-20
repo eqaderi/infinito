@@ -1,0 +1,179 @@
+---
+import SectionTitle from '../atoms/SectionTitle.astro';
+import Button from '../atoms/Button.astro';
+
+export interface PricingPlan {
+  name: string;
+  description: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  features: string[];
+  featured?: boolean;
+}
+
+interface Props {
+  eyebrow?: string;
+  plans?: PricingPlan[];
+}
+
+const {
+  eyebrow = 'the plans',
+  plans = [
+    {
+      name: 'Individuals',
+      description: 'Single user license',
+      monthlyPrice: 29,
+      yearlyPrice: 299,
+      features: ['256MB Memory', 'Free Hosting', 'Unlimited Bandwidth'],
+    },
+    {
+      name: 'Small Team',
+      description: 'Up to 5 users',
+      monthlyPrice: 89,
+      yearlyPrice: 899,
+      features: [
+        '512MB Memory',
+        'Free Hosting',
+        'Unlimited Bandwidth',
+        'Small Social media package',
+      ],
+      featured: true,
+    },
+    {
+      name: 'Organization',
+      description: 'Unlimited users',
+      monthlyPrice: 469,
+      yearlyPrice: 4599,
+      features: [
+        'Unlimited Memory',
+        'Free Hosting',
+        'Unlimited Bandwidth',
+        'Full Social media package',
+        'Analytics Integration',
+      ],
+    },
+  ],
+} = Astro.props;
+---
+
+<section
+  class="bg-paper px-6 py-24 nav:px-12 nav:py-32"
+  x-data="{ billing: 'monthly' }"
+>
+  <div class="mx-auto max-w-[1200px]">
+    <div class="mb-16 flex flex-wrap items-end justify-between gap-6">
+      <SectionTitle eyebrow={eyebrow} />
+      <div
+        class="inline-flex items-center gap-3 font-ui text-xs uppercase tracking-[0.18em]"
+        data-anim="slide-up"
+      >
+        <span class="text-ink-muted">Plans type:</span>
+        <div class="inline-flex rounded-full bg-paper-soft p-1">
+          <button
+            type="button"
+            class="rounded-full px-4 py-2 transition-all"
+            :class="billing === 'monthly' ? 'bg-gradient-accent text-paper' : 'text-ink-muted hover:text-ink'"
+            @click="billing = 'monthly'"
+          >
+            monthly
+          </button>
+          <button
+            type="button"
+            class="rounded-full px-4 py-2 transition-all"
+            :class="billing === 'yearly' ? 'bg-gradient-accent text-paper' : 'text-ink-muted hover:text-ink'"
+            @click="billing = 'yearly'"
+          >
+            yearly
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        plans.map((plan, idx) => (
+          <div
+            class:list={[
+              'relative flex flex-col overflow-hidden rounded-lg border bg-paper transition-transform duration-500',
+              plan.featured
+                ? 'border-transparent shadow-xl md:-translate-y-3 md:scale-[1.02] [background-image:linear-gradient(white,white),linear-gradient(45deg,var(--accent-from),var(--accent-to))] [background-origin:border-box] [background-clip:padding-box,border-box] [border-width:2px]'
+                : 'border-paper-gray',
+            ]}
+            data-anim="fade-up"
+            data-anim-delay={(idx * 0.12).toFixed(2)}
+          >
+            <header class="border-b border-paper-gray p-8">
+              <h3 class="font-display text-2xl text-ink">{plan.name}</h3>
+              <p class="mt-1 font-ui text-xs uppercase tracking-[0.18em] text-ink-muted">
+                {plan.description}
+              </p>
+              <div class="mt-6 flex items-baseline gap-1">
+                <span class="font-display text-2xl text-ink-muted">$</span>
+                <span class="relative inline-grid font-display text-6xl text-ink tabular-nums">
+                  <span
+                    class="col-start-1 row-start-1"
+                    x-show="billing === 'monthly'"
+                    x-transition:enter="transition duration-300 ease-out"
+                    x-transition:enter-start="opacity-0 scale-90 -translate-y-2"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave="transition duration-150 ease-in"
+                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 scale-90 translate-y-2"
+                  >{plan.monthlyPrice}</span>
+                  <span
+                    class="col-start-1 row-start-1"
+                    x-show="billing === 'yearly'"
+                    x-cloak
+                    x-transition:enter="transition duration-300 ease-out"
+                    x-transition:enter-start="opacity-0 scale-90 -translate-y-2"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave="transition duration-150 ease-in"
+                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 scale-90 translate-y-2"
+                  >{plan.yearlyPrice}</span>
+                </span>
+                <span class="font-ui text-xs uppercase tracking-[0.18em] text-ink-muted">
+                  /<span x-text="billing === 'monthly' ? 'mo' : 'yr'" />
+                </span>
+              </div>
+            </header>
+            <div class="flex-1 p-8">
+              <ul class="space-y-3 font-body text-sm text-ink-soft">
+                {plan.features.map((f) => (
+                  <li class="flex items-start gap-2">
+                    <svg
+                      class="mt-1 h-4 w-4 flex-shrink-0 text-accent-text"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <footer class="p-8 pt-0">
+              <Button
+                href="#contact"
+                variant={plan.featured ? 'gradient-solid' : 'dark'}
+                class="w-full"
+              >
+                select
+              </Button>
+            </footer>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  endpoint?: string;
+  placeholder?: string;
+  buttonLabel?: string;
+}
+
+const {
+  endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '#',
+  placeholder = 'Subscribe to our newsletter please',
+  buttonLabel = 'Subscribe',
+} = Astro.props;
+---
+
+<section class="border-y border-paper/10 bg-ink px-6 py-12 text-paper">
+  <form
+    action={endpoint}
+    method="post"
+    class="mx-auto flex max-w-2xl flex-col items-stretch gap-4 sm:flex-row sm:items-center"
+  >
+    <div class="relative flex-1">
+      <input
+        type="email"
+        name="email"
+        id="subscribe-email"
+        required
+        placeholder=" "
+        class="peer w-full border-0 border-b border-paper/30 bg-transparent px-0 pb-2 pt-6 font-body text-base text-paper focus:border-paper focus:outline-none focus:ring-0"
+      />
+      <label
+        for="subscribe-email"
+        class="pointer-events-none absolute left-0 top-6 origin-left font-ui text-xs uppercase tracking-[0.18em] text-paper/60 transition-all duration-300 ease-out peer-focus:top-1 peer-focus:scale-90 peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:scale-90"
+      >
+        {placeholder}
+      </label>
+    </div>
+    <button
+      type="submit"
+      class="inline-flex items-center justify-center rounded-full border border-paper/30 px-7 py-3 font-ui text-xs uppercase tracking-[0.18em] text-paper transition-all hover:border-transparent hover:bg-gradient-accent"
+    >
+      {buttonLabel}
+    </button>
+  </form>
+</section>

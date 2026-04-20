@@ -1,0 +1,122 @@
+---
+import GradientText from '../atoms/GradientText.astro';
+
+export interface FeaturedItem {
+  number: string;
+  title: string;
+  subtitle: string;
+  body: string;
+  image: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  items?: FeaturedItem[];
+}
+
+const {
+  items = [
+    {
+      number: '01',
+      title: 'Modern Approach',
+      subtitle: 'used latest technology',
+      body: 'Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.',
+      image: '/img/featured/featured-1.jpg',
+      imageAlt: 'Modern approach',
+    },
+    {
+      number: '02',
+      title: 'Flexible Design',
+      subtitle: 'infinite available options',
+      body: 'Nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt.',
+      image: '/img/featured/featured-2.jpg',
+      imageAlt: 'Flexible design',
+    },
+    {
+      number: '03',
+      title: 'Quality Design',
+      subtitle: 'High standard coding',
+      body: 'Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      image: '/img/featured/featured-3.jpg',
+      imageAlt: 'Quality design',
+    },
+  ],
+} = Astro.props;
+---
+
+<section id="featured" class="bg-paper">
+  {
+    items.map((item, idx) => {
+      const reversed = idx % 2 === 1;
+      return (
+        <div class="relative overflow-hidden border-b border-paper-gray px-6 py-20 nav:px-12 nav:py-28 last:border-b-0">
+          <div class="mx-auto grid max-w-[1200px] items-center gap-12 nav:gap-20 md:grid-cols-12">
+            {/* Image */}
+            <div
+              class={`md:col-span-5 ${reversed ? 'md:order-2' : ''}`}
+              data-anim="slide-up"
+            >
+              <div class="group relative" data-anim="parallax-y" data-anim-strength="60">
+                <span
+                  class="absolute -inset-4 -z-10 block bg-gradient-accent opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40"
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="absolute -bottom-3 -right-3 -z-10 hidden h-[92%] w-[92%] bg-gradient-accent opacity-90 transition-transform duration-500 ease-out group-hover:-translate-x-1 group-hover:translate-y-1 sm:block"
+                  aria-hidden="true"
+                ></span>
+                <img
+                  src={item.image}
+                  alt={item.imageAlt ?? item.title}
+                  class="relative block w-full object-cover shadow-md"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* Text */}
+            <div
+              class={`md:col-span-7 ${reversed ? 'md:order-1 md:text-right' : ''}`}
+            >
+              <div class="relative">
+                <span
+                  class={`pointer-events-none absolute -top-10 -z-0 select-none font-display text-[12rem] leading-none text-paper-gray nav:text-[16rem] ${reversed ? '-right-2' : '-left-2'}`}
+                  aria-hidden="true"
+                  data-anim="parallax-y"
+                  data-anim-strength="160"
+                  data-anim-direction="down"
+                >
+                  {item.number}
+                </span>
+                <h2
+                  class="relative font-display text-4xl text-ink nav:text-5xl"
+                  data-anim="slide-up"
+                  data-anim-delay="0.15"
+                >
+                  {item.title}
+                </h2>
+                <p
+                  class="relative mt-4 font-ui text-xs uppercase tracking-[0.28em]"
+                  data-anim="slide-up"
+                  data-anim-delay="0.25"
+                >
+                  <GradientText>{item.subtitle}</GradientText>
+                </p>
+                <p
+                  class:list={[
+                    'relative mt-6 max-w-xl font-body text-base leading-relaxed text-ink-soft',
+                    reversed && 'md:ml-auto',
+                  ]}
+                  data-anim="slide-up"
+                  data-anim-delay="0.4"
+                >
+                  {item.body}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    })
+  }
+</section>

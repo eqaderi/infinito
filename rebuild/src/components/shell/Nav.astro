@@ -1,0 +1,190 @@
+---
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  variant?: 'transparent-white' | 'solid-dark';
+  links?: NavLink[];
+  brand?: string;
+}
+
+const {
+  variant = 'transparent-white',
+  brand = 'infinito',
+  links = [
+    { label: 'Home', href: '#hero' },
+    { label: 'About', href: '#about' },
+    { label: 'Portfolio', href: '#portfolio' },
+    { label: 'Blog', href: '#blog' },
+    { label: 'Contact', href: '#contact' },
+  ],
+} = Astro.props;
+
+const isTransparent = variant === 'transparent-white';
+---
+
+{/* Wraps both the bar and the drawer so they share Alpine state */}
+<div
+  x-data={`{
+    open: false,
+    searchOpen: false,
+    scrolled: false,
+    init() {
+      this.$watch('open', v => { document.body.style.overflow = v ? 'hidden' : ''; });
+      this.$watch('searchOpen', v => { document.body.style.overflow = v ? 'hidden' : ''; });
+      window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 80 });
+      window.addEventListener('keydown', e => { if (e.key === 'Escape') { this.open = false; this.searchOpen = false; } });
+    }
+  }`}
+>
+  <header
+    class="fixed inset-x-0 top-0 z-[60] transition-colors duration-300"
+    :class={`scrolled || open ? 'bg-ink/95 backdrop-blur-sm' : '${isTransparent ? 'bg-transparent' : 'bg-ink'}'`}
+  >
+    <div class="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 nav:px-12">
+      {/* Hamburger (left) */}
+      <button
+        type="button"
+        class="group relative z-[70] flex items-center gap-3 text-paper"
+        @click="open = !open"
+        :aria-expanded="open ? 'true' : 'false'"
+        aria-label="Toggle menu"
+      >
+        <span class="relative inline-block h-3 w-7">
+          <span
+            class="absolute left-0 h-px w-7 bg-current transition-transform duration-300"
+            :class="open ? 'top-1.5 rotate-45' : 'top-0'"
+          ></span>
+          <span
+            class="absolute left-0 top-1.5 h-px w-5 bg-current transition-opacity duration-200"
+            :class="open ? 'opacity-0' : 'opacity-100'"
+          ></span>
+          <span
+            class="absolute left-0 h-px w-7 bg-current transition-transform duration-300"
+            :class="open ? 'top-1.5 -rotate-45' : 'top-3'"
+          ></span>
+        </span>
+        <span class="hidden font-ui text-xs uppercase tracking-[0.28em] sm:inline">
+          Menu
+        </span>
+      </button>
+
+      {/* Brand */}
+      <a
+        href="#hero"
+        class="absolute left-1/2 -translate-x-1/2 font-display text-xl text-paper"
+      >
+        <span class="inline-flex items-center gap-2">
+          <svg
+            class="h-7 w-7"
+            viewBox="0 0 100 100"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M39.213,35.87c-7.814-7.814-20.53-7.814-28.343,0C7.085,39.654,5,44.688,5,50.041s2.085,10.387,5.87,14.171c3.785,3.785,8.818,5.87,14.172,5.87c5.353,0,10.386-2.085,14.171-5.87L64.04,39.385l0.136-0.128c5.945-5.945,15.62-5.944,21.565,0.001c2.88,2.881,4.466,6.71,4.466,10.783c0,4.072-1.586,7.903-4.466,10.783c-2.879,2.879-6.71,4.465-10.782,4.465c-4.074,0-7.902-1.586-10.781-4.465l-5.671-5.653c-0.938-0.937-2.454-0.937-3.392,0c-0.936,0.938-0.936,2.454,0,3.393l6.067,6.043l0.011-0.001c3.733,3.536,8.603,5.477,13.766,5.477c5.354,0,10.387-2.085,14.171-5.87C92.916,60.428,95,55.395,95,50.041s-2.084-10.387-5.87-14.171C85.346,32.084,80.313,30,74.959,30c-4.995,0-9.714,1.816-13.352,5.09l-0.026-0.024L35.824,60.824c-2.881,2.879-6.71,4.465-10.783,4.465c-4.073,0-7.903-1.586-10.783-4.465c-2.879-2.88-4.466-6.711-4.466-10.785c0-4.073,1.585-7.903,4.466-10.783c5.946-5.945,15.621-5.944,21.566,0.001l5.713,5.722c0.938,0.935,2.453,0.935,3.392-0.001c0.937-0.937,0.937-2.453,0-3.391L39.213,35.87z"
+            ></path>
+          </svg>
+          <span class="font-display text-lg lowercase tracking-wide">{brand}</span>
+        </span>
+      </a>
+
+      {/* Right cluster */}
+      <div class="relative z-[70] flex items-center gap-5 font-ui text-xs uppercase tracking-[0.18em] text-paper">
+        <button
+          type="button"
+          class="hidden sm:inline-flex items-center gap-1.5 hover:opacity-80"
+          aria-label="Search"
+          @click="searchOpen = true"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="hidden lg:inline">search</span>
+        </button>
+        <a href="#contact" class="hidden sm:inline-flex hover:opacity-80">contact</a>
+      </div>
+    </div>
+  </header>
+
+  {/* Drawer overlay (sibling of header to escape any stacking-context issues) */}
+  <aside
+    class="fixed inset-0 z-[55] flex flex-col bg-ink text-paper transition-[opacity,visibility] duration-300 ease-out"
+    :class="open ? 'opacity-100 visible' : 'opacity-0 invisible'"
+    aria-hidden="true"
+    :aria-hidden="open ? 'false' : 'true'"
+  >
+    {/* Spacer matching the header height so links don't sit under the bar */}
+    <div class="h-[68px] flex-shrink-0"></div>
+
+    <nav class="flex-1 overflow-y-auto">
+      <ul class="mx-auto flex max-w-[1440px] flex-col gap-2 px-6 py-12 nav:px-12">
+        {
+          links.map((link, i) => (
+            <li
+              class="border-b border-paper/10 py-5 transition-all duration-500"
+              :class={`open ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'`}
+              style={`transition-delay: ${100 + i * 60}ms`}
+            >
+              <a
+                href={link.href}
+                class="group flex items-baseline gap-6 font-display text-3xl text-paper transition-colors hover:text-accent-text nav:text-5xl"
+                @click="open = false"
+              >
+                <span class="font-ui text-xs uppercase tracking-[0.28em] text-paper/40 group-hover:text-accent-text">
+                  0{i + 1}
+                </span>
+                <span>{link.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </aside>
+
+  {/* Search overlay */}
+  <div
+    class="fixed inset-0 z-[65] grid place-items-center bg-ink/95 backdrop-blur-sm transition-[opacity,visibility] duration-300"
+    :class="searchOpen ? 'opacity-100 visible' : 'opacity-0 invisible'"
+    @click.self="searchOpen = false"
+    aria-hidden="true"
+    :aria-hidden="searchOpen ? 'false' : 'true'"
+  >
+    <button
+      type="button"
+      class="absolute right-6 top-6 flex h-10 w-10 items-center justify-center text-paper transition-opacity hover:opacity-70"
+      @click="searchOpen = false"
+      aria-label="Close search"
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+    <form class="w-full max-w-2xl px-6" @submit.prevent="searchOpen = false">
+      <p class="mb-4 text-center font-ui text-xs uppercase tracking-[0.32em] text-paper/60">
+        Search the site
+      </p>
+      <div class="relative">
+        <input
+          type="search"
+          placeholder="Type and hit enter"
+          class="w-full border-0 border-b border-paper/30 bg-transparent pb-3 pl-10 pr-4 font-display text-3xl text-paper placeholder:text-paper/30 focus:border-paper focus:outline-none focus:ring-0 nav:text-5xl"
+          x-ref="searchInput"
+          x-effect="searchOpen && $nextTick(() => $refs.searchInput.focus())"
+        />
+        <svg class="absolute left-0 top-3 h-6 w-6 text-paper/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <p class="mt-4 text-center font-ui text-[10px] uppercase tracking-[0.32em] text-paper/40">
+        Press Esc to close
+      </p>
+    </form>
+  </div>
+</div>

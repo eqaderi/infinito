@@ -1,197 +1,58 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageShell from '../components/shell/PageShell.astro';
+
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Featured from '../components/sections/Featured.astro';
+import Services from '../components/sections/Services.astro';
+import VideoStrip from '../components/sections/VideoStrip.astro';
+import Portfolio from '../components/sections/Portfolio.astro';
+import ProcessCarousel from '../components/sections/ProcessCarousel.astro';
+import TeamGrid from '../components/sections/TeamGrid.astro';
+import CtaStrip from '../components/sections/CtaStrip.astro';
+import BlogPreview from '../components/sections/BlogPreview.astro';
+import Subscribe from '../components/sections/Subscribe.astro';
+import Pricing from '../components/sections/Pricing.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import LogoCloud from '../components/sections/LogoCloud.astro';
+import Contact from '../components/sections/Contact.astro';
+
+import {
+  meta,
+  hero,
+  about,
+  featured,
+  services,
+  videoStrip,
+  portfolio,
+  process,
+  team,
+  stats,
+  blog,
+  pricing,
+  testimonials,
+  logos,
+  contact,
+} from '../data/index';
 ---
 
-<BaseLayout title="Infinito — scaffold smoke test">
-  <main class="min-h-screen px-6 py-16 nav:px-16">
-    <section class="mx-auto max-w-4xl space-y-12">
-      <!-- Heading & intro -->
-      <header class="space-y-4" data-gsap-fade-up>
-        <p class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Phase 0 / scaffold
-        </p>
-        <h1 class="font-display text-5xl leading-tight nav:text-7xl">
-          Infinito <span class="text-gradient">rebuild</span>
-        </h1>
-        <p class="max-w-2xl font-body text-lg text-ink-soft">
-          If you can read this in the right fonts, see the gradient on
-          <span class="text-gradient font-semibold">rebuild</span>, and watch the
-          heading fade up on load — the stack is wired up correctly.
-        </p>
-      </header>
-
-      <!-- Font smoke test -->
-      <section class="space-y-3 rounded-lg border border-paper-gray bg-paper-soft p-6">
-        <h2 class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Fonts
-        </h2>
-        <p class="font-body text-base">Body — Roboto, quick brown fox 0123</p>
-        <p class="font-ui text-base">UI — Montserrat, quick brown fox 0123</p>
-        <p class="font-display text-xl">
-          Display — Playfair Display, quick brown fox 0123
-        </p>
-        <p class="font-alt text-base">
-          Alt — Josefin Sans, quick brown fox 0123
-        </p>
-        <p class="font-mono text-sm">Mono — ui-monospace stack, 0O1lI</p>
-      </section>
-
-      <!-- Color token smoke test -->
-      <section class="space-y-3 rounded-lg border border-paper-gray bg-paper-soft p-6">
-        <h2 class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Accent palette (via CSS custom properties)
-        </h2>
-        <div class="flex flex-wrap gap-4">
-          <div class="flex items-center gap-2">
-            <span
-              class="inline-block h-10 w-10 rounded"
-              style="background: var(--accent-from)"></span>
-            <code class="font-mono text-sm">--accent-from</code>
-          </div>
-          <div class="flex items-center gap-2">
-            <span
-              class="inline-block h-10 w-10 rounded"
-              style="background: var(--accent-to)"></span>
-            <code class="font-mono text-sm">--accent-to</code>
-          </div>
-          <div class="flex items-center gap-2">
-            <span
-              class="inline-block h-10 w-10 rounded"
-              style="background: var(--accent-text)"></span>
-            <code class="font-mono text-sm">--accent-text</code>
-          </div>
-        </div>
-        <div
-          class="h-10 w-full rounded"
-          style="background: linear-gradient(90deg, var(--accent-from), var(--accent-to));">
-        </div>
-      </section>
-
-      <!-- Button smoke test -->
-      <section class="space-y-3 rounded-lg border border-paper-gray bg-paper-soft p-6">
-        <h2 class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Buttons
-        </h2>
-        <div class="flex flex-wrap items-center gap-4">
-          <button
-            class="rounded-full px-6 py-3 font-ui text-sm font-medium uppercase tracking-wider text-paper transition-transform duration-300 ease-out-back hover:-translate-y-0.5"
-            style="background: linear-gradient(45deg, var(--accent-from), var(--accent-to));">
-            Solid gradient
-          </button>
-          <button
-            class="rounded-full border border-paper-gray bg-paper px-6 py-3 font-ui text-sm font-medium uppercase tracking-wider transition-transform duration-300 ease-out-back hover:-translate-y-0.5">
-            <span class="text-gradient">Gradient text</span>
-          </button>
-          <button
-            class="rounded-full px-6 py-3 font-ui text-sm font-medium uppercase tracking-wider transition-transform duration-300 ease-out-back hover:-translate-y-0.5"
-            style="background: var(--paper); border: 2px solid transparent; background-image: linear-gradient(var(--paper), var(--paper)), linear-gradient(45deg, var(--accent-from), var(--accent-to)); background-origin: border-box; background-clip: padding-box, border-box;">
-            Outlined gradient
-          </button>
-        </div>
-      </section>
-
-      <!-- Alpine.js smoke test -->
-      <section
-        class="space-y-3 rounded-lg border border-paper-gray bg-paper-soft p-6"
-        x-data="{ open: false }">
-        <h2 class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Alpine.js
-        </h2>
-        <button
-          class="rounded-full bg-ink px-6 py-3 font-ui text-sm font-medium uppercase tracking-wider text-paper transition-transform duration-300 ease-out-back hover:-translate-y-0.5"
-          @click="open = !open">
-          <span x-text="open ? 'Hide' : 'Show'"></span> Alpine panel
-        </button>
-        <div
-          x-show="open"
-          x-transition.duration.300ms
-          class="rounded border border-paper-gray bg-paper p-4"
-          style="display: none">
-          <p class="font-body text-sm text-ink-soft">
-            Alpine's state is reactive. Toggling the button hides and shows this
-            panel. If you see this when clicking, Alpine is working.
-          </p>
-        </div>
-      </section>
-
-      <!-- Theme switcher smoke test -->
-      <section
-        class="space-y-3 rounded-lg border border-paper-gray bg-paper-soft p-6"
-        x-data="{
-          set(theme) {
-            if (theme) document.documentElement.setAttribute('data-theme', theme);
-            else document.documentElement.removeAttribute('data-theme');
-          }
-        }">
-        <h2 class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Theme switcher (data-theme)
-        </h2>
-        <p class="font-body text-sm text-ink-soft">
-          Click a palette to apply via <code class="font-mono text-xs">data-theme</code>
-          on <code class="font-mono text-xs">&lt;html&gt;</code>. Replaces the legacy 19
-          gradient CSS files.
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
-            @click="set(null)">Default</button>
-          <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
-            @click="set('blue')">Blue</button>
-          <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
-            @click="set('purple-pink')">Purple–Pink</button>
-          <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
-            @click="set('magenta')">Magenta</button>
-        </div>
-      </section>
-
-      <!-- Lucide icon smoke test -->
-      <section class="space-y-3 rounded-lg border border-paper-gray bg-paper-soft p-6">
-        <h2 class="font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Lucide icons (runtime injection)
-        </h2>
-        <p class="font-body text-sm text-ink-soft">
-          Icons below are injected by Lucide after load. If you see SVGs, the
-          wiring works.
-        </p>
-        <div class="flex flex-wrap items-center gap-6 text-ink-soft">
-          <i data-lucide="arrow-right" class="h-6 w-6"></i>
-          <i data-lucide="search" class="h-6 w-6"></i>
-          <i data-lucide="menu" class="h-6 w-6"></i>
-          <i data-lucide="heart" class="h-6 w-6"></i>
-          <i data-lucide="sparkles" class="h-6 w-6"></i>
-        </div>
-      </section>
-
-      <footer class="pt-8 font-ui text-xs uppercase tracking-[0.2em] text-ink-muted">
-        Scaffold verified · Phase 0 · Infinito
-      </footer>
-    </section>
-  </main>
-
-  <!-- GSAP smoke test: fade-up on load -->
-  <script>
-    import { gsap } from 'gsap';
-
-    const reduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    if (!reduced) {
-      gsap.from('[data-gsap-fade-up]', {
-        y: 24,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-    }
-  </script>
-
-  <!-- Lucide smoke test: render all [data-lucide] placeholders -->
-  <script>
-    import { createIcons, icons } from 'lucide';
-    createIcons({ icons });
-  </script>
+<BaseLayout title={meta.title} description={meta.description}>
+  <PageShell brand={meta.brand} navVariant="transparent-white">
+    <Hero {...hero} />
+    <About {...about} />
+    <Featured items={featured} />
+    <Services items={services} />
+    <VideoStrip {...videoStrip} />
+    <Portfolio items={portfolio} />
+    <ProcessCarousel steps={process} />
+    <TeamGrid members={team} />
+    <CtaStrip stats={stats} />
+    <BlogPreview posts={blog} />
+    <Subscribe />
+    <Pricing plans={pricing} />
+    <Testimonials quotes={testimonials} />
+    <LogoCloud rows={logos} />
+    <Contact {...contact} />
+  </PageShell>
 </BaseLayout>

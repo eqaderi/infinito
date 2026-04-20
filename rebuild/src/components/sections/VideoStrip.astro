@@ -1,0 +1,114 @@
+---
+interface Props {
+  background?: string;
+  videoHref?: string;
+  caption?: string;
+}
+
+const {
+  background = '/img/backgrounds/parallax-strip.jpg',
+  videoHref = 'https://vimeo.com/40234826',
+  caption = 'watch our awesome story 2019.',
+} = Astro.props;
+
+/* Convert any vimeo / youtube URL to its embed form so the lightbox
+ * iframe works without a new tab. Falls back to the original href. */
+function toEmbed(url: string): string {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('vimeo.com')) {
+      const id = u.pathname.replace(/\//g, '');
+      return `https://player.vimeo.com/video/${id}?autoplay=1`;
+    }
+    if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
+      const id = u.hostname.includes('youtu.be')
+        ? u.pathname.slice(1)
+        : u.searchParams.get('v') ?? '';
+      return `https://www.youtube.com/embed/${id}?autoplay=1`;
+    }
+  } catch (_) {}
+  return url;
+}
+
+const embedSrc = toEmbed(videoHref);
+---
+
+<section
+  class="relative overflow-hidden border-y border-paper-gray"
+  data-anim="parallax-bg"
+  data-anim-strength="0.4"
+  x-data="{
+    open: false,
+    init() {
+      window.addEventListener('keydown', e => { if (e.key === 'Escape') this.open = false; });
+      this.$watch('open', v => { document.body.style.overflow = v ? 'hidden' : ''; });
+    }
+  }"
+>
+  <div class="absolute inset-0">
+    <div
+      class="absolute -inset-y-12 inset-x-0 bg-cover bg-center"
+      style={`background-image: url('${background}');`}
+      data-parallax-el
+    ></div>
+    <div class="absolute inset-0 bg-ink/55"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-[800px] px-6 py-24 text-center text-paper nav:py-28">
+    <button
+      type="button"
+      class="group relative inline-grid h-20 w-20 place-items-center"
+      aria-label="Watch the video"
+      @click="open = true"
+    >
+      <span class="absolute h-20 w-20 rounded-full bg-paper/15 transition-transform duration-500 group-hover:scale-110"></span>
+      <span class="absolute h-28 w-28 animate-ping rounded-full bg-paper/10"></span>
+      <svg
+        class="relative h-16 w-16 text-paper transition-transform duration-300 group-hover:scale-110"
+        viewBox="0 0 100 100"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M50 10 a40 40 0 1 0 0.001 0z M40 30 v40 l30 -20z" fill-rule="evenodd"></path>
+      </svg>
+    </button>
+    <h2 class="mt-6 font-ui text-sm uppercase tracking-[0.32em]">
+      {caption}
+    </h2>
+  </div>
+
+  {/* Lightbox */}
+  <div
+    class="fixed inset-0 z-[80] grid place-items-center bg-ink/90 p-4 transition-[opacity,visibility] duration-300 sm:p-10"
+    :class="open ? 'opacity-100 visible' : 'opacity-0 invisible'"
+    @click.self="open = false"
+    aria-hidden="true"
+    :aria-hidden="open ? 'false' : 'true'"
+  >
+    <div class="relative w-full max-w-5xl">
+      <button
+        type="button"
+        class="absolute -top-12 right-0 flex h-10 w-10 items-center justify-center rounded-full text-paper transition-colors hover:bg-paper/10"
+        @click="open = false"
+        aria-label="Close video"
+      >
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div class="aspect-video w-full overflow-hidden rounded-md bg-black shadow-2xl">
+        <template x-if="open">
+          <iframe
+            src={embedSrc}
+            class="h-full w-full"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            title="Video"
+          ></iframe>
+        </template>
+      </div>
+    </div>
+  </div>
+</section>

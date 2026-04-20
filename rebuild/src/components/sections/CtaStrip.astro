@@ -1,0 +1,52 @@
+---
+import GradientText from '../atoms/GradientText.astro';
+
+export interface Stat {
+  value: number;
+  label: string;
+  display?: string;
+}
+
+interface Props {
+  stats?: Stat[];
+}
+
+const {
+  stats = [
+    {
+      value: 999999,
+      label: 'lines of code',
+      display: '~1 Million+',
+    },
+    { value: 9235, label: 'users' },
+    { value: 53, label: 'apps' },
+  ],
+} = Astro.props;
+---
+
+<section class="border-y border-paper/10 bg-ink px-6 py-16 text-paper">
+  <div class="mx-auto grid max-w-[1100px] grid-cols-1 gap-10 text-center sm:grid-cols-3">
+    {
+      stats.map((s, idx) => (
+        <div data-anim="fade-up" data-anim-delay={(idx * 0.15).toFixed(2)}>
+          <p class="mb-3 font-ui text-xs uppercase tracking-[0.32em]">
+            <GradientText>{s.label}</GradientText>
+          </p>
+          {s.display ? (
+            <span class="block font-display text-4xl nav:text-5xl">
+              {s.display}
+            </span>
+          ) : (
+            <span
+              class="block font-display text-4xl tabular-nums nav:text-5xl"
+              data-anim="odometer"
+              data-anim-end={s.value}
+            >
+              {s.value}
+            </span>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</section>

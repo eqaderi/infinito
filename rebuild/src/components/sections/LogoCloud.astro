@@ -1,0 +1,61 @@
+---
+import SectionTitle from '../atoms/SectionTitle.astro';
+
+export interface ClientLogo {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  rows?: ClientLogo[][];
+}
+
+const {
+  eyebrow = 'our partners',
+  rows = [
+    [
+      { src: '/img/clients/logo-1.png', alt: 'Client 1' },
+      { src: '/img/clients/logo-14.png', alt: 'Client 14' },
+      { src: '/img/clients/logo-13.png', alt: 'Client 13' },
+      { src: '/img/clients/logo-8.png', alt: 'Client 8' },
+      { src: '/img/clients/logo-15.png', alt: 'Client 15' },
+    ],
+    [
+      { src: '/img/clients/logo-6.png', alt: 'Client 6' },
+      { src: '/img/clients/logo-16.png', alt: 'Client 16' },
+      { src: '/img/clients/logo-4.png', alt: 'Client 4' },
+      { src: '/img/clients/logo-17.png', alt: 'Client 17' },
+      { src: '/img/clients/logo-10.png', alt: 'Client 10' },
+    ],
+  ],
+} = Astro.props;
+---
+
+<section class="bg-paper px-6 py-24 nav:px-12 nav:py-32">
+  <div class="mx-auto max-w-[1200px]">
+    <SectionTitle eyebrow={eyebrow} class="mb-12" />
+    <div class="space-y-8">
+      {
+        rows.map((row, rowIdx) => (
+          <div
+            class="grid grid-cols-2 items-center gap-x-8 gap-y-10 sm:grid-cols-3 md:grid-cols-5"
+            data-anim="fade-up"
+            data-anim-delay={(rowIdx * 0.15).toFixed(2)}
+          >
+            {row.map((logo) => (
+              <div class="grid h-20 place-items-center px-4">
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  class="max-h-12 w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

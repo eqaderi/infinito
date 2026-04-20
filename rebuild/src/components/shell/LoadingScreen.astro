@@ -1,0 +1,49 @@
+---
+/* Phase 1A: simple fade-out overlay on window.load.
+ * Phase 1B will replace this with the legacy SVG draw-in
+ * intro using GSAP. */
+---
+
+<div
+  id="loading-screen"
+  class="fixed inset-0 z-50 grid place-items-center bg-paper transition-opacity duration-500 ease-out"
+  data-loading-screen
+>
+  <div class="flex flex-col items-center gap-6">
+    <svg
+      class="h-16 w-32 animate-pulse text-ink"
+      viewBox="0 0 187.3 93.7"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <path
+        d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z"
+      ></path>
+    </svg>
+    <span class="font-ui text-xs uppercase tracking-[0.4em] text-ink-muted">
+      infinito
+    </span>
+  </div>
+</div>
+
+<script>
+  const screen = document.querySelector<HTMLElement>('[data-loading-screen]');
+  if (screen) {
+    const hide = () => {
+      screen.style.opacity = '0';
+      screen.style.pointerEvents = 'none';
+      window.setTimeout(() => {
+        screen.style.display = 'none';
+      }, 600);
+    };
+    if (document.readyState === 'complete') {
+      window.setTimeout(hide, 200);
+    } else {
+      window.addEventListener('load', () => window.setTimeout(hide, 200), {
+        once: true,
+      });
+    }
+  }
+</script>

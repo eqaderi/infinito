@@ -1,0 +1,113 @@
+---
+import SectionTitle from '../atoms/SectionTitle.astro';
+import GradientText from '../atoms/GradientText.astro';
+import Button from '../atoms/Button.astro';
+
+export interface BlogPost {
+  title: string;
+  date: string;
+  author: string;
+  category: string;
+  authorImage: string;
+  excerpt: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  posts?: BlogPost[];
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  eyebrow = 'our blog',
+  posts = [
+    {
+      title: 'Graphic Romance',
+      date: 'September 17, 2016',
+      author: 'Joe Biden',
+      category: 'Lifestyle',
+      authorImage: '/img/blog/author-01.jpg',
+      excerpt:
+        "It's a great way to kick off Preen's 20th year in business; the couple met aged 18 while studying on the Isle of Man. Their footer signature play on …",
+    },
+    {
+      title: 'Tacos & Paint',
+      date: 'July 17, 2016',
+      author: 'Linda Jobs',
+      category: 'Technology',
+      authorImage: '/img/blog/author-02.jpg',
+      excerpt:
+        'Why do we love tacos so? No reason really except that they are easy to make, come in a unique shape that you can dress up colorfully …',
+    },
+    {
+      title: "We've moved into our new office.",
+      date: 'December 28, 2015',
+      author: 'Tony Montana',
+      category: 'News',
+      authorImage: '/img/blog/author-03.jpg',
+      excerpt:
+        'We have now moved into our brand new office in Tamworth at Relay Point. We are located at the roundabout just off junction 10 …',
+    },
+  ],
+  ctaLabel = 'read more stories',
+  ctaHref = '#0',
+} = Astro.props;
+---
+
+<section id="blog" class="bg-paper-soft px-6 py-24 nav:px-12 nav:py-32">
+  <div class="mx-auto max-w-[1200px]">
+    <SectionTitle eyebrow={eyebrow} class="mb-12" />
+
+    <div class="overflow-hidden rounded-lg border border-paper-gray bg-paper">
+      {
+        posts.map((post, idx) => (
+          <article
+            class="group relative overflow-hidden border-b border-paper-gray last:border-b-0"
+            data-anim="slide-up"
+            data-anim-delay={(idx * 0.1).toFixed(2)}
+          >
+            <a href={post.href ?? '#0'} class="block">
+              <div class="absolute inset-0 -z-0 origin-left scale-x-0 bg-gradient-to-r from-paper-soft via-paper-gray to-paper-soft transition-transform duration-500 group-hover:scale-x-100"></div>
+              <div class="relative grid items-center gap-6 px-6 py-7 nav:px-10 md:grid-cols-12">
+                <div class="md:col-span-5">
+                  <h4 class="font-display text-2xl">
+                    <GradientText>{post.title}</GradientText>
+                  </h4>
+                  <p class="mt-2 font-ui text-xs uppercase tracking-[0.18em] text-ink-muted">
+                    Posted on {post.date} by {post.author} in {post.category}
+                  </p>
+                </div>
+                <div class="hidden items-center gap-4 md:col-span-7 md:flex">
+                  <img
+                    src={post.authorImage}
+                    alt={post.author}
+                    class="h-14 w-14 flex-shrink-0 rounded-full object-cover"
+                    loading="lazy"
+                  />
+                  <p class="flex-1 font-body text-sm leading-relaxed text-ink-soft">
+                    {post.excerpt}
+                  </p>
+                  <span class="inline-flex flex-shrink-0 items-center gap-2 font-ui text-xs uppercase tracking-[0.18em] text-ink transition-transform duration-300 group-hover:translate-x-1">
+                    read more
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center" data-anim="fade-up">
+      <Button href={ctaHref} variant="gradient-outline" size="md">
+        {ctaLabel}
+      </Button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  align?: 'left' | 'center' | 'right';
+  class?: string;
+}
+
+const { align = 'left', class: className = '' } = Astro.props;
+const wrapAlign =
+  align === 'center'
+    ? 'mx-auto'
+    : align === 'right'
+      ? 'ml-auto'
+      : '';
+---
+
+<span
+  class={`block h-px w-12 bg-gradient-accent ${wrapAlign} ${className}`}
+  aria-hidden="true"
+></span>

@@ -1,0 +1,157 @@
+---
+import SectionTitle from '../atoms/SectionTitle.astro';
+
+export interface PortfolioItem {
+  title: string;
+  subtitle: string;
+  image: string;
+  href?: string;
+  span?: 'sm' | 'md' | 'lg' | 'xl';
+  categories: string[];
+}
+
+interface Props {
+  eyebrow?: string;
+  filters?: string[];
+  items?: PortfolioItem[];
+}
+
+const {
+  eyebrow = 'featured works',
+  filters = ['all', 'branding', 'print', 'photography'],
+  items = [
+    {
+      title: 'red sky',
+      subtitle: 'we fought hard for this one',
+      image: '/img/portfolio/red-sky.jpg',
+      span: 'md',
+      categories: ['print', 'photography'],
+    },
+    {
+      title: 'silver nail',
+      subtitle: 'check this one out!',
+      image: '/img/portfolio/silver-nail.jpg',
+      span: 'sm',
+      categories: ['branding', 'print'],
+    },
+    {
+      title: 'golden tail',
+      subtitle: 'a little project done right',
+      image: '/img/portfolio/golden-tail.jpg',
+      span: 'lg',
+      categories: ['branding', 'photography'],
+    },
+    {
+      title: 'death rose',
+      subtitle: 'absolutely gorgeous',
+      image: '/img/portfolio/death-rose.jpg',
+      span: 'xl',
+      categories: ['print', 'photography'],
+    },
+    {
+      title: 'shining star',
+      subtitle: 'the state of art',
+      image: '/img/portfolio/shining-star.gif',
+      span: 'lg',
+      categories: ['branding', 'photography'],
+    },
+  ],
+} = Astro.props;
+
+/* Use a 12-col grid with balanced spans + fixed-height rows so the
+ * layout is predictable and filtering doesn't reflow item heights. */
+const spanCls: Record<NonNullable<PortfolioItem['span']>, string> = {
+  sm: 'md:col-span-4 md:row-span-1',
+  md: 'md:col-span-4 md:row-span-1',
+  lg: 'md:col-span-6 md:row-span-1',
+  xl: 'md:col-span-8 md:row-span-2',
+};
+
+const itemsJson = JSON.stringify(
+  items.map((i) => i.categories.join(' ').toLowerCase()),
+);
+---
+
+<section
+  id="portfolio"
+  class="bg-paper px-6 py-24 nav:px-12 nav:py-32"
+  x-data={`{
+    active: 'all',
+    items: ${itemsJson},
+    matches(idx) {
+      if (this.active === 'all') return true;
+      return (this.items[idx] || '').includes(this.active);
+    }
+  }`}
+>
+  <div class="mx-auto max-w-[1300px]">
+    <div class="mb-12 flex flex-col items-start justify-between gap-6 nav:flex-row nav:items-end">
+      <SectionTitle eyebrow={eyebrow} />
+      <div
+        class="flex flex-wrap gap-2 self-start nav:self-auto"
+        data-anim="fade-up"
+        data-anim-delay="0.2"
+      >
+        {
+          filters.map((filter) => (
+            <button
+              type="button"
+              class="rounded-full border px-4 py-2 font-ui text-xs uppercase tracking-[0.18em] transition-all"
+              :class={`active === '${filter}' ? 'border-transparent bg-gradient-accent text-paper' : 'border-paper-gray text-ink-muted hover:border-ink hover:text-ink'`}
+              @click={`active = '${filter}'`}
+            >
+              {filter === 'all' ? 'show all' : filter}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="grid auto-rows-[260px] grid-cols-1 gap-6 [grid-auto-flow:dense] sm:auto-rows-[300px] md:grid-cols-12">
+      {
+        items.map((item, idx) => (
+          <a
+            href={item.href ?? '#0'}
+            class:list={[
+              'group relative block overflow-hidden bg-paper-gray transition-opacity duration-300',
+              spanCls[item.span ?? 'md'],
+            ]}
+            x-show={`matches(${idx})`}
+            x-transition:enter="transition-opacity duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            data-anim="fade-up"
+            data-anim-delay={(0.05 * (idx % 3)).toFixed(2)}
+          >
+            <div class="absolute inset-0 overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.title}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+            <div class="absolute bottom-0 left-0 p-6 text-paper opacity-0 transition-all duration-500 group-hover:opacity-100">
+              <h3 class="font-display text-2xl">{item.title}</h3>
+              <p class="mt-1 font-ui text-xs uppercase tracking-[0.18em] text-paper/80">
+                {item.subtitle}
+              </p>
+            </div>
+            <div class="absolute right-4 top-4 flex translate-y-2 flex-col gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-paper/15 text-paper backdrop-blur transition-colors hover:bg-gradient-accent">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -6,12 +6,14 @@ interface Props {
   title?: string;
   description?: string;
   theme?: 'default' | 'blue' | 'purple-pink' | 'magenta';
+  bodyClass?: string;
 }
 
 const {
   title = 'Infinito',
   description = 'Infinito — modern creative agency & portfolio template.',
   theme,
+  bodyClass = '',
 } = Astro.props;
 ---
 
@@ -24,8 +26,32 @@ const {
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    {/* Boot: decide synchronously whether to hide [data-anim] elements
+        before they paint. With JS + no reduced motion, add `has-anim`
+        so CSS hides them; otherwise leave them visible. */}
+    <script is:inline>
+      (function () {
+        try {
+          var reduced = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches;
+          if (!reduced) document.documentElement.classList.add('has-anim');
+        } catch (_) {}
+      })();
+    </script>
   </head>
-  <body>
+  <body class={bodyClass}>
     <slot />
+
+    <script>
+      import { mount } from '../lib/animations';
+
+      const start = () => mount();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+      } else {
+        start();
+      }
+    </script>
   </body>
 </html>

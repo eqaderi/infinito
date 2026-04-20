@@ -1,0 +1,52 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'url' | 'number';
+  required?: boolean;
+  inverse?: boolean;
+  class?: string;
+}
+
+const {
+  id,
+  name,
+  label,
+  type = 'text',
+  required = false,
+  inverse = false,
+  class: className = '',
+} = Astro.props;
+
+const baseField =
+  'peer w-full border-0 border-b bg-transparent px-0 pb-2 pt-6 font-body text-base focus:outline-none focus:ring-0';
+const colorCls = inverse
+  ? 'text-paper border-paper/30 focus:border-paper placeholder:text-paper/40'
+  : 'text-ink border-ink/15 focus:border-ink placeholder:text-ink-muted';
+const labelBase =
+  'pointer-events-none absolute left-0 origin-left font-ui text-xs uppercase tracking-[0.18em] transition-all duration-300 ease-out';
+const labelColor = inverse
+  ? 'text-paper/60 peer-focus:text-paper'
+  : 'text-ink-muted peer-focus:text-ink';
+---
+
+<div class={`relative ${className}`}>
+  <input
+    id={id}
+    name={name}
+    type={type}
+    required={required}
+    placeholder=" "
+    class={`${baseField} ${colorCls}`}
+  />
+  <label
+    for={id}
+    class={`${labelBase} ${labelColor}
+      top-6 scale-100 peer-placeholder-shown:top-6 peer-placeholder-shown:scale-100
+      peer-focus:top-1 peer-focus:scale-90
+      peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:scale-90`}
+  >
+    {label}{required ? ' *' : ''}
+  </label>
+</div>

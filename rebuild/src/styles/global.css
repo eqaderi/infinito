@@ -88,13 +88,39 @@ body {
           color: transparent;
 }
 
+/* Gradient bg utility */
+.bg-gradient-accent {
+  background: linear-gradient(45deg, var(--accent-from), var(--accent-to));
+}
+
+/* -------------------------------------------------------
+ * Animation initial state
+ *
+ * Elements with [data-anim] are hidden until the animation
+ * library either reveals them (sets [data-anim-shown]) or
+ * the html.no-anim hatch is engaged (no JS / reduced motion).
+ *
+ * The inline boot script in BaseLayout decides which to apply
+ * synchronously, so there is never a flash of unstyled content.
+ * ------------------------------------------------------- */
+html.has-anim [data-anim]:not([data-anim-shown]) {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+html.has-anim [data-anim="parallax-bg"]:not([data-anim-shown]),
+html.has-anim [data-anim="odometer"]:not([data-anim-shown]),
+html.has-anim [data-anim="svg-draw"]:not([data-anim-shown]) {
+  opacity: 1;
+}
+
 /* -------------------------------------------------------
  * Reduced motion
  *
  * Global guard: any user with prefers-reduced-motion gets
- * near-instant animations/transitions. Component-level
- * code should ALSO check the media query before spinning
- * up GSAP/ScrollTrigger timelines.
+ * near-instant animations/transitions. The animations
+ * library ALSO checks this media query and bails out of
+ * GSAP/ScrollTrigger timelines.
  * ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -104,5 +130,10 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

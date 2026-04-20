@@ -1,0 +1,107 @@
+---
+import SectionTitle from '../atoms/SectionTitle.astro';
+
+export interface ServiceItem {
+  title: string;
+  body: string;
+  icon: 'web' | 'cart' | 'site' | 'consult' | 'brand';
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  items?: ServiceItem[];
+}
+
+const {
+  eyebrow,
+  title,
+  items = [
+    {
+      title: 'Web Applications',
+      body: 'From a business catalog to an administrative system',
+      icon: 'web',
+    },
+    {
+      title: 'Ecommerce',
+      body: 'A refined shopping experience that gets you an optimal conversion rate',
+      icon: 'cart',
+    },
+    {
+      title: 'Websites',
+      body: 'From an educational platform to an enterprise level website',
+      icon: 'site',
+    },
+    {
+      title: 'Consultancy',
+      body: 'Advice on user experience and other web related subjects',
+      icon: 'consult',
+    },
+    {
+      title: 'Branding',
+      body: 'Excepteur sint occaecat experience and other web cupidatat non proident',
+      icon: 'brand',
+    },
+  ],
+} = Astro.props;
+
+/* Lightweight icon set drawn as SVG strokes so registerSvgDraw can
+ * animate them in. Source-of-truth: legacy SCSS used the linea
+ * iconset; we replicate the visual category at a much smaller bundle. */
+const icons: Record<ServiceItem['icon'], string> = {
+  web: '<rect x="6" y="10" width="52" height="40" rx="2"/><path d="M6 18 L58 18"/><circle cx="11" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><circle cx="19" cy="14" r="1"/><path d="M16 30 L24 38 L16 46 M48 30 L40 38 L48 46 M34 28 L30 48"/>',
+  cart: '<circle cx="22" cy="52" r="3"/><circle cx="46" cy="52" r="3"/><path d="M6 10 L14 10 L20 40 L48 40 L54 18 L18 18"/>',
+  site: '<rect x="6" y="10" width="52" height="40" rx="2"/><path d="M6 22 L58 22 M16 32 L48 32 M16 40 L40 40"/>',
+  consult: '<circle cx="32" cy="22" r="9"/><path d="M16 50 C16 40 22 36 32 36 C42 36 48 40 48 50"/><path d="M40 14 L46 8 M44 6 L46 8 L48 6"/>',
+  brand: '<polygon points="32,8 40,24 58,26 44,38 48,56 32,46 16,56 20,38 6,26 24,24"/>',
+};
+
+const Component = items.length > 0;
+---
+
+{
+  Component && (
+    <section class="bg-paper-soft px-6 py-24 nav:px-12 nav:py-32">
+      <div class="mx-auto max-w-[1200px]">
+        {(eyebrow || title) && (
+          <SectionTitle
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            class="mb-16"
+          />
+        )}
+        <div class="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 md:grid-cols-6">
+          {items.map((item, idx) => (
+            <div
+              class:list={[
+                'text-center md:col-span-2',
+                idx === 3 && 'md:col-start-2',
+              ]}
+              data-anim="slide-up"
+              data-anim-delay={(0.1 * (idx % 3)).toFixed(2)}
+            >
+              <div class="mx-auto mb-6 inline-block">
+                <svg
+                  class="h-16 w-16 text-ink-muted"
+                  viewBox="0 0 64 64"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  data-anim="svg-draw"
+                  set:html={icons[item.icon]}
+                />
+              </div>
+              <h4 class="mb-3 font-display text-xl text-ink">{item.title}</h4>
+              <p class="font-body text-sm leading-relaxed text-ink-soft">
+                {item.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

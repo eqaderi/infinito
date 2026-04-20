@@ -1,0 +1,24 @@
+---
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import LoadingScreen from './LoadingScreen.astro';
+
+interface Props {
+  navVariant?: 'transparent-white' | 'solid-dark';
+  brand?: string;
+  showLoading?: boolean;
+}
+
+const {
+  navVariant = 'transparent-white',
+  brand = 'infinito',
+  showLoading = true,
+} = Astro.props;
+---
+
+{showLoading && <LoadingScreen />}
+<Nav variant={navVariant} brand={brand} />
+<main class="overflow-x-clip">
+  <slot />
+</main>
+<Footer brand={brand} />

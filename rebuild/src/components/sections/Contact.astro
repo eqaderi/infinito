@@ -1,0 +1,172 @@
+---
+import SectionTitle from '../atoms/SectionTitle.astro';
+import Input from '../atoms/Input.astro';
+import Textarea from '../atoms/Textarea.astro';
+import Button from '../atoms/Button.astro';
+
+interface ContactInfo {
+  label: string;
+  primary?: { text: string; href?: string }[];
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  formEndpoint?: string;
+  info?: {
+    text?: ContactInfo;
+    call?: ContactInfo;
+    visit?: ContactInfo & { mapHref?: string };
+  };
+  mapAddress?: string;
+}
+
+const {
+  eyebrow = 'contact us',
+  title = 'write us / visit us',
+  body = 'The work is as important as the pleasure we get from doing it. When people who love creating, learning and growing get together, forming a team with ties that transcend the workplace.',
+  formEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '#',
+  info = {
+    text: {
+      label: 'text us',
+      primary: [
+        { text: 'hello@infinito.com', href: 'mailto:hello@infinito.com' },
+        { text: 'join@infinito.com', href: 'mailto:join@infinito.com' },
+      ],
+    },
+    call: {
+      label: 'call us',
+      primary: [{ text: 'Tel: +44 775 988 988', href: 'tel:+44775988988' }],
+    },
+    visit: {
+      label: 'visit us',
+      primary: [{ text: '6 Greswell St,' }, { text: 'London SW6 6PP, UK' }],
+      mapHref:
+        'https://www.google.co.uk/maps/place/6+Greswell+St,+Fulham,+London+SW6+6PP',
+    },
+  },
+  mapAddress = '6 Greswell St, Fulham, London SW6 6PP',
+} = Astro.props;
+---
+
+<section id="contact" class="bg-paper px-6 py-24 nav:px-12 nav:py-32">
+  <div class="mx-auto max-w-[1200px]">
+    {/* Header */}
+    <div class="mb-12 grid gap-10 md:grid-cols-12 md:items-end">
+      <div class="md:col-span-6">
+        <SectionTitle eyebrow={eyebrow} title={title} />
+      </div>
+      <div class="md:col-span-5 md:col-start-8">
+        <p
+          class="font-body text-lg leading-relaxed text-ink-soft"
+          data-anim="slide-up"
+          data-anim-delay="0.2"
+        >
+          {body}
+        </p>
+      </div>
+    </div>
+
+    {/* Form */}
+    <form
+      action={formEndpoint}
+      method="post"
+      class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2"
+    >
+      <div data-anim="fade-up">
+        <Input id="contact-fname" name="fname" label="First Name" required />
+      </div>
+      <div data-anim="fade-up" data-anim-delay="0.05">
+        <Input id="contact-lname" name="lname" label="Last Name" />
+      </div>
+      <div data-anim="fade-up" data-anim-delay="0.1">
+        <Input
+          id="contact-email"
+          name="email"
+          label="Email Address"
+          type="email"
+          required
+        />
+      </div>
+      <div data-anim="fade-up" data-anim-delay="0.15">
+        <Input id="contact-phone" name="phone" label="Phone Number" type="tel" />
+      </div>
+      <div class="sm:col-span-2" data-anim="fade-up" data-anim-delay="0.2">
+        <Textarea
+          id="contact-message"
+          name="message"
+          label="Message"
+          rows={5}
+          required
+        />
+      </div>
+      <div class="text-center sm:col-span-2" data-anim="fade-up" data-anim-delay="0.3">
+        <Button type="submit" variant="gradient-solid" size="lg">
+          send
+        </Button>
+        {
+          formEndpoint === '#' && (
+            <p class="mt-3 font-ui text-xs uppercase tracking-[0.18em] text-ink-muted">
+              Set <code class="font-mono">PUBLIC_FORMSPREE_ENDPOINT</code> in
+              your <code class="font-mono">.env</code>
+            </p>
+          )
+        }
+      </div>
+    </form>
+
+    {/* Info grid + map */}
+    <div class="mt-20 grid gap-10 md:grid-cols-3" data-anim="slide-up">
+      {(['text', 'call', 'visit'] as const).map((key) => {
+        const i = info[key];
+        if (!i) return null;
+        return (
+          <div class="text-center">
+            <h4 class="mb-3 font-ui text-xs uppercase tracking-[0.32em] text-ink-muted">
+              {i.label}
+            </h4>
+            <div class="space-y-1">
+              {i.primary?.map((p) =>
+                p.href ? (
+                  <a
+                    href={p.href}
+                    class="block font-body text-base text-ink transition-colors hover:text-accent-text"
+                  >
+                    {p.text}
+                  </a>
+                ) : (
+                  <div class="font-body text-base text-ink">{p.text}</div>
+                ),
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* Map (Google Maps no-API embed) */}
+    <div class="relative mt-12 overflow-hidden rounded-lg border border-paper-gray">
+      <iframe
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(mapAddress)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+        class="block aspect-[16/7] w-full grayscale-[0.2] contrast-95"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title={`Map to ${mapAddress}`}
+        allowfullscreen
+      ></iframe>
+      <a
+        href={info.visit?.mapHref ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapAddress)}`}
+        target="_blank"
+        rel="noopener"
+        class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-paper px-4 py-2 font-ui text-xs uppercase tracking-[0.28em] text-ink shadow-md transition-transform duration-300 hover:scale-105"
+      >
+        <svg class="h-4 w-4 text-accent-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        Open in Google Maps
+      </a>
+    </div>
+  </div>
+</section>
