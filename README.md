@@ -1,1 +1,1 @@
-# infinito-nuxt
+# infinito
