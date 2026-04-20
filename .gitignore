@@ -1,0 +1,66 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+.npm/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.tmp/
+temp/
+.cache/
+coverage/
+
+# Legacy task runners / build artifacts
+.grunt/
+.sass-cache/
+
+# Generated / minified assets and maps (keep if you want source-only workflow)
+# Uncomment these only if you will regenerate them from source
+# **/*.min.css
+# **/*.min.js
+# **/*.map
+
+# PHP / server junk
+vendor/
+composer.lock
+
+# Archives / exports
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Mac resource forks
+._*
+
+# Cursor / AI tooling
+.cursor/
