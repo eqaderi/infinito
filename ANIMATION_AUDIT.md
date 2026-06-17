@@ -3,6 +3,8 @@
 > Structured inventory of every animation, effect, and interactive system in the Infinito legacy template, with a viability assessment and a concrete preservation/replacement plan for each.
 >
 > Companion to **[`MODERNIZATION_PLAN.md`](MODERNIZATION_PLAN.md)**.
+>
+> This audit covers the first two steps of the [rebuild methodology](REBUILD_METHODOLOGY.md): **"What it does"** = understand; **"Viable today?" / "Tier"** = evaluate. The remaining steps (pin as a test contract, build implementation-blind, verify) happen per-feature when it enters its phase — see [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md).
 
 ---
 

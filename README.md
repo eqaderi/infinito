@@ -37,7 +37,7 @@ The legacy folders (`Final_Files/`, `working_dir/`, `Documentation/`) are treate
 
 ## Status
 
-**Current phase:** Phase 1A — vertical slice of the home page (`/`). Validates the architecture top-to-bottom on one route before scaling to the rest.
+**Current phase:** Phase 1B. Phase 1A (the home-page vertical slice) is complete.
 
 - ✅ Phase 0 — Foundation (Astro + Tailwind + Alpine + GSAP, design tokens, fonts, animation primitives).
 - ✅ Phase 1A — Home-page rebuild (15 sections, centralized data, asset migration, full integration, in-browser verification + bug-fix pass).
@@ -45,7 +45,7 @@ The legacy folders (`Final_Files/`, `working_dir/`, `Documentation/`) are treate
 - ⏳ Phase 2 — Marquee hero effects (Tier 1 WebGL: tilt, video rotator, ripples, distort, fluid).
 - ⏳ Phase 3 — Secondary effects, docs site, Envato submission package.
 
-For detailed Phase 1A status (everything built, today's fix log, known remaining issues, next-day backlog) see **[`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md)**.
+This ledger is a summary. The **live source of truth** for what's built, the current backlog, and the fix log is **[`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md)**.
 
 ## Getting started
 
@@ -71,6 +71,7 @@ All home-page copy and asset paths live in **[`rebuild/src/data/index.ts`](rebui
 
 ## Documentation
 
+- **[`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md)** — how every feature is rebuilt: behavior-first, implementation-blind, pinned by test contracts. Read this before building or rebuilding anything.
 - **[`MODERNIZATION_PLAN.md`](MODERNIZATION_PLAN.md)** — the audit, migration strategy, phased roadmap, and risk list. The "Implementation Progress" section near the top tracks live status.
 - **[`ANIMATION_AUDIT.md`](ANIMATION_AUDIT.md)** — per-effect inventory of every legacy animation with a tiered replacement plan. The "Implementation Status" section near the top tracks which primitives are now live.
 - **[`rebuild/docs/index-section-map.md`](rebuild/docs/index-section-map.md)** — section-by-section reference extracted from `Final_Files/index.html` while building the rebuild.

@@ -20,6 +20,14 @@ The codebase has two faces:
 
 ---
 
+## 1.1 How we rebuild (methodology)
+
+Every feature, function, and visual is rebuilt **behavior-first and implementation-blind**, never ported. For each thing we keep: understand what it does → evaluate whether it's worth keeping → pin the behavior down as a **test contract** that says nothing about implementation → close the legacy source → rebuild from scratch with modern, minimal code → verify against the contract.
+
+The legacy tree is a **specification of behavior and visuals, never a source of code.** The full loop, the four contract types (functional / accessibility / performance / visual), the tooling, and the Phase 1A backfill plan live in **[`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md)**. This governs every phase below.
+
+---
+
 ## 1.5 Implementation Progress (live)
 
 > Last updated: **2026-04-20**. The detailed Phase 1A handoff lives in [`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md).
@@ -330,6 +338,8 @@ Consolidate **5 icon packs** down to **one**:
 ---
 
 ## 8. Phased Migration Roadmap
+
+> Every phase follows the [rebuild methodology](REBUILD_METHODOLOGY.md): each kept behavior is characterized, evaluated, pinned as a test contract, then rebuilt implementation-blind. A phase is not complete until its behaviors' contracts (functional, accessibility, performance, visual) are green — this is implied in every "Exit criteria" below.
 
 ### Phase 0 — Foundation (1–2 weeks)
 
