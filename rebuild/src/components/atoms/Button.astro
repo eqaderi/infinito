@@ -24,14 +24,14 @@ const sizeMap = {
 } as const;
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-full font-ui font-medium uppercase tracking-[0.18em] transition-transform duration-300 ease-out-back hover:-translate-y-0.5 focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-text focus-visible:ring-offset-2';
+  'inline-flex items-center justify-center gap-2 rounded-full font-ui font-medium uppercase tracking-[0.18em] transition-transform duration-300 ease-out-back hover:-translate-y-0.5 focus-visible:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent-text focus-visible:ring-offset-2';
 
 const variantClasses: Record<NonNullable<Props['variant']>, string> = {
-  'gradient-solid': 'text-paper bg-gradient-accent shadow-sm hover:shadow-md',
+  'gradient-solid': 'text-paper bg-gradient-accent shadow-xs hover:shadow-md',
   'gradient-text':
     'border border-paper-gray bg-paper hover:border-transparent',
   'gradient-outline':
-    'relative text-ink bg-paper border-[2px] border-transparent [background-image:linear-gradient(var(--tw-bg-paper,white),var(--tw-bg-paper,white)),linear-gradient(45deg,var(--accent-from),var(--accent-to))] [background-origin:border-box] [background-clip:padding-box,border-box]',
+    'relative text-ink bg-paper border-2 border-transparent bg-[linear-gradient(var(--tw-bg-paper,white),var(--tw-bg-paper,white)),linear-gradient(45deg,var(--accent-from),var(--accent-to))] bg-origin-border [background-clip:padding-box,border-box]',
   dark: 'text-paper bg-ink hover:bg-ink-soft',
   ghost: 'text-ink hover:text-accent-text',
 };

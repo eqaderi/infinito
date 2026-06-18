@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 
 const baseField =
-  'peer w-full border-0 border-b bg-transparent px-0 pb-2 pt-6 font-body text-base focus:outline-none focus:ring-0';
+  'peer w-full border-0 border-b bg-transparent px-0 pb-2 pt-6 font-body text-base focus:outline-hidden focus:ring-0';
 const colorCls = inverse
   ? 'text-paper border-paper/30 focus:border-paper placeholder:text-paper/40'
   : 'text-ink border-ink/15 focus:border-ink placeholder:text-ink-muted';
@@ -45,7 +45,7 @@ const labelColor = inverse
     class={`${labelBase} ${labelColor}
       top-6 scale-100 peer-placeholder-shown:top-6 peer-placeholder-shown:scale-100
       peer-focus:top-1 peer-focus:scale-90
-      peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:scale-90`}
+      peer-not-placeholder-shown:top-1 peer-not-placeholder-shown:scale-90`}
   >
     {label}{required ? ' *' : ''}
   </label>

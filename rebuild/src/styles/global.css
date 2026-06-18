@@ -1,6 +1,80 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-nav: 856px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1440px;
+
+  --font-body: Roboto, system-ui, -apple-system, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-ui: Montserrat, system-ui, sans-serif;
+  --font-alt: 'Josefin Sans', system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  --color-accent-from: var(--accent-from);
+  --color-accent-to: var(--accent-to);
+  --color-accent-text: var(--accent-text);
+
+  --color-ink: #111111;
+  --color-ink-soft: #333333;
+  --color-ink-muted: #666666;
+
+  --color-paper: #ffffff;
+  --color-paper-soft: #f7f7f7;
+  --color-paper-gray: #eeeeee;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.85rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.5;
+
+  --z-index-1: 100;
+  --z-index-2: 200;
+  --z-index-3: 300;
+  --z-index-4: 400;
+  --z-index-5: 500;
+  --z-index-6: 600;
+  --z-index-7: 700;
+  --z-index-8: 800;
+  --z-index-9: 900;
+  --z-index-10: 1000;
+
+  --ease-in-out-sine: var(--ease-in-out-sine);
+  --ease-in-out-cubic: var(--ease-in-out-cubic);
+  --ease-fast-out-slow-in: var(--ease-fast-out-slow-in);
+  --ease-out-back: var(--ease-out-back);
+  --ease-page-cover: var(--ease-page-cover);
+
+  --transition-duration-page-cover: var(--page-cover-duration);
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 /* =========================================================
  * Design tokens (CSS custom properties)

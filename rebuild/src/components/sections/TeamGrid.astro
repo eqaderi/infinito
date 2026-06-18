@@ -103,7 +103,7 @@ const {
             data-anim="slide-up"
             data-anim-delay={(idx * 0.1).toFixed(2)}
           >
-            <div class="aspect-[4/5] overflow-hidden">
+            <div class="aspect-4/5 overflow-hidden">
               <img
                 src={m.image}
                 alt={m.name}
@@ -111,7 +111,7 @@ const {
                 loading="lazy"
               />
             </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div class="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div class="absolute bottom-0 left-0 p-6 text-paper opacity-0 transition-all duration-500 group-hover:opacity-100">
               <h3 class="font-display text-2xl">{m.name}</h3>
               <p class="mt-1 font-ui text-xs uppercase tracking-[0.18em] text-paper/80">
@@ -124,7 +124,7 @@ const {
                   <a
                     href={s.href}
                     aria-label={s.label}
-                    class="grid h-9 w-9 place-items-center rounded-full bg-paper/15 text-paper backdrop-blur transition-colors hover:bg-gradient-accent"
+                    class="grid h-9 w-9 place-items-center rounded-full bg-paper/15 text-paper backdrop-blur-sm transition-colors hover:bg-gradient-accent"
                   >
                     <svg
                       class="h-4 w-4"

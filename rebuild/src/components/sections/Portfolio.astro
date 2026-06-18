@@ -107,7 +107,7 @@ const itemsJson = JSON.stringify(
       </div>
     </div>
 
-    <div class="grid auto-rows-[260px] grid-cols-1 gap-6 [grid-auto-flow:dense] sm:auto-rows-[300px] md:grid-cols-12">
+    <div class="grid auto-rows-[260px] grid-cols-1 gap-6 grid-flow-dense sm:auto-rows-[300px] md:grid-cols-12">
       {
         items.map((item, idx) => (
           <a
@@ -134,7 +134,7 @@ const itemsJson = JSON.stringify(
                 loading="lazy"
               />
             </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
             <div class="absolute bottom-0 left-0 p-6 text-paper opacity-0 transition-all duration-500 group-hover:opacity-100">
               <h3 class="font-display text-2xl">{item.title}</h3>
               <p class="mt-1 font-ui text-xs uppercase tracking-[0.18em] text-paper/80">
@@ -142,7 +142,7 @@ const itemsJson = JSON.stringify(
               </p>
             </div>
             <div class="absolute right-4 top-4 flex translate-y-2 flex-col gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-              <span class="grid h-9 w-9 place-items-center rounded-full bg-paper/15 text-paper backdrop-blur transition-colors hover:bg-gradient-accent">
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-paper/15 text-paper backdrop-blur-sm transition-colors hover:bg-gradient-accent">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                   <circle cx="12" cy="12" r="3"/>
