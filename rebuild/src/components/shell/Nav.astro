@@ -40,14 +40,14 @@ const isTransparent = variant === 'transparent-white';
   }`}
 >
   <header
-    class="fixed inset-x-0 top-0 z-[60] transition-colors duration-300"
-    :class={`scrolled || open ? 'bg-ink/95 backdrop-blur-sm' : '${isTransparent ? 'bg-transparent' : 'bg-ink'}'`}
+    class="fixed inset-x-0 top-0 z-60 transition-colors duration-300"
+    :class={`scrolled || open ? 'bg-ink/95 backdrop-blur-xs' : '${isTransparent ? 'bg-transparent' : 'bg-ink'}'`}
   >
     <div class="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 nav:px-12">
       {/* Hamburger (left) */}
       <button
         type="button"
-        class="group relative z-[70] flex items-center gap-3 text-paper"
+        class="group relative z-70 flex items-center gap-3 text-paper"
         @click="open = !open"
         :aria-expanded="open ? 'true' : 'false'"
         aria-label="Toggle menu"
@@ -92,7 +92,7 @@ const isTransparent = variant === 'transparent-white';
       </a>
 
       {/* Right cluster */}
-      <div class="relative z-[70] flex items-center gap-5 font-ui text-xs uppercase tracking-[0.18em] text-paper">
+      <div class="relative z-70 flex items-center gap-5 font-ui text-xs uppercase tracking-[0.18em] text-paper">
         <button
           type="button"
           class="hidden sm:inline-flex items-center gap-1.5 hover:opacity-80"
@@ -112,13 +112,13 @@ const isTransparent = variant === 'transparent-white';
 
   {/* Drawer overlay (sibling of header to escape any stacking-context issues) */}
   <aside
-    class="fixed inset-0 z-[55] flex flex-col bg-ink text-paper transition-[opacity,visibility] duration-300 ease-out"
+    class="fixed inset-0 z-55 flex flex-col bg-ink text-paper transition-[opacity,visibility] duration-300 ease-out"
     :class="open ? 'opacity-100 visible' : 'opacity-0 invisible'"
     aria-hidden="true"
     :aria-hidden="open ? 'false' : 'true'"
   >
     {/* Spacer matching the header height so links don't sit under the bar */}
-    <div class="h-[68px] flex-shrink-0"></div>
+    <div class="h-[68px] shrink-0"></div>
 
     <nav class="flex-1 overflow-y-auto">
       <ul class="mx-auto flex max-w-[1440px] flex-col gap-2 px-6 py-12 nav:px-12">
@@ -148,7 +148,7 @@ const isTransparent = variant === 'transparent-white';
 
   {/* Search overlay */}
   <div
-    class="fixed inset-0 z-[65] grid place-items-center bg-ink/95 backdrop-blur-sm transition-[opacity,visibility] duration-300"
+    class="fixed inset-0 z-65 grid place-items-center bg-ink/95 backdrop-blur-xs transition-[opacity,visibility] duration-300"
     :class="searchOpen ? 'opacity-100 visible' : 'opacity-0 invisible'"
     @click.self="searchOpen = false"
     aria-hidden="true"
@@ -173,7 +173,7 @@ const isTransparent = variant === 'transparent-white';
         <input
           type="search"
           placeholder="Type and hit enter"
-          class="w-full border-0 border-b border-paper/30 bg-transparent pb-3 pl-10 pr-4 font-display text-3xl text-paper placeholder:text-paper/30 focus:border-paper focus:outline-none focus:ring-0 nav:text-5xl"
+          class="w-full border-0 border-b border-paper/30 bg-transparent pb-3 pl-10 pr-4 font-display text-3xl text-paper placeholder:text-paper/30 focus:border-paper focus:outline-hidden focus:ring-0 nav:text-5xl"
           x-ref="searchInput"
           x-effect="searchOpen && $nextTick(() => $refs.searchInput.focus())"
         />

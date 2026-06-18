@@ -69,7 +69,7 @@ const {
             data-anim-delay={(idx * 0.1).toFixed(2)}
           >
             <a href={post.href ?? '#0'} class="block">
-              <div class="absolute inset-0 -z-0 origin-left scale-x-0 bg-gradient-to-r from-paper-soft via-paper-gray to-paper-soft transition-transform duration-500 group-hover:scale-x-100"></div>
+              <div class="absolute inset-0 z-0 origin-left scale-x-0 bg-linear-to-r from-paper-soft via-paper-gray to-paper-soft transition-transform duration-500 group-hover:scale-x-100"></div>
               <div class="relative grid items-center gap-6 px-6 py-7 nav:px-10 md:grid-cols-12">
                 <div class="md:col-span-5">
                   <h4 class="font-display text-2xl">
@@ -83,13 +83,13 @@ const {
                   <img
                     src={post.authorImage}
                     alt={post.author}
-                    class="h-14 w-14 flex-shrink-0 rounded-full object-cover"
+                    class="h-14 w-14 shrink-0 rounded-full object-cover"
                     loading="lazy"
                   />
                   <p class="flex-1 font-body text-sm leading-relaxed text-ink-soft">
                     {post.excerpt}
                   </p>
-                  <span class="inline-flex flex-shrink-0 items-center gap-2 font-ui text-xs uppercase tracking-[0.18em] text-ink transition-transform duration-300 group-hover:translate-x-1">
+                  <span class="inline-flex shrink-0 items-center gap-2 font-ui text-xs uppercase tracking-[0.18em] text-ink transition-transform duration-300 group-hover:translate-x-1">
                     read more
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                       <line x1="5" y1="12" x2="19" y2="12" />

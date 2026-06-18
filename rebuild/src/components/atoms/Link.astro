@@ -17,7 +17,7 @@ const variantCls: Record<NonNullable<Props['variant']>, string> = {
   default:
     'text-ink hover:text-accent-text transition-colors duration-200',
   gradient:
-    'relative inline-block bg-[linear-gradient(45deg,var(--accent-from),var(--accent-to))] bg-[length:0%_2px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-300 ease-out hover:bg-[length:100%_2px]',
+    'relative inline-block bg-[linear-gradient(45deg,var(--accent-from),var(--accent-to))] bg-size-[0%_2px] bg-position-[0_100%] bg-no-repeat transition-[background-size] duration-300 ease-out hover:bg-size-[100%_2px]',
   inverse:
     'text-paper hover:text-paper/70 transition-colors duration-200',
 };

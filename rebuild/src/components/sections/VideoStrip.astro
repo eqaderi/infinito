@@ -62,7 +62,7 @@ const embedSrc = toEmbed(videoHref);
 
   {/* Lightbox */}
   <div
-    class="fixed inset-0 z-[80] grid place-items-center bg-ink/90 p-4 transition-[opacity,visibility] duration-300 sm:p-10"
+    class="fixed inset-0 z-80 grid place-items-center bg-ink/90 p-4 transition-[opacity,visibility] duration-300 sm:p-10"
     :class="open ? 'opacity-100 visible' : 'opacity-0 invisible'"
     @click.self="open = false"
     aria-hidden="true"

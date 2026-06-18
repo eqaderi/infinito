@@ -96,7 +96,7 @@ const {
             class:list={[
               'relative flex flex-col overflow-hidden rounded-lg border bg-paper transition-transform duration-500',
               plan.featured
-                ? 'border-transparent shadow-xl md:-translate-y-3 md:scale-[1.02] [background-image:linear-gradient(white,white),linear-gradient(45deg,var(--accent-from),var(--accent-to))] [background-origin:border-box] [background-clip:padding-box,border-box] [border-width:2px]'
+                ? 'border-transparent shadow-xl md:-translate-y-3 md:scale-[1.02] bg-[linear-gradient(white,white),linear-gradient(45deg,var(--accent-from),var(--accent-to))] bg-origin-border [background-clip:padding-box,border-box] [border-width:2px]'
                 : 'border-paper-gray',
             ]}
             data-anim="fade-up"
@@ -142,7 +142,7 @@ const {
                 {plan.features.map((f) => (
                   <li class="flex items-start gap-2">
                     <svg
-                      class="mt-1 h-4 w-4 flex-shrink-0 text-accent-text"
+                      class="mt-1 h-4 w-4 shrink-0 text-accent-text"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"

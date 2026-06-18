@@ -44,25 +44,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="flex flex-wrap gap-4">
           <div class="flex items-center gap-2">
             <span
-              class="inline-block h-10 w-10 rounded"
+              class="inline-block h-10 w-10 rounded-sm"
               style="background: var(--accent-from)"></span>
             <code class="font-mono text-sm">--accent-from</code>
           </div>
           <div class="flex items-center gap-2">
             <span
-              class="inline-block h-10 w-10 rounded"
+              class="inline-block h-10 w-10 rounded-sm"
               style="background: var(--accent-to)"></span>
             <code class="font-mono text-sm">--accent-to</code>
           </div>
           <div class="flex items-center gap-2">
             <span
-              class="inline-block h-10 w-10 rounded"
+              class="inline-block h-10 w-10 rounded-sm"
               style="background: var(--accent-text)"></span>
             <code class="font-mono text-sm">--accent-text</code>
           </div>
         </div>
         <div
-          class="h-10 w-full rounded"
+          class="h-10 w-full rounded-sm"
           style="background: linear-gradient(90deg, var(--accent-from), var(--accent-to));">
         </div>
       </section>
@@ -105,7 +105,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div
           x-show="open"
           x-transition.duration.300ms
-          class="rounded border border-paper-gray bg-paper p-4"
+          class="rounded-sm border border-paper-gray bg-paper p-4"
           style="display: none">
           <p class="font-body text-sm text-ink-soft">
             Alpine's state is reactive. Toggling the button hides and shows this
@@ -133,16 +133,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
         <div class="flex flex-wrap gap-2">
           <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
+            class="rounded-sm border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
             @click="set(null)">Default</button>
           <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
+            class="rounded-sm border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
             @click="set('blue')">Blue</button>
           <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
+            class="rounded-sm border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
             @click="set('purple-pink')">Purple–Pink</button>
           <button
-            class="rounded border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
+            class="rounded-sm border border-paper-gray px-3 py-1.5 font-ui text-xs uppercase tracking-wider hover:bg-paper"
             @click="set('magenta')">Magenta</button>
         </div>
       </section>
