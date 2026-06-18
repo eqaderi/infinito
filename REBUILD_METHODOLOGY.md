@@ -104,17 +104,23 @@ If any fails, the feature is not done — regardless of how good the demo looks.
 
 ---
 
-## Tooling (to set up — none exists yet)
+## Tooling
 
-`CLAUDE.md` currently notes there is no test suite and no linter. This methodology needs a minimal, standard kit under `rebuild/`:
+Test infrastructure lives under `rebuild/`. Run from there.
 
-| Need           | Tool                                    | Used for                                                                                                         |
-| -------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Unit / logic   | **Vitest**                              | Pure functions: `toEmbed()`, filter matching, odometer math, split-text helper, direction-aware-hover edge math. |
-| Behavior / E2E | **Playwright**                          | Interaction contracts: drawer, search overlay, filters, lightbox, pricing toggle, form states, scroll spy.       |
-| Accessibility  | **@axe-core/playwright**                | Per-page a11y assertions; keyboard + focus-trap flows.                                                           |
-| Performance    | **Lighthouse CI** + a bundle-size check | The §15 budgets (mobile > 90, no WebGL on first paint, lazy hero modules).                                       |
-| Visual         | **Playwright screenshots** (or Percy)   | Diff sections against captured legacy references.                                                                |
+| Need           | Tool                                    | Status      | Used for                                                                                                         |
+| -------------- | --------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- |
+| Unit / logic   | **Vitest**                              | ✅ Live     | Pure functions: `toEmbed()`, filter matching, odometer math, split-text helper, direction-aware-hover edge math. |
+| Behavior / E2E | **Playwright**                          | ✅ Live     | Interaction contracts: drawer, search overlay, filters, lightbox, pricing toggle, form states, scroll spy.       |
+| Accessibility  | **@axe-core/playwright**                | ✅ Live     | Per-page a11y assertions; keyboard + focus-trap flows.                                                           |
+| Performance    | **Lighthouse CI** + a bundle-size check | ⏳ Planned  | The §15 budgets (mobile > 90, no WebGL on first paint, lazy hero modules).                                       |
+| Visual         | **Playwright screenshots** (or Percy)   | ⏳ Planned  | Diff sections against captured legacy references.                                                                |
+
+```bash
+npm run test        # all (unit + e2e)
+npm run test:unit   # Vitest only
+npm run test:e2e    # Playwright only (auto-builds + previews)
+```
 
 Keep it lean. The goal is a contract per kept behavior, not coverage theater.
 
@@ -128,3 +134,11 @@ Adoption plan:
 
 1. **Phase 1B onward:** every kept behavior follows the full loop, contract-first.
 2. **Backfill:** the behaviors already shipped in Phase 1A (nav drawer + search, Featured parallax, Services grid, video lightbox, Portfolio filter, Process timeline, Pricing toggle, Contact map) get retroactive contract tests so the 9 fixes are locked before Phase 1B builds on top of them.
+
+### What's already covered (as of 2026-06-18)
+
+Initial contract tests established alongside tooling setup:
+
+- **Unit (Vitest):** `toEmbed()` — Vimeo, YouTube, youtu.be URL conversion, unknown host fallback, invalid URL fallback.
+- **E2E (Playwright):** cover-d-r-img (Featured image reveal via `data-anim-shown`), cover-up (Blog card reveal), nav drawer open/close/ESC, search overlay open + input focus.
+- **A11y (@axe-core/playwright):** home page WCAG 2.0 AA scan (critical + serious violations).

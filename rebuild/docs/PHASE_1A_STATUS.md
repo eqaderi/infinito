@@ -149,8 +149,9 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 | #   | Task                              | Status | Date       | Notes                                                                                                                                        |
 | --- | --------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Cover/reveal primitives           | ✅ Done | 2026-06-18 | `registerCoverDR` (clip-path horizontal wipe + scale settle) on Featured images. `registerCoverUp` (clip-path vertical wipe) on Blog cards. |
+| —   | Test tooling setup                | ✅ Done | 2026-06-18 | Vitest + Playwright + @axe-core/playwright. Initial contracts for cover-reveal, nav drawer, search overlay, a11y. `toEmbed()` extracted to `src/lib/video.ts` for unit testing. |
 
-⚠️ **Methodology gap:** step 1 was implemented without writing test contracts first (`REBUILD_METHODOLOGY.md` step 3). No automated tests guard these behaviors yet. The test tooling (Vitest, Playwright) is still not set up.
+Phase 1B onward follows the full rebuild methodology loop: understand → evaluate → **contract first** → go blind → rebuild → verify. See `REBUILD_METHODOLOGY.md`.
 
 ---
 

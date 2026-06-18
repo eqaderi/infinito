@@ -1,4 +1,6 @@
 ---
+import { toEmbed } from '@lib/video';
+
 interface Props {
   background?: string;
   videoHref?: string;
@@ -10,25 +12,6 @@ const {
   videoHref = 'https://vimeo.com/40234826',
   caption = 'watch our awesome story 2019.',
 } = Astro.props;
-
-/* Convert any vimeo / youtube URL to its embed form so the lightbox
- * iframe works without a new tab. Falls back to the original href. */
-function toEmbed(url: string): string {
-  try {
-    const u = new URL(url);
-    if (u.hostname.includes('vimeo.com')) {
-      const id = u.pathname.replace(/\//g, '');
-      return `https://player.vimeo.com/video/${id}?autoplay=1`;
-    }
-    if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
-      const id = u.hostname.includes('youtu.be')
-        ? u.pathname.slice(1)
-        : u.searchParams.get('v') ?? '';
-      return `https://www.youtube.com/embed/${id}?autoplay=1`;
-    }
-  } catch (_) {}
-  return url;
-}
 
 const embedSrc = toEmbed(videoHref);
 ---

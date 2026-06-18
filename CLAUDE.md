@@ -15,9 +15,12 @@ cd rebuild
 npm run dev        # Astro dev server → http://localhost:4321
 npm run build      # Static build → rebuild/dist/
 npm run preview    # Serve built output
+npm run test       # Run all tests (unit + e2e)
+npm run test:unit  # Vitest unit tests only
+npm run test:e2e   # Playwright E2E tests only (builds + previews automatically)
 ```
 
-No test suite or linter is configured yet. Type-check via the build. The methodology calls for a contract per kept behavior — the intended kit is Vitest (logic), Playwright + `@axe-core/playwright` (behavior + a11y), Lighthouse CI + a bundle-size check (perf), and Playwright screenshots (visual). See [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md).
+Test tooling is live. Vitest for pure-function unit contracts, Playwright + `@axe-core/playwright` for behavior and a11y contracts. Lighthouse CI (perf) and Playwright screenshot diffs (visual) are planned but not set up yet. See [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md).
 
 ## Engineering principles — grug (simplicity-first)
 
