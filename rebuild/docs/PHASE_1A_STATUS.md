@@ -22,7 +22,7 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
   - ⚠️ **Custom `zIndex` scale** — `z-1`…`z-10` map to **100**…**1000**. Arbitrary values like `z-[55]` therefore stack **below** `z-10`. Modal/drawer/overlay layers should use `z-[60]+` or extend the scale.
   - Custom breakpoint `nav` for the navigation collapse point.
 - **Alpine.js** for component-local interactivity (drawer, search, filters, carousels, lightbox, pricing toggle).
-- **GSAP 3 + ScrollTrigger** (free tier only — no SplitText/DrawSVG yet) for scroll-driven reveals and parallax.
+- **GSAP 3 + ScrollTrigger** for scroll-driven reveals and parallax. GSAP went 100% free in April 2025, so the former Club plugins (**DrawSVG**, SplitText, MorphSVG) are now available — DrawSVG powers the Featured numeral draw-in. SplitText/MorphSVG remain unused for now.
 - **Lucide** icons (inline SVG, hand-picked per component).
 - **Self-hosted fonts** via `@fontsource` packages, loaded in `BaseLayout.astro`.
 - **Centralized data** — every piece of home-page copy and asset path lives in `src/data/index.ts` as a typed export. Components consume it; no copy lives inside components.
@@ -68,7 +68,8 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 ### Animations (`src/lib/animations.ts`)
 
 Live primitives: `mountIntro`, `registerSlideUp`, `registerFadeUp`, `registerRotateIn`, `registerParallaxBg`, `registerParallaxY`, `registerCoverDR`, `registerCoverUp`, `registerOdometer`, `registerSvgDraw` (paths only).
-Deferred: `bars`, line-by-line splits, draw-on for filled SVG numerals, `cover-transp` text line reveals (depends on line splitter).
+Filled SVG draw-in: `registerSvgDraw` uses GSAP DrawSVG; `data-anim-fill` opt-in draws the outline then fades the fill (used by the Featured numerals).
+Deferred: `bars`, line-by-line splits, `cover-transp` text line reveals (depends on line splitter).
 
 ### Data (`src/data/index.ts`)
 
@@ -116,7 +117,7 @@ These were either explicitly deferred from the 1A scope or surfaced during the b
 
 - ~~`cover-d-r-img` and `cover-up` primitives~~ — **done** (Phase 1B step 1, 2026-06-18). `cover-transp` text line reveals still deferred (depends on line splitter).
 - `slide-up2__lines` line-by-line split — currently animates the whole block; needs SplitText (or a vanilla word/line splitter) to animate per-line.
-- Featured giant numerals (01/02/03) — currently rendered as a static text glyph; legacy renders them as outlined paths that draw-in with `svg-draw`. Needs SVG path assets and DrawSVG (or stroke-dasharray fallback).
+- ~~Featured giant numerals (01/02/03) draw-in~~ — **done** (Phase 1B). Montserrat glyph paths in `NumeralGlyph.astro`, drawn via DrawSVG (`data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
 - Testimonials background quote-mark watermark — currently absent. Needs a draw-in SVG.
 - Pricing yearly count-up — toggling to "yearly" should trigger an odometer count-up on each plan's price; currently just a snap fade.
 - LoadingScreen wordmark draw-in — currently snaps in.
@@ -150,6 +151,8 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 | --- | --------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Cover/reveal primitives           | ✅ Done | 2026-06-18 | `registerCoverDR` (clip-path horizontal wipe + scale settle) on Featured images. `registerCoverUp` (clip-path vertical wipe) on Blog cards. |
 | —   | Test tooling setup                | ✅ Done | 2026-06-18 | Vitest + Playwright + @axe-core/playwright. Initial contracts for cover-reveal, nav drawer, search overlay, a11y. `toEmbed()` extracted to `src/lib/video.ts` for unit testing. |
+| —   | Dependency majors update          | ✅ Done | 2026-06-18 | Tailwind 3→4 (`@tailwindcss/vite`, theme → CSS `@theme`), Astro 5→6, in-range bumps. |
+| 2   | Featured numeral SVG draw-in      | ✅ Done | 2026-06-18 | `NumeralGlyph.astro` (Montserrat glyph paths) drawn via DrawSVG — now free. `registerSvgDraw` gained opt-in `data-anim-fill` (draw outline + fade fill). Contract: `tests/e2e/svg-draw.spec.ts`. |
 
 Phase 1B onward follows the full rebuild methodology loop: understand → evaluate → **contract first** → go blind → rebuild → verify. See `REBUILD_METHODOLOGY.md`.
 
@@ -160,8 +163,8 @@ Phase 1B onward follows the full rebuild methodology loop: understand → evalua
 Picking up Phase 1B from here:
 
 1. ~~Cover/reveal primitives~~ — **done**.
-2. **Featured numeral SVG draw-in** — produce the 01/02/03 outlined paths, drop into `Featured.astro`, register with `registerSvgDraw`.
-3. **Testimonials quote-mark watermark** — same approach.
+2. ~~Featured numeral SVG draw-in~~ — **done** (DrawSVG via `NumeralGlyph.astro`).
+3. **Testimonials quote-mark watermark** — same approach (DrawSVG + `data-anim-fill`).
 4. **Pricing yearly count-up** — re-trigger `registerOdometer` on Alpine `billing` change.
 5. **Swiper migration for Testimonials + ProcessCarousel** — single library, replaces the Alpine carousels.
 6. **LightGallery v2 wiring for Portfolio + VideoStrip** — proper lightbox with prev/next, captions, lazy-load.

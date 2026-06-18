@@ -1,5 +1,6 @@
 ---
 import GradientText from '../atoms/GradientText.astro';
+import NumeralGlyph from '../atoms/NumeralGlyph.astro';
 
 export interface FeaturedItem {
   number: string;
@@ -80,13 +81,13 @@ const {
             >
               <div class="relative">
                 <span
-                  class={`pointer-events-none absolute -top-10 z-0 select-none font-display text-[12rem] leading-none text-paper-gray nav:text-[16rem] ${reversed ? '-right-2' : '-left-2'}`}
+                  class={`pointer-events-none absolute -top-12 z-0 block w-[20rem] select-none nav:w-[28rem] ${reversed ? '-right-2' : '-left-2'}`}
                   aria-hidden="true"
                   data-anim="parallax-y"
                   data-anim-strength="160"
                   data-anim-direction="down"
                 >
-                  {item.number}
+                  <NumeralGlyph number={item.number} class="block w-full" />
                 </span>
                 <h2
                   class="relative font-display text-4xl text-ink nav:text-5xl"

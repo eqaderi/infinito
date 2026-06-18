@@ -25,6 +25,7 @@
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
 let registered = false;
 let mounted = false;
@@ -207,32 +208,28 @@ export function registerSvgDraw(scope: ParentNode = document): void {
     );
     if (paths.length === 0) return;
 
-    const lengths: number[] = [];
-    paths.forEach((p) => {
-      const len =
-        typeof p.getTotalLength === "function" ? p.getTotalLength() : 0;
-      lengths.push(len);
-      if (len > 0) {
-        p.style.strokeDasharray = `${len}`;
-        p.style.strokeDashoffset = `${len}`;
-      }
-    });
-    reveal(svg);
-
+    // Filled glyphs (data-anim-fill) draw the outline, then fade the fill in —
+    // the legacy DrawSVG behaviour. Stroked icons (no data-anim-fill) just draw.
+    const filled = svg.hasAttribute("data-anim-fill");
     const duration = num(svg, "data-anim-duration", 1.4);
     const stagger = num(svg, "data-anim-stagger", 0.05);
 
-    gsap.to(paths, {
-      strokeDashoffset: 0,
-      duration,
-      ease: "power2.out",
-      stagger,
+    gsap.set(paths, { drawSVG: "0%" });
+    if (filled) gsap.set(paths, { fillOpacity: 0 });
+    reveal(svg);
+
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: svg,
         start: "top 85%",
         toggleActions: "play none none none",
       },
     });
+
+    tl.to(paths, { drawSVG: "100%", duration, ease: "power2.out", stagger });
+    if (filled) {
+      tl.to(paths, { fillOpacity: 1, duration: 0.8, ease: "power1.out" }, "-=0.5");
+    }
   });
 }
 
@@ -368,7 +365,7 @@ export function mount(scope: ParentNode = document): void {
   }
 
   if (!registered) {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
     registered = true;
   }
 
