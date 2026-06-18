@@ -140,5 +140,5 @@ Adoption plan:
 Initial contract tests established alongside tooling setup:
 
 - **Unit (Vitest):** `toEmbed()` — Vimeo, YouTube, youtu.be URL conversion, unknown host fallback, invalid URL fallback.
-- **E2E (Playwright):** cover-d-r-img (Featured image reveal via `data-anim-shown`), cover-up (Blog card reveal), nav drawer open/close/ESC, search overlay open + input focus.
+- **E2E (Playwright):** cover-d-r-img (Featured image reveal via `data-anim-shown`), cover-up (Blog card reveal), svg-draw (Featured numerals — path `fill-opacity` 0→1 on scroll; solid immediately under reduced motion), nav drawer open/close/ESC, search overlay open + input focus.
 - **A11y (@axe-core/playwright):** home page WCAG 2.0 AA scan (critical + serious violations).

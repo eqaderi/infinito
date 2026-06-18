@@ -36,12 +36,12 @@ The new product lives under **`rebuild/`** and is built on **Astro + Tailwind + 
 
 ### ✅ Phase 0 — Foundation (complete)
 
-- Astro project scaffolded under `rebuild/` (`astro.config.mjs`, Tailwind integration, TypeScript strict).
-- Tailwind config with custom design tokens (colors, breakpoints incl. `nav` breakpoint, font stacks, gradient utilities, custom `zIndex` scale).
+- Astro project scaffolded under `rebuild/` (`astro.config.mjs`, Tailwind via `@tailwindcss/vite`, TypeScript strict). **Stack updated 2026-06-18 to Astro 6 + Tailwind 4.**
+- Custom design tokens (colors, breakpoints incl. `nav` breakpoint, font stacks, gradient utilities, custom `zIndex` scale) live in `src/styles/global.css` as CSS-first `@theme` (Tailwind 4) — no `tailwind.config.mjs`.
   - ⚠️ **Watch-out for future-me:** the custom `zIndex` scale maps `z-1`…`z-10` to `100`…`1000`. Arbitrary values like `z-[55]` therefore stack **below** `z-10`. Use `z-[60]+` or extend the scale when layering modals.
 - Self-hosted fonts via `@fontsource` (Playfair Display, Cormorant Garamond, Josefin Sans, Montserrat, Roboto), loaded in `BaseLayout.astro` via `src/styles/fonts.css`.
 - Lucide icons available via inline SVG.
-- GSAP 3 + ScrollTrigger free-tier primitives in `src/lib/animations.ts` (no Club plugins yet — `SplitText`/`DrawSVG` deferred). See [`ANIMATION_AUDIT.md` §0](ANIMATION_AUDIT.md#0-implementation-status-phase-1a).
+- GSAP 3 + ScrollTrigger primitives in `src/lib/animations.ts`. **GSAP went 100% free in April 2025**, so DrawSVG/SplitText/MorphSVG are available — DrawSVG is in use (Featured numerals). See [`ANIMATION_AUDIT.md` §0](ANIMATION_AUDIT.md#0-implementation-status-phase-1a).
 - `prefers-reduced-motion` honored: `BaseLayout` adds `html.has-anim` only when motion is allowed; `global.css` has visibility fallbacks so reduced-motion users still see all content.
 
 ### ✅ Phase 1A — Vertical slice of `index.html` (complete)
@@ -59,8 +59,9 @@ One Astro route (`/`) renders the full home page using the new component model.
 
 ### ⏳ Phase 1B — in progress
 
+- ~~**Dependency majors update** (2026-06-18)~~ — **done**. Tailwind 3→4 (`@tailwindcss/vite`, CSS-first `@theme`), Astro 5→6, in-range bumps. Shipped as its own PR.
 - ~~Cover/reveal animations (`cover-d-r-img`, `cover-up`)~~ — **done** (2026-06-18). `clip-path` wipe replaces legacy overlay-div approach. `cover-transp` text line reveals still deferred (depends on line splitter).
-- SVG draw-in for the giant Featured numerals (currently rendered as static text).
+- ~~SVG draw-in for the giant Featured numerals~~ — **done** (2026-06-18). `NumeralGlyph.astro` + DrawSVG (`svg-draw` + `data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
 - Real Swiper integration for Testimonials + ProcessCarousel (replace Alpine carousels).
 - LightGallery v2 wiring for Portfolio + VideoStrip (currently a vanilla iframe lightbox).
 - Marquee animation for the LogoCloud rows.
@@ -73,7 +74,7 @@ One Astro route (`/`) renders the full home page using the new component model.
 | ----------------------- | ------------------------------- | ------------------------------------------------------------------------------------- |
 | Primary stack           | HTML + Vite + Tailwind + Alpine | **Astro + Tailwind + Alpine + GSAP** (§5.1 "Strong alternative" promoted to primary). |
 | Per-demo HTML files     | One static HTML per demo        | One Astro route per demo, statically rendered. Buyer ships `dist/`.                   |
-| Initial GSAP plugin set | ScrollTrigger + SplitText       | ScrollTrigger only for Phase 1A. SplitText/DrawSVG deferred to Phase 1B.              |
+| Initial GSAP plugin set | ScrollTrigger + SplitText       | ScrollTrigger for Phase 1A; DrawSVG added in 1B (now free). SplitText/MorphSVG available, not yet used. |
 | Carousel library        | Swiper from day one             | Alpine carousels for Phase 1A; Swiper integration is a Phase 1B task.                 |
 
 ---

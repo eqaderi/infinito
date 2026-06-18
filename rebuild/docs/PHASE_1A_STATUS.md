@@ -1,7 +1,7 @@
 # Phase 1A — Status & Handoff
 
 > Vertical slice of `index.html` rebuilt on Astro + Tailwind + Alpine + GSAP.
-> Last updated: **2026-06-18** — after Phase 1B step 1 (cover-reveal primitives).
+> Last updated: **2026-06-18** — after the dependency-majors update (Tailwind 4 + Astro 6) and Phase 1B step 2 (Featured numeral SVG draw-in).
 
 This is the working memory for the rebuild. If you're picking it up after a break, read this first, then [`index-section-map.md`](./index-section-map.md) for the page reference, then [`MODERNIZATION_PLAN.md` §1.5](../../MODERNIZATION_PLAN.md#15-implementation-progress-live) for the high-level roadmap, then [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a) for the per-primitive status.
 
@@ -17,10 +17,10 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 ## 2. Stack & key conventions
 
-- **Astro** static site generator (`rebuild/`). Output is plain HTML/CSS/JS in `rebuild/dist/`.
-- **Tailwind CSS** with custom design tokens in `rebuild/tailwind.config.mjs`.
-  - ⚠️ **Custom `zIndex` scale** — `z-1`…`z-10` map to **100**…**1000**. Arbitrary values like `z-[55]` therefore stack **below** `z-10`. Modal/drawer/overlay layers should use `z-[60]+` or extend the scale.
-  - Custom breakpoint `nav` for the navigation collapse point.
+- **Astro 6** static site generator (`rebuild/`). Output is plain HTML/CSS/JS in `rebuild/dist/`.
+- **Tailwind CSS 4** via the `@tailwindcss/vite` plugin. Theme is CSS-first in `src/styles/global.css` (`@theme {…}`) — there is **no** `tailwind.config.mjs` anymore.
+  - ⚠️ **Custom `zIndex` scale** — `z-1`…`z-10` map to **100**…**1000** (via `--z-index-*` in `@theme`). Arbitrary values like `z-[55]` therefore stack **below** `z-10`. Modal/drawer/overlay layers should use `z-[60]+` or extend the scale.
+  - Custom breakpoint `nav` for the navigation collapse point (`--breakpoint-*` in `@theme`; defaults reset so only the project's screens exist).
 - **Alpine.js** for component-local interactivity (drawer, search, filters, carousels, lightbox, pricing toggle).
 - **GSAP 3 + ScrollTrigger** for scroll-driven reveals and parallax. GSAP went 100% free in April 2025, so the former Club plugins (**DrawSVG**, SplitText, MorphSVG) are now available — DrawSVG powers the Featured numeral draw-in. SplitText/MorphSVG remain unused for now.
 - **Lucide** icons (inline SVG, hand-picked per component).
@@ -47,7 +47,7 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 1. `Hero.astro` — full-viewport background image, centered title + subline, scroll-down arrow.
 2. `About.astro` — eyebrow + display heading + paragraph + rotate-in CTA.
-3. `Featured.astro` — 3 alternating rows; image + giant background numeral + heading + subhead + paragraph. **Parallax-Y** on image and numeral. **Cover-reveal** (`cover-d-r-img`) clip-path wipe on image columns.
+3. `Featured.astro` — 3 alternating rows; image + giant background numeral + heading + subhead + paragraph. **Parallax-Y** on image and numeral. **Cover-reveal** (`cover-d-r-img`) clip-path wipe on image columns. Numeral is now an inline SVG glyph (`NumeralGlyph.astro`) that **draws in via DrawSVG** (`svg-draw` + `data-anim-fill`), nested inside the parallax-Y wrapper.
 4. `Services.astro` — 5 cards in a 6-column grid; row 2 (cards 4–5) centered via `md:col-start-2` on the 4th item.
 5. `VideoStrip.astro` — parallax background image + play button → **Alpine lightbox iframe modal**. Vimeo/YouTube watch-URL → embed-URL conversion.
 6. `Portfolio.astro` — Alpine filter tabs + 12-column dense grid with fixed row heights + `x-transition` opacity.
@@ -63,12 +63,12 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 ### Tier D — Atoms (`src/components/atoms/`)
 
-`Button`, `GradientText`, `SectionTitle`, `Input`, `Textarea`, `IconLine`, `Link`.
+`Button`, `GradientText`, `SectionTitle`, `Input`, `Textarea`, `IconLine`, `Link`, `NumeralGlyph` (Featured 01/02/03 SVG glyphs).
 
 ### Animations (`src/lib/animations.ts`)
 
-Live primitives: `mountIntro`, `registerSlideUp`, `registerFadeUp`, `registerRotateIn`, `registerParallaxBg`, `registerParallaxY`, `registerCoverDR`, `registerCoverUp`, `registerOdometer`, `registerSvgDraw` (paths only).
-Filled SVG draw-in: `registerSvgDraw` uses GSAP DrawSVG; `data-anim-fill` opt-in draws the outline then fades the fill (used by the Featured numerals).
+Live primitives: `mountIntro`, `registerSlideUp`, `registerFadeUp`, `registerRotateIn`, `registerParallaxBg`, `registerParallaxY`, `registerCoverDR`, `registerCoverUp`, `registerOdometer`, `registerSvgDraw`.
+`registerSvgDraw` uses GSAP **DrawSVG** (free since 2025): draws stroked icons; opt-in `data-anim-fill` also fades the fill in for filled glyphs (Featured numerals).
 Deferred: `bars`, line-by-line splits, `cover-transp` text line reveals (depends on line splitter).
 
 ### Data (`src/data/index.ts`)
@@ -116,11 +116,11 @@ These were either explicitly deferred from the 1A scope or surfaced during the b
 ### Animation parity
 
 - ~~`cover-d-r-img` and `cover-up` primitives~~ — **done** (Phase 1B step 1, 2026-06-18). `cover-transp` text line reveals still deferred (depends on line splitter).
-- `slide-up2__lines` line-by-line split — currently animates the whole block; needs SplitText (or a vanilla word/line splitter) to animate per-line.
+- `slide-up2__lines` line-by-line split — currently animates the whole block; needs per-line split. **SplitText is now free** (GSAP 3.15, already installed) — use it instead of a vanilla splitter.
 - ~~Featured giant numerals (01/02/03) draw-in~~ — **done** (Phase 1B). Montserrat glyph paths in `NumeralGlyph.astro`, drawn via DrawSVG (`data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
-- Testimonials background quote-mark watermark — currently absent. Needs a draw-in SVG.
+- Testimonials background quote-mark watermark — currently absent. Add a draw-in SVG (reuse `svg-draw` + `data-anim-fill`, same as the numerals).
 - Pricing yearly count-up — toggling to "yearly" should trigger an odometer count-up on each plan's price; currently just a snap fade.
-- LoadingScreen wordmark draw-in — currently snaps in.
+- LoadingScreen wordmark draw-in — currently snaps in. Now unblocked by `registerSvgDraw` (DrawSVG).
 
 ### Carousels & galleries
 
