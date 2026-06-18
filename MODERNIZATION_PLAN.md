@@ -57,9 +57,9 @@ One Astro route (`/`) renders the full home page using the new component model.
 - **Assets** — only `index.html`-referenced assets selectively copied to `rebuild/public/img/` (see `rebuild/docs/index-section-map.md` "Asset manifest").
 - **Bug-fix pass** — 9 critical issues from manual testing resolved (nav drawer, search overlay, Featured parallax, Services row 2 centering, video lightbox modal, Portfolio dense-pack + flicker, Process timeline click target + line/dot alignment, Pricing toggle animation, Contact Google Maps embed). Full log in [`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md#today-2026-04-20--bug-fix-pass-9-issues).
 
-### ⏳ Phase 1B — next up
+### ⏳ Phase 1B — in progress
 
-- Cover/reveal animations (`cover-d-r-img`, `cover-up`, `cover-transp` lines) — currently deferred placeholders.
+- ~~Cover/reveal animations (`cover-d-r-img`, `cover-up`)~~ — **done** (2026-06-18). `clip-path` wipe replaces legacy overlay-div approach. `cover-transp` text line reveals still deferred (depends on line splitter).
 - SVG draw-in for the giant Featured numerals (currently rendered as static text).
 - Real Swiper integration for Testimonials + ProcessCarousel (replace Alpine carousels).
 - LightGallery v2 wiring for Portfolio + VideoStrip (currently a vanilla iframe lightbox).

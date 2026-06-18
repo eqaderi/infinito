@@ -69,6 +69,8 @@ Data-attribute driven — no class soup. Apply animations by adding `data-anim="
 | `rotate-in`           | Scale + fade in on scroll                                       |
 | `parallax-bg`         | Background element parallax (strength via `data-anim-strength`) |
 | `parallax-y`          | Element Y-scrub parallax                                        |
+| `cover-d-r-img`       | Horizontal clip-path wipe + content scale/shift settle          |
+| `cover-up`            | Vertical clip-path wipe (bottom → top)                          |
 | `odometer`            | Count-up on scroll (`data-anim-end`, `data-anim-duration`)      |
 | `svg-draw`            | Stroke-dash draw-in on scroll                                   |
 | `intro-up/down/fade`  | One-shot entry animation (no scroll trigger)                    |

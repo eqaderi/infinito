@@ -236,6 +236,72 @@ export function registerSvgDraw(scope: ParentNode = document): void {
   });
 }
 
+/* ---------- cover reveals ---------- */
+
+/* Horizontal clip-path wipe (left → right) with a subtle content
+ * scale/shift settle. Replaces the legacy overlay-div approach. */
+export function registerCoverDR(scope: ParentNode = document): void {
+  const els = scope.querySelectorAll<HTMLElement>(
+    '[data-anim="cover-d-r-img"]',
+  );
+  els.forEach((el) => {
+    const delay = num(el, "data-anim-delay", 0);
+    const content = el.querySelector<HTMLElement>(
+      "img, video, [data-cover-content]",
+    );
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top 75%",
+        toggleActions: "play none none none",
+      },
+      onStart: () => reveal(el),
+      delay,
+    });
+
+    tl.fromTo(
+      el,
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.8, ease: "power3.out" },
+      0,
+    );
+
+    if (content) {
+      tl.fromTo(
+        content,
+        { scale: 1.15, x: "-5%" },
+        { scale: 1, x: "0%", duration: 0.8, ease: "power3.out" },
+        0,
+      );
+    }
+  });
+}
+
+/* Vertical clip-path wipe (bottom → top). */
+export function registerCoverUp(scope: ParentNode = document): void {
+  const els = scope.querySelectorAll<HTMLElement>('[data-anim="cover-up"]');
+  els.forEach((el) => {
+    const delay = num(el, "data-anim-delay", 0);
+    gsap.fromTo(
+      el,
+      { clipPath: "inset(100% 0 0 0)" },
+      {
+        clipPath: "inset(0% 0 0 0)",
+        duration: 1,
+        delay,
+        ease: "power3.out",
+        onStart: () => reveal(el),
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      },
+    );
+  });
+}
+
 /* ---------- intros (one-shot, no scroll) ---------- */
 
 export function mountIntro(scope: ParentNode = document): void {
@@ -312,6 +378,8 @@ export function mount(scope: ParentNode = document): void {
   registerRotateIn(scope);
   registerParallaxBg(scope);
   registerParallaxY(scope);
+  registerCoverDR(scope);
+  registerCoverUp(scope);
   registerOdometer(scope);
   registerSvgDraw(scope);
 

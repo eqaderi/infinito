@@ -114,6 +114,16 @@ html.has-anim [data-anim="svg-draw"]:not([data-anim-shown]) {
   opacity: 1;
 }
 
+html.has-anim [data-anim="cover-d-r-img"]:not([data-anim-shown]) {
+  opacity: 1;
+  clip-path: inset(0 100% 0 0);
+}
+
+html.has-anim [data-anim="cover-up"]:not([data-anim-shown]) {
+  opacity: 1;
+  clip-path: inset(100% 0 0 0);
+}
+
 /* -------------------------------------------------------
  * Reduced motion
  *
@@ -135,5 +145,6 @@ html.has-anim [data-anim="svg-draw"]:not([data-anim-shown]) {
   [data-anim] {
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
   }
 }

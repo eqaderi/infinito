@@ -1,7 +1,7 @@
 # Phase 1A — Status & Handoff
 
 > Vertical slice of `index.html` rebuilt on Astro + Tailwind + Alpine + GSAP.
-> Last updated: **2026-04-20** — at end of the bug-fix pass.
+> Last updated: **2026-06-18** — after Phase 1B step 1 (cover-reveal primitives).
 
 This is the working memory for the rebuild. If you're picking it up after a break, read this first, then [`index-section-map.md`](./index-section-map.md) for the page reference, then [`MODERNIZATION_PLAN.md` §1.5](../../MODERNIZATION_PLAN.md#15-implementation-progress-live) for the high-level roadmap, then [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a) for the per-primitive status.
 
@@ -47,14 +47,14 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 1. `Hero.astro` — full-viewport background image, centered title + subline, scroll-down arrow.
 2. `About.astro` — eyebrow + display heading + paragraph + rotate-in CTA.
-3. `Featured.astro` — 3 alternating rows; image + giant background numeral + heading + subhead + paragraph. **Parallax-Y** on image and numeral.
+3. `Featured.astro` — 3 alternating rows; image + giant background numeral + heading + subhead + paragraph. **Parallax-Y** on image and numeral. **Cover-reveal** (`cover-d-r-img`) clip-path wipe on image columns.
 4. `Services.astro` — 5 cards in a 6-column grid; row 2 (cards 4–5) centered via `md:col-start-2` on the 4th item.
 5. `VideoStrip.astro` — parallax background image + play button → **Alpine lightbox iframe modal**. Vimeo/YouTube watch-URL → embed-URL conversion.
 6. `Portfolio.astro` — Alpine filter tabs + 12-column dense grid with fixed row heights + `x-transition` opacity.
 7. `ProcessCarousel.astro` — Alpine timeline with dot+label `<button>` click targets, evenly distributed progress line.
 8. `TeamGrid.astro` — 3 portrait cards with hover-revealed socials.
 9. `CtaStrip.astro` — dark stats band: 3 odometer counters in the legacy 1-2-3 column shuffle.
-10. `BlogPreview.astro` — 3 post cards with hover-expand body and "read more" CTA.
+10. `BlogPreview.astro` — 3 post cards with hover-expand body and "read more" CTA. **Cover-up** vertical clip-path wipe reveal on each card.
 11. `Subscribe.astro` — dark band, email input + Formspree submit.
 12. `Pricing.astro` — Alpine monthly/yearly toggle with **scale+fade `x-transition`** on the price digits; gradient SVG icons.
 13. `Testimonials.astro` — Alpine fade carousel; gradient author label.
@@ -67,8 +67,8 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 ### Animations (`src/lib/animations.ts`)
 
-Live primitives: `mountIntro`, `registerSlideUp`, `registerFadeUp`, `registerRotateIn`, `registerParallaxBg`, `registerParallaxY`, `registerOdometer`, `registerSvgDraw` (paths only).
-Deferred: `cover-d-r-img`, `cover-up`, `bars`, line-by-line splits, draw-on for filled SVG numerals.
+Live primitives: `mountIntro`, `registerSlideUp`, `registerFadeUp`, `registerRotateIn`, `registerParallaxBg`, `registerParallaxY`, `registerCoverDR`, `registerCoverUp`, `registerOdometer`, `registerSvgDraw` (paths only).
+Deferred: `bars`, line-by-line splits, draw-on for filled SVG numerals, `cover-transp` text line reveals (depends on line splitter).
 
 ### Data (`src/data/index.ts`)
 
@@ -114,7 +114,7 @@ These were either explicitly deferred from the 1A scope or surfaced during the b
 
 ### Animation parity
 
-- `cover-d-r-img` (diagonal cover-reveal) and `cover-up` (upward cover-reveal) primitives — currently no-ops. The Featured images and About/Featured paragraphs are missing the legacy cover transitions.
+- ~~`cover-d-r-img` and `cover-up` primitives~~ — **done** (Phase 1B step 1, 2026-06-18). `cover-transp` text line reveals still deferred (depends on line splitter).
 - `slide-up2__lines` line-by-line split — currently animates the whole block; needs SplitText (or a vanilla word/line splitter) to animate per-line.
 - Featured giant numerals (01/02/03) — currently rendered as a static text glyph; legacy renders them as outlined paths that draw-in with `svg-draw`. Needs SVG path assets and DrawSVG (or stroke-dasharray fallback).
 - Testimonials background quote-mark watermark — currently absent. Needs a draw-in SVG.
@@ -144,11 +144,21 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 
 ---
 
-## 7. Recommended next-day order of work
+## 7. Phase 1B progress
 
-If picking this up cold, this is a sane Phase 1B start order:
+| #   | Task                              | Status | Date       | Notes                                                                                                                                        |
+| --- | --------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Cover/reveal primitives           | ✅ Done | 2026-06-18 | `registerCoverDR` (clip-path horizontal wipe + scale settle) on Featured images. `registerCoverUp` (clip-path vertical wipe) on Blog cards. |
 
-1. **Cover/reveal primitives** (`registerCoverDR`, `registerCoverUp`) — unblock Featured + About visual parity. CSS `clip-path` animation is enough; no plugin needed.
+⚠️ **Methodology gap:** step 1 was implemented without writing test contracts first (`REBUILD_METHODOLOGY.md` step 3). No automated tests guard these behaviors yet. The test tooling (Vitest, Playwright) is still not set up.
+
+---
+
+## 8. Recommended next order of work
+
+Picking up Phase 1B from here:
+
+1. ~~Cover/reveal primitives~~ — **done**.
 2. **Featured numeral SVG draw-in** — produce the 01/02/03 outlined paths, drop into `Featured.astro`, register with `registerSvgDraw`.
 3. **Testimonials quote-mark watermark** — same approach.
 4. **Pricing yearly count-up** — re-trigger `registerOdometer` on Alpine `billing` change.
@@ -162,7 +172,7 @@ Once Phase 1B is closed, the route is open to Phase 2 (Tier-1 WebGL hero effects
 
 ---
 
-## 8. Smoke checklist before any commit
+## 9. Smoke checklist before any commit
 
 ```bash
 cd rebuild
@@ -175,12 +185,14 @@ In the browser, confirm:
 - [ ] Hero loads with intro animation; scroll-down arrow visible at the bottom.
 - [ ] Hamburger opens the drawer (full-screen, dark, staggered link entry); X closes it; ESC closes it; body scroll is locked while open.
 - [ ] Search icon opens the search overlay; input is auto-focused; ESC + backdrop click close.
+- [ ] Featured images reveal with a left-to-right clip-path wipe + subtle zoom settle on scroll (cover-d-r-img).
 - [ ] Featured image and giant numeral move at different speeds on scroll (parallax-Y).
 - [ ] Services: at md+ width, the 4th and 5th cards are centered in row 2.
 - [ ] VideoStrip: clicking play opens a modal iframe (not a new tab); ESC closes it.
 - [ ] Portfolio: filter tabs filter without flicker; all visible images are the same height; gaps are consistent.
 - [ ] Process timeline: clicking the label area (not just the dot) advances; the progress line ends inside the active dot.
 - [ ] Pricing: monthly→yearly transition is smooth (~300ms scale+fade), not a snap.
+- [ ] Blog cards reveal with a bottom-to-top clip-path wipe on scroll (cover-up).
 - [ ] Contact: Google Maps iframe renders; "Open in Google Maps" link works.
 - [ ] No console errors.
 - [ ] At `prefers-reduced-motion: reduce`, the page is fully visible without animations.
