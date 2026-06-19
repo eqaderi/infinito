@@ -1,0 +1,32 @@
+---
+description: Behavior-first rebuild methodology + grug principles + enforcement gates for the Infinito rebuild
+alwaysApply: true
+---
+
+# Rebuild methodology (non-negotiable)
+
+Every feature/function/visual in `rebuild/` is rebuilt **behavior-first and implementation-blind** — never ported from the legacy (`Final_Files/`, `working_dir/`, `Documentation/` are read-only references). Before building any kept behavior, work the loop in `REBUILD_METHODOLOGY.md`:
+
+understand → evaluate → **contract first** → go blind (close the legacy file) → rebuild minimal/modern → verify.
+
+## Definition of Done (every behavior-bearing change)
+
+- A **test contract** exists for the behavior — Vitest (pure logic), Playwright (interaction), `@axe-core/playwright` (a11y). For a bug, write the regression test first.
+- Built **blind**: no legacy code copied; minimal, idiomatic code.
+- `prefers-reduced-motion` honored; keyboard-reachable; ARIA on icon-only controls.
+- From `rebuild/`: `npm run build` and `npm run test` are green.
+
+## grug (simplicity-first)
+
+- Reuse before inventing; smallest change that fits; name + justify any new complexity.
+- Say no to one-use abstractions / new deps for small problems. Small duplication > bad abstraction.
+- Chesterton's Fence: understand why code exists before replacing it.
+- Tests protect behavior, not internals. No factoring before a real cut point; no optimizing without a measurement.
+- The bar: code a tired mid-level dev can debug at 3 AM.
+
+## Gates (not advisory)
+
+- CI (`.github/workflows/ci.yml`) runs build + unit + e2e/a11y on every PR; red blocks merge.
+- The PR template attests to what CI can't check: a new behavior got a contract, and the rebuild was done blind.
+
+Full detail: `AGENTS.md` (canonical) and `REBUILD_METHODOLOGY.md`.
