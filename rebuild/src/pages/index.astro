@@ -37,7 +37,11 @@ import {
 } from '../data/index';
 ---
 
-<BaseLayout title={meta.title} description={meta.description}>
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  preloadImages={[hero.background]}
+>
   <PageShell brand={meta.brand} navVariant="transparent-white">
     <Hero {...hero} />
     <About {...about} />

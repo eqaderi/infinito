@@ -142,7 +142,6 @@
  * handles the heavy lifting)
  * ------------------------------------------------------- */
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -179,7 +178,6 @@ body {
  * ------------------------------------------------------- */
 html.has-anim [data-anim]:not([data-anim-shown]) {
   opacity: 0;
-  will-change: opacity, transform;
 }
 
 html.has-anim [data-anim="parallax-bg"]:not([data-anim-shown]),
@@ -196,6 +194,52 @@ html.has-anim [data-anim="cover-d-r-img"]:not([data-anim-shown]) {
 html.has-anim [data-anim="cover-up"]:not([data-anim-shown]) {
   opacity: 1;
   clip-path: inset(100% 0 0 0);
+}
+
+/* -------------------------------------------------------
+ * CSS-driven one-shot reveals
+ *
+ * slide-up, fade-up, fade-in, rotate-in and cover-up are revealed by a
+ * single IntersectionObserver that toggles [data-anim-shown]; these
+ * transitions do the work on the compositor (no GSAP, no per-element
+ * ScrollTrigger). The `transition` sits on the always-matching selector so
+ * it survives the attribute flip that drives the start -> end change.
+ * GSAP-controlled types (parallax, cover-d-r-img, svg-draw, odometer, intro)
+ * are intentionally excluded here so their inline tweens aren't double-driven.
+ * ------------------------------------------------------- */
+html.has-anim [data-anim="slide-up"] {
+  transition:
+    opacity 0.9s var(--ease-out-cubic),
+    transform 0.9s var(--ease-out-cubic);
+}
+html.has-anim [data-anim="slide-up"]:not([data-anim-shown]) {
+  transform: translateY(28px);
+}
+
+html.has-anim [data-anim="fade-up"],
+html.has-anim [data-anim="fade-in"] {
+  transition:
+    opacity 0.8s var(--ease-out-cubic),
+    transform 0.8s var(--ease-out-cubic);
+}
+html.has-anim [data-anim="fade-up"]:not([data-anim-shown]) {
+  transform: translateY(18px);
+}
+
+html.has-anim [data-anim="rotate-in"] {
+  transition:
+    opacity 0.7s var(--ease-out-back),
+    transform 0.7s var(--ease-out-back);
+}
+html.has-anim [data-anim="rotate-in"]:not([data-anim-shown]) {
+  transform: scale(0.85);
+}
+
+html.has-anim [data-anim="cover-up"] {
+  transition: clip-path 1s var(--ease-out-cubic);
+}
+html.has-anim [data-anim="cover-up"][data-anim-shown] {
+  clip-path: inset(0% 0 0 0);
 }
 
 /* -------------------------------------------------------

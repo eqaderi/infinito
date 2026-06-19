@@ -34,7 +34,16 @@ const isTransparent = variant === 'transparent-white';
     init() {
       this.$watch('open', v => { document.body.style.overflow = v ? 'hidden' : ''; });
       this.$watch('searchOpen', v => { document.body.style.overflow = v ? 'hidden' : ''; });
-      window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 80 });
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const next = window.scrollY > 80;
+          if (next !== this.scrolled) this.scrolled = next;
+          ticking = false;
+        });
+      }, { passive: true });
       window.addEventListener('keydown', e => { if (e.key === 'Escape') { this.open = false; this.searchOpen = false; } });
     }
   }`}

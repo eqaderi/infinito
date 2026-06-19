@@ -7,6 +7,9 @@ interface Props {
   description?: string;
   theme?: 'default' | 'blue' | 'purple-pink' | 'magenta';
   bodyClass?: string;
+  /* Above-the-fold image(s) to preload — typically the hero background, which
+     is the LCP element. Keeps the largest paint off the lazy path. */
+  preloadImages?: string[];
 }
 
 const {
@@ -14,6 +17,7 @@ const {
   description = 'Infinito — modern creative agency & portfolio template.',
   theme,
   bodyClass = '',
+  preloadImages = [],
 } = Astro.props;
 ---
 
@@ -25,6 +29,11 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {
+      preloadImages.map((href) => (
+        <link rel="preload" as="image" href={href} fetchpriority="high" />
+      ))
+    }
     <title>{title}</title>
     {/* Boot: decide synchronously whether to hide [data-anim] elements
         before they paint. With JS + no reduced motion, add `has-anim`
@@ -46,11 +55,22 @@ const {
     <script>
       import { mount } from '../lib/animations';
 
-      const start = () => mount();
+      // Yield to the first paint before booting GSAP: requestIdleCallback when
+      // available (capped so intros still fire promptly), else a microtask via
+      // rAF. Triggered on DOM-ready, not load, so intro animations aren't
+      // gated behind image loading.
+      const boot = () => {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => mount(), { timeout: 200 });
+        } else {
+          requestAnimationFrame(() => mount());
+        }
+      };
+
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', start, { once: true });
+        document.addEventListener('DOMContentLoaded', boot, { once: true });
       } else {
-        start();
+        boot();
       }
     </script>
   </body>

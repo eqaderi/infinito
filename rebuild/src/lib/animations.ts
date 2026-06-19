@@ -50,79 +50,38 @@ function reveal(el: Element): void {
 
 /* ---------- primitives ---------- */
 
-export function registerSlideUp(scope: ParentNode = document): void {
-  const els = scope.querySelectorAll<HTMLElement>('[data-anim="slide-up"]');
-  els.forEach((el) => {
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { y: 28, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        delay,
-        ease: "power3.out",
-        onStart: () => reveal(el),
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-  });
-}
+/* One-shot scroll reveals (slide-up, fade-up, fade-in, rotate-in, cover-up).
+ *
+ * These are plain transform/opacity (and clip-path for cover-up) reveals that
+ * CSS does natively on the compositor — see the matching transition rules in
+ * global.css. A single IntersectionObserver replaces what used to be ~64
+ * individual ScrollTriggers: when an element scrolls into view we flip
+ * [data-anim-shown] (CSS transitions to the end state) and stop observing it.
+ *
+ * data-anim-delay (seconds) maps to transition-delay. The -12% bottom root
+ * margin approximates the legacy "top ~85%" trigger point. */
+const REVEAL_SELECTOR =
+  '[data-anim="slide-up"], [data-anim="fade-up"], [data-anim="fade-in"], [data-anim="rotate-in"], [data-anim="cover-up"]';
 
-export function registerFadeUp(scope: ParentNode = document): void {
-  const els = scope.querySelectorAll<HTMLElement>(
-    '[data-anim="fade-up"], [data-anim="fade-in"]',
+export function registerReveals(scope: ParentNode = document): void {
+  const els = scope.querySelectorAll<HTMLElement>(REVEAL_SELECTOR);
+  if (els.length === 0) return;
+
+  const io = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const delay = num(el, "data-anim-delay", 0);
+        if (delay > 0) el.style.transitionDelay = `${delay}s`;
+        reveal(el);
+        obs.unobserve(el);
+      });
+    },
+    { rootMargin: "0px 0px -12% 0px" },
   );
-  els.forEach((el) => {
-    const isFadeIn = el.getAttribute("data-anim") === "fade-in";
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { y: isFadeIn ? 0 : 18, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        delay,
-        ease: "power2.out",
-        onStart: () => reveal(el),
-        scrollTrigger: {
-          trigger: el,
-          start: "top 88%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-  });
-}
 
-export function registerRotateIn(scope: ParentNode = document): void {
-  const els = scope.querySelectorAll<HTMLElement>('[data-anim="rotate-in"]');
-  els.forEach((el) => {
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { scale: 0.85, opacity: 0 },
-      {
-        scale: 1,
-        opacity: 1,
-        duration: 0.7,
-        delay,
-        ease: "back.out(1.4)",
-        onStart: () => reveal(el),
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-  });
+  els.forEach((el) => io.observe(el));
 }
 
 export function registerParallaxBg(scope: ParentNode = document): void {
@@ -130,6 +89,9 @@ export function registerParallaxBg(scope: ParentNode = document): void {
   els.forEach((el) => {
     const strength = num(el, "data-anim-strength", 0.35);
     const target = el.querySelector<HTMLElement>("[data-parallax-el]") ?? el;
+    // Scoped GPU hint: only the handful of scrub-driven elements get a layer,
+    // not every [data-anim] on the page.
+    target.style.willChange = "transform";
     gsap.fromTo(
       target,
       { yPercent: -strength * 50 },
@@ -155,6 +117,7 @@ export function registerParallaxY(scope: ParentNode = document): void {
     const strength = num(el, "data-anim-strength", 80);
     const dir = el.getAttribute("data-anim-direction") === "down" ? 1 : -1;
     reveal(el);
+    el.style.willChange = "transform";
     gsap.fromTo(
       el,
       { y: -dir * strength * 0.5 },
@@ -182,6 +145,7 @@ export function registerOdometer(scope: ParentNode = document): void {
     );
     const duration = num(el, "data-anim-duration", 2);
     const obj = { v: 0 };
+    let last = -1;
     el.textContent = "0";
     reveal(el);
     gsap.to(obj, {
@@ -194,7 +158,10 @@ export function registerOdometer(scope: ParentNode = document): void {
         toggleActions: "play none none none",
       },
       onUpdate: () => {
-        el.textContent = Math.round(obj.v).toLocaleString();
+        const rounded = Math.round(obj.v);
+        if (rounded === last) return;
+        last = rounded;
+        el.textContent = rounded.toLocaleString();
       },
     });
   });
@@ -228,7 +195,11 @@ export function registerSvgDraw(scope: ParentNode = document): void {
 
     tl.to(paths, { drawSVG: "100%", duration, ease: "power2.out", stagger });
     if (filled) {
-      tl.to(paths, { fillOpacity: 1, duration: 0.8, ease: "power1.out" }, "-=0.5");
+      tl.to(
+        paths,
+        { fillOpacity: 1, duration: 0.8, ease: "power1.out" },
+        "-=0.5",
+      );
     }
   });
 }
@@ -272,30 +243,6 @@ export function registerCoverDR(scope: ParentNode = document): void {
         0,
       );
     }
-  });
-}
-
-/* Vertical clip-path wipe (bottom → top). */
-export function registerCoverUp(scope: ParentNode = document): void {
-  const els = scope.querySelectorAll<HTMLElement>('[data-anim="cover-up"]');
-  els.forEach((el) => {
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { clipPath: "inset(100% 0 0 0)" },
-      {
-        clipPath: "inset(0% 0 0 0)",
-        duration: 1,
-        delay,
-        ease: "power3.out",
-        onStart: () => reveal(el),
-        scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
   });
 }
 
@@ -370,13 +317,10 @@ export function mount(scope: ParentNode = document): void {
   }
 
   mountIntro(scope);
-  registerSlideUp(scope);
-  registerFadeUp(scope);
-  registerRotateIn(scope);
+  registerReveals(scope);
   registerParallaxBg(scope);
   registerParallaxY(scope);
   registerCoverDR(scope);
-  registerCoverUp(scope);
   registerOdometer(scope);
   registerSvgDraw(scope);
 
