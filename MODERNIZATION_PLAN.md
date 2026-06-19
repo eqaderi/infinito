@@ -64,10 +64,12 @@ One Astro route (`/`) renders the full home page using the new component model.
 - ~~SVG draw-in for the giant Featured numerals~~ — **done** (2026-06-18). `NumeralGlyph.astro` + DrawSVG (`svg-draw` + `data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
 - ~~Testimonials quote-mark watermark~~ — **done** (2026-06-19). `QuoteGlyph.astro` + DrawSVG. Contract: `tests/e2e/quote-draw.spec.ts`.
 - ~~Animation performance overhaul~~ — **done** (2026-06-19). One-shot reveals moved to a single `IntersectionObserver` + CSS transitions; ScrollTriggers ~85 → ~21, `will-change` ~72 → ~7; nav scroll throttled; GSAP boot deferred. Same visuals. Contract: `tests/e2e/reveal.spec.ts`. Deferred follow-up: Astro `<Image>` migration + GIF→video + font trim.
-- **Next up: Pricing yearly count-up** (re-trigger `registerOdometer` on the billing toggle).
-- Real Swiper integration for Testimonials + ProcessCarousel (replace Alpine carousels).
-- LightGallery v2 wiring for Portfolio + VideoStrip (currently a vanilla iframe lightbox).
+- ~~Pricing yearly count-up~~ — **done** (2026-06-19, PR #5). GSAP count-up on the billing toggle. Contract: `tests/e2e/pricing-toggle.spec.ts`.
+- ~~Swiper integration for Testimonials + ProcessCarousel~~ — **done** (2026-06-19, PR #40). Single carousel library in `src/lib/carousels.ts`.
+- ~~Portfolio lightbox~~ — **done** (2026-06-19). **PhotoSwipe v5** (MIT), not LightGallery — resolves the licensing open question. `src/lib/lightbox.ts`. Remaining in the epic: VideoStrip lightbox upgrade + Portfolio AJAX load-more.
+- **Backlog now tracked as GitHub issues** (`eqaderi/infinito`, milestones Phase 1B/2/3; epics → sub-issues).
 - Marquee animation for the LogoCloud rows.
+- Stats odometer string-swap ("~1 Million+").
 - Inner pages: `about.html`, `contact.html`, `services-01..03`, `projects/*`, `blog`, `blog-post-*`, `404`, `coming-soon`, `pricing`.
 - Phase 1B-only deferred polish items tracked in [`PHASE_1A_STATUS.md` "Known remaining issues"](rebuild/docs/PHASE_1A_STATUS.md#known-remaining-issues--phase-1b-backlog).
 
@@ -165,7 +167,7 @@ Strong ideas, dated execution. Keep the visual outcome, modernize the implementa
 - **Three.js planetygon** — keep; modernize Three.js version, use OrbitControls from current `three/examples`
 - **MasterSlider sliders** — replace entirely with **Swiper** (MIT, modern, covers all current use cases including testimonials, logos, full-bleed, fade)
 - **Owl Carousel** — also replace with **Swiper** (single slider library across the product)
-- **LightGallery** — keep (still actively maintained), upgrade to v2.x
+- **Lightbox** — **PhotoSwipe v5** (MIT). Chosen over LightGallery v2 (paid redistribution). Shipped for Portfolio (`src/lib/lightbox.ts`).
 - **Isotope masonry filtering** — keep, but evaluate `Muuri` as a modern alternative; AJAX load-more rewrites cleanly with `fetch` + IntersectionObserver
 
 ### Tier 3 — Optional (per-demo opt-in, not bundled by default)
@@ -456,7 +458,7 @@ Consolidate **5 icon packs** down to **one**:
 
 1. **Branding:** Keep the name "Infinito" or rebrand entirely? (Affects domain, listing slug, asset names.)
 2. **Scope of demo set:** Ship all 11 home demos in v1, or stagger (e.g., 6 in v1.0, 5 added in a free v1.1 update — common Envato strategy)?
-3. **Lightbox licensing:** LightGallery v2 needs a paid license to redistribute. Ship **PhotoSwipe v5** (MIT) instead, or budget for the LightGallery license?
+3. ~~**Lightbox licensing**~~ — **resolved (2026-06-19): PhotoSwipe v5 (MIT).** Shipped for Portfolio to avoid LightGallery's paid redistribution license.
 4. **Pricing tier:** Standard ($19–24) or premium ($49+)? The animation breadth justifies premium pricing if execution is polished.
 5. **Design refresh:** Modernize visually (typography scale, spacing, micro-interactions) or be faithful to the original look? Affects rebuild scope significantly.
 6. **Documentation format:** Static HTML docs (matches Envato norms) or a hosted docs site (Vitepress/Astro Starlight)?

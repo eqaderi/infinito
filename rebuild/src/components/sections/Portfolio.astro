@@ -107,11 +107,15 @@ const itemsJson = JSON.stringify(
       </div>
     </div>
 
-    <div class="grid auto-rows-[260px] grid-cols-1 gap-6 grid-flow-dense sm:auto-rows-[300px] md:grid-cols-12">
+    <div
+      class="grid auto-rows-[260px] grid-cols-1 gap-6 grid-flow-dense sm:auto-rows-[300px] md:grid-cols-12"
+      data-lightbox-gallery
+    >
       {
         items.map((item, idx) => (
           <a
-            href={item.href ?? '#0'}
+            href={item.image}
+            aria-label={`View ${item.title}`}
             class:list={[
               'group relative block overflow-hidden bg-paper-gray transition-opacity duration-300',
               spanCls[item.span ?? 'md'],
@@ -135,6 +139,9 @@ const itemsJson = JSON.stringify(
                 decoding="async"
               />
             </div>
+            <span hidden data-pswp-caption>
+              {item.title} — {item.subtitle}
+            </span>
             <div class="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
             <div class="absolute bottom-0 left-0 p-6 text-paper opacity-0 transition-all duration-500 group-hover:opacity-100">
               <h3 class="font-display text-2xl">{item.title}</h3>
