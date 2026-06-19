@@ -1,9 +1,11 @@
 # Phase 1A — Status & Handoff
 
 > Vertical slice of `index.html` rebuilt on Astro + Tailwind + Alpine + GSAP.
-> Last updated: **2026-06-19** — after the animation performance overhaul (IntersectionObserver reveal engine; ScrollTriggers ~85 → ~21).
+> Last updated: **2026-06-19** — Portfolio lightbox shipped (PhotoSwipe v5); Swiper carousel migration + Pricing yearly count-up already merged.
 
 This is the working memory for the rebuild. If you're picking it up after a break, read this first, then [`index-section-map.md`](./index-section-map.md) for the page reference, then [`MODERNIZATION_PLAN.md` §1.5](../../MODERNIZATION_PLAN.md#15-implementation-progress-live) for the high-level roadmap, then [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a) for the per-primitive status.
+
+> **Backlog now lives in GitHub issues** (`eqaderi/infinito`). Epics map to milestones (Phase 1B / 2 / 3); tasks are native sub-issues. This doc still carries the live narrative + "what's built"; GitHub is the assignable task tracker. The draft that seeded the issues is [`github-backlog.md`](./github-backlog.md).
 
 ---
 
@@ -21,7 +23,9 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 - **Tailwind CSS 4** via the `@tailwindcss/vite` plugin. Theme is CSS-first in `src/styles/global.css` (`@theme {…}`) — there is **no** `tailwind.config.mjs` anymore.
   - ⚠️ **Custom `zIndex` scale** — `z-1`…`z-10` map to **100**…**1000** (via `--z-index-*` in `@theme`). Arbitrary values like `z-[55]` therefore stack **below** `z-10`. Modal/drawer/overlay layers should use `z-[60]+` or extend the scale.
   - Custom breakpoint `nav` for the navigation collapse point (`--breakpoint-*` in `@theme`; defaults reset so only the project's screens exist).
-- **Alpine.js** for component-local interactivity (drawer, search, filters, carousels, lightbox, pricing toggle).
+- **Alpine.js** for component-local interactivity (drawer, search, portfolio filter, pricing toggle).
+- **Swiper** is the single carousel library (Testimonials, ProcessCarousel) — `src/lib/carousels.ts`.
+- **PhotoSwipe v5** (MIT) is the lightbox — `src/lib/lightbox.ts`. Chosen over LightGallery v2 to avoid a paid redistribution license in a sold template.
 - **GSAP 3 + ScrollTrigger** for scroll-driven reveals and parallax. GSAP went 100% free in April 2025, so the former Club plugins (**DrawSVG**, SplitText, MorphSVG) are now available — DrawSVG powers the Featured numeral draw-in. SplitText/MorphSVG remain unused for now.
 - **Lucide** icons (inline SVG, hand-picked per component).
 - **Self-hosted fonts** via `@fontsource` packages, loaded in `BaseLayout.astro`.
@@ -50,14 +54,14 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 3. `Featured.astro` — 3 alternating rows; image + giant background numeral + heading + subhead + paragraph. **Parallax-Y** on image and numeral. **Cover-reveal** (`cover-d-r-img`) clip-path wipe on image columns. Numeral is now an inline SVG glyph (`NumeralGlyph.astro`) that **draws in via DrawSVG** (`svg-draw` + `data-anim-fill`), nested inside the parallax-Y wrapper.
 4. `Services.astro` — 5 cards in a 6-column grid; row 2 (cards 4–5) centered via `md:col-start-2` on the 4th item.
 5. `VideoStrip.astro` — parallax background image + play button → **Alpine lightbox iframe modal**. Vimeo/YouTube watch-URL → embed-URL conversion.
-6. `Portfolio.astro` — Alpine filter tabs + 12-column dense grid with fixed row heights + `x-transition` opacity.
-7. `ProcessCarousel.astro` — Alpine timeline with dot+label `<button>` click targets, evenly distributed progress line.
+6. `Portfolio.astro` — Alpine filter tabs + 12-column dense grid with fixed row heights + `x-transition` opacity. Items open in a **PhotoSwipe v5 lightbox** (prev/next, captions, keyboard, lazy core import). Dimensions resolved at runtime from thumbnail natural size; open uses `fade`. Contract: `tests/e2e/portfolio-lightbox.spec.ts`.
+7. `ProcessCarousel.astro` — **Swiper**-driven slide panels; the timeline (dots, labels, progress line) is derived from Swiper's `activeIndex` on `slideChange`. Dot+label `<button>`s `slideTo`. Contract: `tests/e2e/process-carousel.spec.ts`.
 8. `TeamGrid.astro` — 3 portrait cards with hover-revealed socials.
 9. `CtaStrip.astro` — dark stats band: 3 odometer counters in the legacy 1-2-3 column shuffle.
 10. `BlogPreview.astro` — 3 post cards with hover-expand body and "read more" CTA. **Cover-up** vertical clip-path wipe reveal on each card.
 11. `Subscribe.astro` — dark band, email input + Formspree submit.
-12. `Pricing.astro` — Alpine monthly/yearly toggle with **scale+fade `x-transition`** on the price digits; gradient SVG icons.
-13. `Testimonials.astro` — Alpine fade carousel; gradient author label.
+12. `Pricing.astro` — Alpine monthly/yearly toggle; switching to yearly **counts the price up from 0** (GSAP tween via a `pricing:billing` event → `registerPricingToggle`). Gradient SVG icons. Contract: `tests/e2e/pricing-toggle.spec.ts`.
+13. `Testimonials.astro` — **Swiper** fade carousel (Navigation + gradient-pill Pagination + Keyboard + A11y); gradient author label. Contract: `tests/e2e/testimonials.spec.ts`.
 14. `LogoCloud.astro` — two static rows of 5 partner logos (marquee deferred).
 15. `Contact.astro` — Formspree form (2x2 + textarea + submit) + 3 contact-info columns + **Google Maps no-API embed iframe** with "Open in Google Maps" overlay.
 
@@ -123,14 +127,15 @@ These were either explicitly deferred from the 1A scope or surfaced during the b
 - `slide-up2__lines` line-by-line split — currently animates the whole block; needs per-line split. **SplitText is now free** (GSAP 3.15, already installed) — use it instead of a vanilla splitter.
 - ~~Featured giant numerals (01/02/03) draw-in~~ — **done** (Phase 1B). Montserrat glyph paths in `NumeralGlyph.astro`, drawn via DrawSVG (`data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
 - ~~Testimonials background quote-mark watermark~~ — **done** (Phase 1B step 3). `QuoteGlyph.astro` drawn via DrawSVG (`data-anim-fill`). Contract: `tests/e2e/quote-draw.spec.ts`.
-- Pricing yearly count-up — toggling to "yearly" should trigger an odometer count-up on each plan's price; currently just a snap fade.
-- LoadingScreen wordmark draw-in — currently snaps in. Now unblocked by `registerSvgDraw` (DrawSVG).
+- ~~Pricing yearly count-up~~ — **done** (PR #5). GSAP count-up on toggle to yearly. Contract: `tests/e2e/pricing-toggle.spec.ts`.
+- LoadingScreen wordmark draw-in — currently snaps in. Now unblocked by `registerSvgDraw` (DrawSVG). _(GitHub #8)_
 
 ### Carousels & galleries
 
-- Testimonials and ProcessCarousel use Alpine; should migrate to **Swiper** for swipe gestures, lazy-load, and keyboard a11y consistency. Swiper will be the single carousel library across the product.
-- Portfolio lightbox + AJAX load-more — currently `<a href={item.href}>` opens in new tab; legacy uses LightGallery. Migrate to LightGallery v2.
-- LogoCloud — currently two static rows; legacy is two Owl marquees. Migrate to a CSS-keyframe marquee or Swiper autoplay.
+- ~~Testimonials and ProcessCarousel → **Swiper**~~ — **done** (PR #40, GitHub #13/#14). Swiper is now the single carousel library (`src/lib/carousels.ts`).
+- ~~Portfolio lightbox~~ — **done** (GitHub #16). **PhotoSwipe v5** (MIT), not LightGallery (paid). `src/lib/lightbox.ts`. _Remaining in the lightbox epic (#15):_ **VideoStrip lightbox upgrade (#17)** and **Portfolio AJAX load-more (#18)**.
+- ⚠️ **Known edge (follow-up):** when a portfolio filter is active, the lightbox prev/next still cycles through filtered-out items (gallery binds all anchors). Acceptable for now; revisit by scoping Swiper/PhotoSwipe to visible items.
+- LogoCloud — currently two static rows; legacy is two Owl marquees. Migrate to a CSS-keyframe marquee or Swiper autoplay. _(GitHub #20)_
 
 ### Layout & polish
 
@@ -159,6 +164,9 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 | 2   | Featured numeral SVG draw-in      | ✅ Done | 2026-06-18 | `NumeralGlyph.astro` (Montserrat glyph paths) drawn via DrawSVG — now free. `registerSvgDraw` gained opt-in `data-anim-fill` (draw outline + fade fill). Contract: `tests/e2e/svg-draw.spec.ts`. |
 | 3   | Testimonials quote-mark watermark | ✅ Done | 2026-06-19 | `QuoteGlyph.astro` atom (double-quote SVG glyph) replaces static text `"`. Uses `svg-draw` + `data-anim-fill` (same pipeline as numerals). Contract: `tests/e2e/quote-draw.spec.ts`.             |
 | —   | Animation performance overhaul    | ✅ Done | 2026-06-19 | Reveal engine → one `IntersectionObserver` + CSS transitions (`registerReveals`); ScrollTriggers ~85 → ~21, `will-change` ~72 → ~7. Removed global `will-change` + `scroll-behavior:smooth`; throttled nav scroll; odometer skips redundant writes; deferred GSAP boot; `decoding="async"` + hero LCP preload. Contract: `tests/e2e/reveal.spec.ts`. Deferred to a separate task: Astro `<Image>` migration, GIF→video, font-weight trim. |
+| 4   | Pricing yearly count-up           | ✅ Done | 2026-06-19 | PR #5. GSAP count-up on toggle to yearly via a `pricing:billing` event → `registerPricingToggle`; reduced-motion snaps to final. Contract: `tests/e2e/pricing-toggle.spec.ts`. |
+| 5   | Swiper carousel migration         | ✅ Done | 2026-06-19 | PR #40 (GitHub #12/#13/#14). Testimonials + ProcessCarousel → Swiper; new `src/lib/carousels.ts` mounted from `BaseLayout`. Single carousel library. Contracts: `testimonials.spec.ts`, `process-carousel.spec.ts`. |
+| 6   | Portfolio lightbox                | ✅ Done | 2026-06-19 | GitHub #16. **PhotoSwipe v5** (MIT) in `src/lib/lightbox.ts`; runtime dimensions from thumbnail natural size, lazy core import, `fade` open, dialog `aria-label`. Contract: `portfolio-lightbox.spec.ts`. |
 
 Phase 1B onward follows the full rebuild methodology loop: understand → evaluate → **contract first** → go blind → rebuild → verify. See `REBUILD_METHODOLOGY.md`.
 
@@ -166,18 +174,18 @@ Phase 1B onward follows the full rebuild methodology loop: understand → evalua
 
 ## 8. Recommended next order of work
 
-**START HERE next session → item 1 below (Pricing yearly count-up).** Everything above it is done and committed (`main`). Each item follows the full methodology loop (contract first, then build blind, then verify; `npm run test` must stay green).
+**Tracking is now GitHub issues** (`eqaderi/infinito`, milestone "Phase 1B"). The list below mirrors the open issues. Each item follows the full methodology loop (contract first, then build blind, then verify; `npm run test` must stay green).
 
-Done so far in Phase 1B: cover/reveal primitives, Featured numeral draw-in, Testimonials quote watermark, and the animation performance overhaul.
+Done so far in Phase 1B: cover/reveal primitives, Featured numeral draw-in, Testimonials quote watermark, animation performance overhaul, **Pricing yearly count-up (#7)**, **Swiper migration (#13/#14 — epic #12 closed)**, **Portfolio lightbox (#16)**.
 
-Next, in order:
+**START HERE next session → finish the lightbox epic (#15), then the small wins.** In order:
 
-1. **Pricing yearly count-up** — re-trigger `registerOdometer` on Alpine `billing` change (currently a snap fade). _← next up._
-2. **Swiper migration for Testimonials + ProcessCarousel** — single carousel library, replaces the two Alpine carousels (adds swipe + keyboard a11y).
-3. **LightGallery v2 wiring for Portfolio + VideoStrip** — proper lightbox with prev/next, captions, lazy-load.
-4. **LogoCloud marquee** — CSS-keyframe approach first; Swiper autoplay if buyers ask for pause-on-hover.
-5. **Stats odometer string-swap** — wrap odometer in a small Alpine state machine so the final value can be a custom string ("~1 Million+").
-6. **Inner pages** — start with `about.html`, then `contact.html`, then services, then portfolio detail, then blog. Each re-uses the existing Tier B sections.
+1. **VideoStrip lightbox upgrade (#17)** — align the play-button modal with PhotoSwipe (custom HTML/video slide) for prev/next + consistent UX. Same `src/lib/lightbox.ts`.
+2. **Portfolio AJAX load-more (#18)** — replace legacy jQuery fragments with `fetch()` + IntersectionObserver; `aria-live` for new items. Also fixes the filter↔lightbox edge noted in §6.
+3. **LogoCloud marquee (#20)** — CSS-keyframe marquee; reduced-motion → static rows; no new dep.
+4. **Stats odometer string-swap (#22)** — final value can be a custom string ("~1 Million+") via a small Alpine/JS state machine on top of the odometer.
+5. **LoadingScreen wordmark draw-in (#8)** — DrawSVG on the wordmark (pipeline already exists via `registerSvgDraw`).
+6. **Inner pages (epic #23)** — `BlogGrid`/`BlogPost` Tier B components first, then `about`, `contact`, services, project detail, blog. Each re-uses existing sections.
 
 **Deferred performance follow-up (separate task, not blocking):** Astro `<Image>` migration (needs moving `public/img` → `src/assets` + a glob resolver, which touches the buyer-editable string-path data contract), Portfolio GIF → video/animated-webp, and font-weight trim in `fonts.css`. Pair the `<Image>` move with the GIF conversion. Rationale in the perf row of §7 and the commit `perf(animations): cut scroll jank`.
 
@@ -202,9 +210,10 @@ In the browser, confirm:
 - [ ] Featured image and giant numeral move at different speeds on scroll (parallax-Y).
 - [ ] Services: at md+ width, the 4th and 5th cards are centered in row 2.
 - [ ] VideoStrip: clicking play opens a modal iframe (not a new tab); ESC closes it.
-- [ ] Portfolio: filter tabs filter without flicker; all visible images are the same height; gaps are consistent.
-- [ ] Process timeline: clicking the label area (not just the dot) advances; the progress line ends inside the active dot.
-- [ ] Pricing: monthly→yearly transition is smooth (~300ms scale+fade), not a snap.
+- [ ] Portfolio: filter tabs filter without flicker; all visible images are the same height; gaps are consistent. Clicking an item opens the PhotoSwipe lightbox; arrows/swipe navigate; ESC closes.
+- [ ] Process timeline: clicking the label area (not just the dot) advances the Swiper; the progress line ends inside the active dot; swipe/keyboard work.
+- [ ] Testimonials: arrows + gradient-pill bullets change the quote (fade); swipe + arrow keys work.
+- [ ] Pricing: switching to yearly counts the price up from 0 (~1s); switching back to monthly is instant.
 - [ ] Blog cards reveal with a bottom-to-top clip-path wipe on scroll (cover-up).
 - [ ] Contact: Google Maps iframe renders; "Open in Google Maps" link works.
 - [ ] No console errors.

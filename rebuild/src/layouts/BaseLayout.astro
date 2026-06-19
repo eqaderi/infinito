@@ -55,26 +55,24 @@ const {
     <script>
       import { mount } from '../lib/animations';
       import { mountCarousels } from '../lib/carousels';
+      import { mountLightbox } from '../lib/lightbox';
 
       // Yield to the first paint before booting GSAP: requestIdleCallback when
       // available (capped so intros still fire promptly), else a microtask via
       // rAF. Triggered on DOM-ready, not load, so intro animations aren't
-      // gated behind image loading. mountCarousels runs regardless of reduced
-      // motion — a carousel is navigation, not decorative motion.
+      // gated behind image loading. mountCarousels/mountLightbox run regardless
+      // of reduced motion — they're navigation, not decorative motion (the
+      // lightbox lazy-loads its core only when an item is opened).
+      const interactive = () => {
+        mount();
+        mountCarousels();
+        mountLightbox();
+      };
       const boot = () => {
         if ('requestIdleCallback' in window) {
-          requestIdleCallback(
-            () => {
-              mount();
-              mountCarousels();
-            },
-            { timeout: 200 },
-          );
+          requestIdleCallback(interactive, { timeout: 200 });
         } else {
-          requestAnimationFrame(() => {
-            mount();
-            mountCarousels();
-          });
+          requestAnimationFrame(interactive);
         }
       };
 
