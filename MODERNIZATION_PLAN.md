@@ -205,7 +205,7 @@ Strong ideas, dated execution. Keep the visual outcome, modernize the implementa
 
 ### 5.2 Final Recommendation
 
-**Primary product: HTML + Tailwind CSS + Alpine.js + GSAP 3 (with ScrollTrigger, SplitText, DrawSVG via Club GreenSock).**
+**Primary product: HTML + Tailwind CSS + Alpine.js + GSAP 3 (ScrollTrigger, SplitText, DrawSVG — all free since GSAP went 100% free in April 2025).**
 
 **Optional: build the same templates with Astro** as the project structure, exporting static HTML. This gives you:
 
@@ -223,7 +223,7 @@ Strong ideas, dated execution. Keep the visual outcome, modernize the implementa
 
 **Form handling:** Provide three documented options — **Formspree**, **Netlify Forms**, and a minimal `mailer.php` for buyers on legacy LAMP hosting. Default the demo to Formspree.
 
-**Animation runtime:** **GSAP 3 + ScrollTrigger** (single library replaces ScrollMagic + TweenMax + TimelineMax + custom jQuery animation code). License under GreenSock's "No Charge" or "Business Green" tier as appropriate to Envato's distribution terms — this is a known-solved problem for ThemeForest authors.
+**Animation runtime:** **GSAP 3 + ScrollTrigger** (single library replaces ScrollMagic + TweenMax + TimelineMax + custom jQuery animation code). GSAP and all its plugins (incl. ScrollTrigger, SplitText, DrawSVG, MorphSVG) went 100% free in April 2025 — no Club/commercial license, redistribution on Envato is unencumbered.
 
 ---
 
@@ -343,6 +343,8 @@ Consolidate **5 icon packs** down to **one**:
 
 ## 8. Phased Migration Roadmap
 
+> **This is the original coarse plan; the live execution model differs.** In practice Phase 1 was split into **1A** (home-page vertical slice — validate the architecture on one route) and **1B** (animation parity + inner pages), which proved a better decomposition. **[§1.5](#15-implementation-progress-live)** and [`PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md) are the source of truth for what's actually built and what's next; the phases below remain useful as the high-level shape and exit criteria.
+
 > Every phase follows the [rebuild methodology](REBUILD_METHODOLOGY.md): each kept behavior is characterized, evaluated, pinned as a test contract, then rebuilt implementation-blind. A phase is not complete until its behaviors' contracts (functional, accessibility, performance, visual) are green — this is implied in every "Exit criteria" below.
 
 ### Phase 0 — Foundation (1–2 weeks)
@@ -360,7 +362,7 @@ Consolidate **5 icon packs** down to **one**:
 
 **Exit criteria:** Empty `index.html` renders with the design system's typography, colors, and a button row that visually matches the legacy.
 
-### Phase 1 — Anchor demo + core components (3–4 weeks)
+### Phase 1 — Anchor demo + core components (3–4 weeks) — _executed as 1A + 1B; see §1.5_
 
 **Goal:** One fully rebuilt demo (`index.html` default) end-to-end, plus the inner-page set.
 
@@ -416,7 +418,7 @@ Consolidate **5 icon packs** down to **one**:
 
 | Risk                                                                               | Likelihood | Impact | Mitigation                                                                                                                   |
 | ---------------------------------------------------------------------------------- | ---------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| GreenSock licensing for redistribution on Envato                                   | Medium     | High   | Verify ThemeForest's current GSAP policy; budget for a Business Green license if required                                    |
+| LightGallery v2 commercial license for redistribution on Envato                    | Medium     | Medium | LightGallery requires a paid license to distribute; default to **PhotoSwipe v5** (MIT) for the lightbox, or budget for a LightGallery license. (GSAP licensing is no longer a risk — 100% free since April 2025.) |
 | Pixi.js v3 → v7+ shader/API breaking changes for liquid distortion                 | High       | Medium | Build a minimal proof-of-concept in Phase 0; if cost is too high, evaluate `ogl` or hand-rolled WebGL                        |
 | Custom WebGL effects (ripples, fluid HeaderScroller) have undocumented shader code | High       | Medium | Treat the legacy JS as the spec; reimplement against the visual outcome, not the source                                      |
 | MasterSlider feature parity in Swiper                                              | Low        | Low    | Swiper has thumbnail, fade, parallax, autoplay, keyboard, lazy — all current uses are covered                                |
@@ -443,18 +445,22 @@ Consolidate **5 icon packs** down to **one**:
 6. **Branding:** The product will be re-named or have its branding cleaned up ("Infinito" stays, the variants "Infinto" / "Infinoto" are removed).
 7. **No PWA, no app-shell behavior in v1** — this is a marketing/portfolio template, not an app.
 
+### Decisions made (resolved since the original plan)
+
+- **Canonical source of truth → Astro.** The rebuild is one Astro route per demo, statically rendered; the buyer ships `dist/`. (Was open question "Astro vs plain HTML/Vite".)
+- **Form back-end default → Formspree**, with a graceful inline notice when `PUBLIC_FORMSPREE_ENDPOINT` is unset. Netlify / Web3Forms / hardened `mailer.php` documented as alternatives. (Was "Form back-end default".)
+- **GSAP licensing → non-issue.** GSAP and all plugins went 100% free in April 2025; nothing to license or budget for.
+- **Inner-page set → settled** as `about`, `contact`, `services-01..03`, `projects/*`, `blog`, `blog-3`, `blog-post-01..02`, `404`, `coming-soon`, `pricing` (Phase 1B backlog in `PHASE_1A_STATUS.md`). Revisit only if a new vertical is requested.
+
 ### Open questions for the product owner
 
 1. **Branding:** Keep the name "Infinito" or rebrand entirely? (Affects domain, listing slug, asset names.)
 2. **Scope of demo set:** Ship all 11 home demos in v1, or stagger (e.g., 6 in v1.0, 5 added in a free v1.1 update — common Envato strategy)?
-3. **Astro vs plain HTML/Vite:** Astro gives huge component-reuse wins; plain HTML is simplest for the buyer to modify. Pick one as the canonical source of truth.
-4. **GSAP licensing:** Confirm current ThemeForest policy on bundling GSAP plugins (ScrollTrigger is free; SplitText/DrawSVG require a Club license).
-5. **Pricing tier:** Standard ($19–24) or premium ($49+)? The animation breadth justifies premium pricing if execution is polished.
-6. **Form back-end default:** Formspree (third-party, requires buyer signup) or `mailer.php` (no signup, but legacy)?
-7. **Inner pages to add:** Confirm the new page list (`about`, `contact`, `404`, `coming-soon`, `pricing`) — anything to add (e.g., `careers`, `case-studies-index`)?
-8. **Design refresh:** Modernize visually (typography scale, spacing, micro-interactions) or be faithful to the original look? Affects rebuild scope significantly.
-9. **Documentation format:** Static HTML docs (matches Envato norms) or a hosted docs site (Vitepress/Astro Starlight)?
-10. **WordPress / React variants:** Plan for them in the roadmap, or hard out-of-scope?
+3. **Lightbox licensing:** LightGallery v2 needs a paid license to redistribute. Ship **PhotoSwipe v5** (MIT) instead, or budget for the LightGallery license?
+4. **Pricing tier:** Standard ($19–24) or premium ($49+)? The animation breadth justifies premium pricing if execution is polished.
+5. **Design refresh:** Modernize visually (typography scale, spacing, micro-interactions) or be faithful to the original look? Affects rebuild scope significantly.
+6. **Documentation format:** Static HTML docs (matches Envato norms) or a hosted docs site (Vitepress/Astro Starlight)?
+7. **WordPress / React variants:** Plan for them in the roadmap, or hard out-of-scope?
 
 ---
 

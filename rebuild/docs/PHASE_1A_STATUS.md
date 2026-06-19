@@ -11,7 +11,7 @@ This is the working memory for the rebuild. If you're picking it up after a brea
 
 A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` page top-to-bottom on the new component model. The goal is to validate the architecture (component tiers, animation primitives, design tokens, data layer, build pipeline) end-to-end on one route before scaling to the rest of the demo set.
 
-**Out of scope for 1A:** the other home-demo variants, inner pages, Swiper, LightGallery v2, SplitText/DrawSVG (Club GreenSock plugins), Isotope/Muuri masonry, marquee, smooth-scroll, the full megamenu, and any WebGL hero effect.
+**Out of scope for 1A:** the other home-demo variants, inner pages, Swiper, LightGallery v2, SplitText/DrawSVG (formerly Club GreenSock, free since April 2025), Isotope/Muuri masonry, marquee, smooth-scroll, the full megamenu, and any WebGL hero effect.
 
 ---
 
