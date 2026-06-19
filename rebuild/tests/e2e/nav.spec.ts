@@ -41,6 +41,6 @@ test.describe("Search overlay", () => {
 
     const input = page.locator('input[type="search"]');
     await expect(input).toBeVisible();
-    await expect(input).toBeFocused({ timeout: 2000 });
+    await expect(input).toBeFocused();
   });
 });

@@ -55,8 +55,9 @@ pids/
 # Mac resource forks
 ._*
 
-# Cursor
-.cursor/
+# Cursor — ignore local state, but track shared project rules
+.cursor/*
+!.cursor/rules/
 
 # Astro (rebuild project)
 rebuild/.astro/

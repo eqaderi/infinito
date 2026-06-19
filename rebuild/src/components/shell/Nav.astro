@@ -184,7 +184,7 @@ const isTransparent = variant === 'transparent-white';
           placeholder="Type and hit enter"
           class="w-full border-0 border-b border-paper/30 bg-transparent pb-3 pl-10 pr-4 font-display text-3xl text-paper placeholder:text-paper/30 focus:border-paper focus:outline-hidden focus:ring-0 nav:text-5xl"
           x-ref="searchInput"
-          x-effect="searchOpen && $nextTick(() => $refs.searchInput.focus())"
+          x-effect="searchOpen && $nextTick(() => requestAnimationFrame(() => $refs.searchInput.focus()))"
         />
         <svg class="absolute left-0 top-3 h-6 w-6 text-paper/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="7"></circle>

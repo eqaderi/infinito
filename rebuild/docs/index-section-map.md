@@ -285,21 +285,22 @@ clients/client-logo-10.png          → public/img/clients/logo-10.png
 
 ## Animation triggers used
 
-Mapped to `rebuild/src/lib/animations.ts` register-functions:
+Mapped to the current `rebuild/src/lib/animations.ts` API. Markup opts in with
+`data-anim="<value>"`; reveals run on one shared `IntersectionObserver` + CSS
+transitions (`registerReveals`), scroll-scrubbed / draw / count effects keep
+GSAP. Source of truth for primitive status: [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a).
 
-| Legacy class                                    | Modern primitive          | Notes                                             |
-| ----------------------------------------------- | ------------------------- | ------------------------------------------------- |
-| `slide-up-intro` / `slide-up-intro__el`         | `mountIntro()` (one-shot) | runs once on load, no scroll trigger              |
-| `fade-up-intro` / `fade-up-intro__el`           | `mountIntro()` (one-shot) | same                                              |
-| `fade-down-intro` / `fade-down-intro__el`       | `mountIntro()` (one-shot) | same                                              |
-| `hero_img-intro` / `hero_img-intro__el`         | `mountIntro()` (one-shot) | hero background reveal                            |
-| `slide-up` / `slide-up__el` / `slide-up__lines` | `registerSlideUp()`       | scroll-triggered, opacity 0→1 + y +24px → 0       |
-| `slide-up2` / `slide-up2__lines`                | `registerSlideUp()` (dly) | same with `data-slide-up2-delay`                  |
-| `fade-up` / `fade-up__el`                       | `registerFadeUp()`        | scroll-triggered                                  |
-| `fade-in` / `fade-in__el`                       | `registerFadeUp()` (no y) | opacity only                                      |
-| `rotate-in` / `rotate-in__el`                   | `registerRotateIn()`      | scale .8 + opacity 0 → 1                          |
-| `cover-d-r-img` / `cover-d-r-img__el`           | (deferred to Phase 1B)    | diagonal cover reveal — needs clip-path animation |
-| `cover-up` / `cover-up__el`                     | (deferred to Phase 1B)    | upward cover reveal                               |
-| `svg-draw` / `svg-draw__el`                     | `registerSvgDraw()`       | stroke-dasharray draw on scroll                   |
-| `js-odometer--simple`                           | `registerOdometer()`      | counts to `data-number-end`                       |
-| `parallax` + `parallax__el`                     | `registerParallaxBg()`    | bg image translateY on scroll                     |
+| Legacy class                                    | `data-anim` value | Register fn                            | Notes                                                                  |
+| ----------------------------------------------- | ----------------- | -------------------------------------- | ---------------------------------------------------------------------- |
+| `slide-up-intro*` / `fade-up-intro*` / `fade-down-intro*` / `hero_img-intro*` | `intro-up` / `intro-down` / `intro-fade` | `mountIntro()`     | One-shot GSAP timeline at load, no scroll trigger.                     |
+| `slide-up` / `slide-up__lines`                  | `slide-up`        | `registerReveals()`                    | opacity 0→1 + y translate; `data-anim-delay` → `transition-delay`.     |
+| `slide-up2` / `slide-up2__lines`                | `slide-up`        | `registerReveals()`                    | same, with delay. Per-line split still deferred (needs SplitText).     |
+| `fade-up` / `fade-up__el`                       | `fade-up`         | `registerReveals()`                    | opacity + y.                                                           |
+| `fade-in` / `fade-in__el`                       | `fade-in`         | `registerReveals()`                    | opacity only.                                                          |
+| `rotate-in` / `rotate-in__el`                   | `rotate-in`       | `registerReveals()`                    | scale + opacity.                                                       |
+| `cover-d-r-img` / `cover-d-r-img__el`           | `cover-d-r-img`   | `registerCoverDR()`                    | ✅ done. Horizontal `clip-path` wipe + scale/shift settle (GSAP).       |
+| `cover-up` / `cover-up__el`                     | `cover-up`        | `registerReveals()`                    | ✅ done. Vertical `clip-path` wipe (bottom → top).                      |
+| `svg-draw` / `svg-draw--filled`                 | `svg-draw`        | `registerSvgDraw()`                    | GSAP **DrawSVG** outline draw; opt-in `data-anim-fill` fades fill in.   |
+| `js-odometer--simple`                           | `odometer`        | `registerOdometer()`                   | counts to `data-anim-end` (GSAP).                                      |
+| `parallax` + `parallax__el`                     | `parallax-bg`     | `registerParallaxBg()`                 | bg-position scrub (GSAP); strength via `data-anim-strength`.           |
+| (new — vertical element parallax)               | `parallax-y`      | `registerParallaxY()`                  | y-translate scrub (GSAP); strength + `data-anim-direction`.            |

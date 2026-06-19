@@ -285,7 +285,7 @@ Documented in §1.7 above.
 | **Where it appears**   | Hero text rotators (`index__02`), button shuffle/hover effects, odometer letter animations                                            |
 | **Powered by**         | `Final_Files/js/plugins/lettering.js` (jQuery plugin)                                                                                 |
 | **Tier**               | **T1 — Must preserve** (functionality)                                                                                                |
-| **Modern replacement** | **GSAP SplitText** (Club GreenSock; commercial license) or a tiny vanilla split-text helper (~30 lines) for buyers without GSAP Club. |
+| **Modern replacement** | **GSAP SplitText** (free since GSAP went 100% free in April 2025 — no Club license) or a tiny vanilla split-text helper (~30 lines). |
 
 ### 4.2 Hero text rotator (`lettering_rotator`)
 
@@ -611,8 +611,8 @@ graph TD
     Pages --> Alpine[Alpine.js]
     Pages --> GSAP[GSAP 3 core]
     GSAP --> ScrollTrigger
-    GSAP --> SplitText[SplitText - optional Club]
-    GSAP --> DrawSVG[DrawSVG - optional Club]
+    GSAP --> SplitText[SplitText - free]
+    GSAP --> DrawSVG[DrawSVG - free]
     Pages --> Swiper
     Pages --> CountUp[CountUp.js]
     Pages --> Lightbox[LightGallery v2 / PhotoSwipe v5]
