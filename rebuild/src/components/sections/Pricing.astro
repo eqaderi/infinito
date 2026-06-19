@@ -58,7 +58,11 @@ const {
 
 <section
   class="bg-paper px-6 py-24 nav:px-12 nav:py-32"
+  data-pricing-section
   x-data="{ billing: 'monthly' }"
+  x-init="$watch('billing', val => $nextTick(() =>
+    $el.dispatchEvent(new CustomEvent('pricing:billing', { bubbles: true, detail: { billing: val } }))
+  ))"
 >
   <div class="mx-auto max-w-[1200px]">
     <div class="mb-16 flex flex-wrap items-end justify-between gap-6">
@@ -124,6 +128,7 @@ const {
                     class="col-start-1 row-start-1"
                     x-show="billing === 'yearly'"
                     x-cloak
+                    data-yearly-price={plan.yearlyPrice}
                     x-transition:enter="transition duration-300 ease-out"
                     x-transition:enter-start="opacity-0 scale-90 -translate-y-2"
                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
