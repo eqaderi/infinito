@@ -1,0 +1,33 @@
+---
+/* Decorative double-quote watermark for the Testimonials section.
+ *
+ * Glyph geometry is a stylized curly double-quote, lifted as a visual asset
+ * from the legacy template (viewBox 800x800).
+ *
+ * Carries data-anim="svg-draw" + data-anim-fill so registerSvgDraw() draws
+ * the outline then fades the fill in on scroll. Default markup is the solid
+ * filled state, so reduced-motion / no-JS show the glyph immediately. */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const D = "M 620.555 708.7 Q 572.475 708.7 536.988 692.292 Q 501.501 675.884 478.606 648.41 Q 455.711 620.936 444.264 584.304 Q 432.816 547.673 432.816 506.462 Q 432.816 424.04 457.619 357.263 Q 482.422 290.486 522.106 238.972 Q 561.791 187.458 610.252 150.445 Q 658.713 113.431 706.029 91.3 L 728.161 121.063 Q 661.003 184.406 621.318 233.63 Q 581.633 282.854 581.633 315.67 Q 581.633 335.513 598.423 347.723 Q 615.213 359.934 639.634 369.855 Q 663.292 379.013 689.24 390.46 Q 715.187 401.908 736.938 420.605 Q 758.688 439.303 772.806 467.54 Q 786.925 495.777 786.925 539.278 Q 786.925 565.225 776.622 594.989 Q 766.319 624.752 745.332 649.937 Q 724.345 675.121 693.056 691.911 Q 661.766 708.7 620.555 708.7 Z M 200.814 708.7 Q 152.734 708.7 117.247 692.292 Q 81.76 675.884 58.865 648.41 Q 35.97 620.936 24.523 584.304 Q 13.075 547.673 13.075 506.462 Q 13.075 424.04 37.878 357.263 Q 62.681 290.486 102.365 238.972 Q 142.05 187.458 190.511 150.445 Q 238.972 113.431 286.288 91.3 L 308.42 121.063 Q 241.262 184.406 201.577 233.63 Q 161.892 282.854 161.892 315.67 Q 161.892 335.513 178.682 347.723 Q 195.472 359.934 219.893 369.855 Q 243.551 379.013 269.499 390.46 Q 295.446 401.908 317.197 420.605 Q 338.947 439.303 353.065 467.54 Q 367.184 495.777 367.184 539.278 Q 367.184 565.225 356.881 594.989 Q 346.578 624.752 325.591 649.937 Q 304.604 675.121 273.315 691.911 Q 242.025 708.7 200.814 708.7 Z";
+---
+
+<svg
+  class={className}
+  viewBox="0 0 800 800"
+  aria-hidden="true"
+  data-anim="svg-draw"
+  data-anim-fill
+  data-anim-duration="1.6"
+>
+  <path
+    d={D}
+    fill-rule="evenodd"
+    vector-effect="non-scaling-stroke"
+    class="fill-paper-gray stroke-paper-gray [stroke-width:2px]"
+  />
+</svg>

@@ -1,4 +1,6 @@
 ---
+import QuoteGlyph from "../atoms/QuoteGlyph.astro";
+
 export interface Quote {
   quote: string;
   author: string;
@@ -38,6 +40,7 @@ const {
 ---
 
 <section
+  id="testimonials"
   class="bg-paper-soft px-6 py-24 nav:px-12 nav:py-32"
   x-data={`{
     active: 0,
@@ -65,12 +68,9 @@ const {
 
     {/* Big background quote glyph */}
     <div class="relative px-4 text-center">
-      <span
-        class="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 select-none font-display text-[16rem] leading-none text-paper-gray nav:text-[22rem]"
-        aria-hidden="true"
-      >
-        “
-      </span>
+      <QuoteGlyph
+        class="pointer-events-none absolute left-1/2 top-1/2 z-0 w-36 -translate-x-1/2 -translate-y-1/2 select-none opacity-40 nav:w-48"
+      />
 
       <div class="relative min-h-[180px]" data-anim="fade-up">
         {

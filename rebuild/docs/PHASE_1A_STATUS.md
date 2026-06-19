@@ -1,7 +1,7 @@
 # Phase 1A — Status & Handoff
 
 > Vertical slice of `index.html` rebuilt on Astro + Tailwind + Alpine + GSAP.
-> Last updated: **2026-06-18** — after the dependency-majors update (Tailwind 4 + Astro 6) and Phase 1B step 2 (Featured numeral SVG draw-in).
+> Last updated: **2026-06-19** — after Phase 1B step 3 (Testimonials quote-mark watermark DrawSVG).
 
 This is the working memory for the rebuild. If you're picking it up after a break, read this first, then [`index-section-map.md`](./index-section-map.md) for the page reference, then [`MODERNIZATION_PLAN.md` §1.5](../../MODERNIZATION_PLAN.md#15-implementation-progress-live) for the high-level roadmap, then [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a) for the per-primitive status.
 
@@ -63,7 +63,7 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 ### Tier D — Atoms (`src/components/atoms/`)
 
-`Button`, `GradientText`, `SectionTitle`, `Input`, `Textarea`, `IconLine`, `Link`, `NumeralGlyph` (Featured 01/02/03 SVG glyphs).
+`Button`, `GradientText`, `SectionTitle`, `Input`, `Textarea`, `IconLine`, `Link`, `NumeralGlyph` (Featured 01/02/03 SVG glyphs), `QuoteGlyph` (Testimonials double-quote watermark).
 
 ### Animations (`src/lib/animations.ts`)
 
@@ -118,7 +118,7 @@ These were either explicitly deferred from the 1A scope or surfaced during the b
 - ~~`cover-d-r-img` and `cover-up` primitives~~ — **done** (Phase 1B step 1, 2026-06-18). `cover-transp` text line reveals still deferred (depends on line splitter).
 - `slide-up2__lines` line-by-line split — currently animates the whole block; needs per-line split. **SplitText is now free** (GSAP 3.15, already installed) — use it instead of a vanilla splitter.
 - ~~Featured giant numerals (01/02/03) draw-in~~ — **done** (Phase 1B). Montserrat glyph paths in `NumeralGlyph.astro`, drawn via DrawSVG (`data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
-- Testimonials background quote-mark watermark — currently absent. Add a draw-in SVG (reuse `svg-draw` + `data-anim-fill`, same as the numerals).
+- ~~Testimonials background quote-mark watermark~~ — **done** (Phase 1B step 3). `QuoteGlyph.astro` drawn via DrawSVG (`data-anim-fill`). Contract: `tests/e2e/quote-draw.spec.ts`.
 - Pricing yearly count-up — toggling to "yearly" should trigger an odometer count-up on each plan's price; currently just a snap fade.
 - LoadingScreen wordmark draw-in — currently snaps in. Now unblocked by `registerSvgDraw` (DrawSVG).
 
@@ -147,12 +147,13 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 
 ## 7. Phase 1B progress
 
-| #   | Task                              | Status | Date       | Notes                                                                                                                                        |
-| --- | --------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Cover/reveal primitives           | ✅ Done | 2026-06-18 | `registerCoverDR` (clip-path horizontal wipe + scale settle) on Featured images. `registerCoverUp` (clip-path vertical wipe) on Blog cards. |
-| —   | Test tooling setup                | ✅ Done | 2026-06-18 | Vitest + Playwright + @axe-core/playwright. Initial contracts for cover-reveal, nav drawer, search overlay, a11y. `toEmbed()` extracted to `src/lib/video.ts` for unit testing. |
-| —   | Dependency majors update          | ✅ Done | 2026-06-18 | Tailwind 3→4 (`@tailwindcss/vite`, theme → CSS `@theme`), Astro 5→6, in-range bumps. |
+| #   | Task                              | Status  | Date       | Notes                                                                                                                                                                                            |
+| --- | --------------------------------- | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Cover/reveal primitives           | ✅ Done | 2026-06-18 | `registerCoverDR` (clip-path horizontal wipe + scale settle) on Featured images. `registerCoverUp` (clip-path vertical wipe) on Blog cards.                                                      |
+| —   | Test tooling setup                | ✅ Done | 2026-06-18 | Vitest + Playwright + @axe-core/playwright. Initial contracts for cover-reveal, nav drawer, search overlay, a11y. `toEmbed()` extracted to `src/lib/video.ts` for unit testing.                  |
+| —   | Dependency majors update          | ✅ Done | 2026-06-18 | Tailwind 3→4 (`@tailwindcss/vite`, theme → CSS `@theme`), Astro 5→6, in-range bumps.                                                                                                             |
 | 2   | Featured numeral SVG draw-in      | ✅ Done | 2026-06-18 | `NumeralGlyph.astro` (Montserrat glyph paths) drawn via DrawSVG — now free. `registerSvgDraw` gained opt-in `data-anim-fill` (draw outline + fade fill). Contract: `tests/e2e/svg-draw.spec.ts`. |
+| 3   | Testimonials quote-mark watermark | ✅ Done | 2026-06-19 | `QuoteGlyph.astro` atom (double-quote SVG glyph) replaces static text `"`. Uses `svg-draw` + `data-anim-fill` (same pipeline as numerals). Contract: `tests/e2e/quote-draw.spec.ts`.             |
 
 Phase 1B onward follows the full rebuild methodology loop: understand → evaluate → **contract first** → go blind → rebuild → verify. See `REBUILD_METHODOLOGY.md`.
 
@@ -164,7 +165,7 @@ Picking up Phase 1B from here:
 
 1. ~~Cover/reveal primitives~~ — **done**.
 2. ~~Featured numeral SVG draw-in~~ — **done** (DrawSVG via `NumeralGlyph.astro`).
-3. **Testimonials quote-mark watermark** — same approach (DrawSVG + `data-anim-fill`).
+3. ~~Testimonials quote-mark watermark~~ — **done** (DrawSVG via `QuoteGlyph.astro`).
 4. **Pricing yearly count-up** — re-trigger `registerOdometer` on Alpine `billing` change.
 5. **Swiper migration for Testimonials + ProcessCarousel** — single library, replaces the Alpine carousels.
 6. **LightGallery v2 wiring for Portfolio + VideoStrip** — proper lightbox with prev/next, captions, lazy-load.

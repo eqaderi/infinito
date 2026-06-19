@@ -108,13 +108,13 @@ If any fails, the feature is not done — regardless of how good the demo looks.
 
 Test infrastructure lives under `rebuild/`. Run from there.
 
-| Need           | Tool                                    | Status      | Used for                                                                                                         |
-| -------------- | --------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- |
-| Unit / logic   | **Vitest**                              | ✅ Live     | Pure functions: `toEmbed()`, filter matching, odometer math, split-text helper, direction-aware-hover edge math. |
-| Behavior / E2E | **Playwright**                          | ✅ Live     | Interaction contracts: drawer, search overlay, filters, lightbox, pricing toggle, form states, scroll spy.       |
-| Accessibility  | **@axe-core/playwright**                | ✅ Live     | Per-page a11y assertions; keyboard + focus-trap flows.                                                           |
-| Performance    | **Lighthouse CI** + a bundle-size check | ⏳ Planned  | The §15 budgets (mobile > 90, no WebGL on first paint, lazy hero modules).                                       |
-| Visual         | **Playwright screenshots** (or Percy)   | ⏳ Planned  | Diff sections against captured legacy references.                                                                |
+| Need           | Tool                                    | Status     | Used for                                                                                                         |
+| -------------- | --------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------- |
+| Unit / logic   | **Vitest**                              | ✅ Live    | Pure functions: `toEmbed()`, filter matching, odometer math, split-text helper, direction-aware-hover edge math. |
+| Behavior / E2E | **Playwright**                          | ✅ Live    | Interaction contracts: drawer, search overlay, filters, lightbox, pricing toggle, form states, scroll spy.       |
+| Accessibility  | **@axe-core/playwright**                | ✅ Live    | Per-page a11y assertions; keyboard + focus-trap flows.                                                           |
+| Performance    | **Lighthouse CI** + a bundle-size check | ⏳ Planned | The §15 budgets (mobile > 90, no WebGL on first paint, lazy hero modules).                                       |
+| Visual         | **Playwright screenshots** (or Percy)   | ⏳ Planned | Diff sections against captured legacy references.                                                                |
 
 ```bash
 npm run test        # all (unit + e2e)
@@ -135,10 +135,10 @@ Adoption plan:
 1. **Phase 1B onward:** every kept behavior follows the full loop, contract-first.
 2. **Backfill:** the behaviors already shipped in Phase 1A (nav drawer + search, Featured parallax, Services grid, video lightbox, Portfolio filter, Process timeline, Pricing toggle, Contact map) get retroactive contract tests so the 9 fixes are locked before Phase 1B builds on top of them.
 
-### What's already covered (as of 2026-06-18)
+### What's already covered (as of 2026-06-19)
 
 Initial contract tests established alongside tooling setup:
 
 - **Unit (Vitest):** `toEmbed()` — Vimeo, YouTube, youtu.be URL conversion, unknown host fallback, invalid URL fallback.
-- **E2E (Playwright):** cover-d-r-img (Featured image reveal via `data-anim-shown`), cover-up (Blog card reveal), svg-draw (Featured numerals — path `fill-opacity` 0→1 on scroll; solid immediately under reduced motion), nav drawer open/close/ESC, search overlay open + input focus.
+- **E2E (Playwright):** cover-d-r-img (Featured image reveal via `data-anim-shown`), cover-up (Blog card reveal), svg-draw (Featured numerals — path `fill-opacity` 0→1 on scroll; solid immediately under reduced motion), quote-draw (Testimonials quote watermark — same `fill-opacity` signal), nav drawer open/close/ESC, search overlay open + input focus.
 - **A11y (@axe-core/playwright):** home page WCAG 2.0 AA scan (critical + serious violations).
