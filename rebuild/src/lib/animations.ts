@@ -204,6 +204,46 @@ export function registerSvgDraw(scope: ParentNode = document): void {
   });
 }
 
+/* ---------- pricing toggle count-up ---------- */
+
+export function registerPricingToggle(scope: ParentNode = document): void {
+  const section = (scope as Document).querySelector<HTMLElement>(
+    "[data-pricing-section]",
+  );
+  if (!section) return;
+
+  section.addEventListener("pricing:billing", (e: Event) => {
+    const { billing } = (e as CustomEvent<{ billing: string }>).detail;
+    if (billing !== "yearly") return;
+
+    const els = section.querySelectorAll<HTMLElement>("[data-yearly-price]");
+    els.forEach((el) => {
+      const end = parseFloat(el.dataset.yearlyPrice ?? "0");
+      if (reducedMotion()) {
+        el.textContent = end.toLocaleString();
+        return;
+      }
+      const obj = { v: 0 };
+      let last = -1;
+      el.textContent = "0";
+      gsap.to(obj, {
+        v: end,
+        duration: 1,
+        ease: "power2.out",
+        onUpdate() {
+          const r = Math.round(obj.v);
+          if (r === last) return;
+          last = r;
+          el.textContent = r.toLocaleString();
+        },
+        onComplete() {
+          el.textContent = end.toLocaleString();
+        },
+      });
+    });
+  });
+}
+
 /* ---------- cover reveals ---------- */
 
 /* Horizontal clip-path wipe (left → right) with a subtle content
@@ -323,6 +363,7 @@ export function mount(scope: ParentNode = document): void {
   registerCoverDR(scope);
   registerOdometer(scope);
   registerSvgDraw(scope);
+  registerPricingToggle(scope);
 
   ScrollTrigger.refresh();
 }
