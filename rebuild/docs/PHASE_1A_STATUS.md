@@ -1,7 +1,7 @@
 # Phase 1A — Status & Handoff
 
 > Vertical slice of `index.html` rebuilt on Astro + Tailwind + Alpine + GSAP.
-> Last updated: **2026-06-19** — after Phase 1B step 3 (Testimonials quote-mark watermark DrawSVG).
+> Last updated: **2026-06-19** — after the animation performance overhaul (IntersectionObserver reveal engine; ScrollTriggers ~85 → ~21).
 
 This is the working memory for the rebuild. If you're picking it up after a break, read this first, then [`index-section-map.md`](./index-section-map.md) for the page reference, then [`MODERNIZATION_PLAN.md` §1.5](../../MODERNIZATION_PLAN.md#15-implementation-progress-live) for the high-level roadmap, then [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a) for the per-primitive status.
 
@@ -67,8 +67,12 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 
 ### Animations (`src/lib/animations.ts`)
 
-Live primitives: `mountIntro`, `registerSlideUp`, `registerFadeUp`, `registerRotateIn`, `registerParallaxBg`, `registerParallaxY`, `registerCoverDR`, `registerCoverUp`, `registerOdometer`, `registerSvgDraw`.
-`registerSvgDraw` uses GSAP **DrawSVG** (free since 2025): draws stroked icons; opt-in `data-anim-fill` also fades the fill in for filled glyphs (Featured numerals).
+**Two engines, split by cost** (since the perf overhaul). The `data-anim="…"` markup API is unchanged; only what drives it differs:
+
+- **CSS + one shared `IntersectionObserver`** (`registerReveals`) handles the one-shot reveals: `slide-up`, `fade-up`, `fade-in`, `rotate-in`, `cover-up`. The observer flips `data-anim-shown` when an element scrolls in; CSS transitions (reusing the `--ease-out-*` tokens in `global.css`) do the motion on the compositor. `data-anim-delay` → `transition-delay`. No GSAP, no per-element ScrollTrigger.
+- **GSAP + ScrollTrigger**, kept only where it earns its weight: `registerParallaxBg`/`registerParallaxY` (scroll-scrubbed, with scoped `will-change: transform`), `registerCoverDR` (clip-path wipe + image scale settle), `registerOdometer` (count-up), `registerSvgDraw` (DrawSVG outline draw; opt-in `data-anim-fill` fades the fill in for filled glyphs — Featured numerals + Testimonials quote). `mountIntro` is the one-shot load intro (no scroll trigger).
+
+This cut ScrollTriggers ~85 → ~21 and persistent `will-change` layers ~72 → ~7 with no change to how anything looks (see the Phase 1B perf row). GSAP boot is deferred to `requestIdleCallback`.
 Deferred: `bars`, line-by-line splits, `cover-transp` text line reveals (depends on line splitter).
 
 ### Data (`src/data/index.ts`)
@@ -154,6 +158,7 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 | —   | Dependency majors update          | ✅ Done | 2026-06-18 | Tailwind 3→4 (`@tailwindcss/vite`, theme → CSS `@theme`), Astro 5→6, in-range bumps.                                                                                                             |
 | 2   | Featured numeral SVG draw-in      | ✅ Done | 2026-06-18 | `NumeralGlyph.astro` (Montserrat glyph paths) drawn via DrawSVG — now free. `registerSvgDraw` gained opt-in `data-anim-fill` (draw outline + fade fill). Contract: `tests/e2e/svg-draw.spec.ts`. |
 | 3   | Testimonials quote-mark watermark | ✅ Done | 2026-06-19 | `QuoteGlyph.astro` atom (double-quote SVG glyph) replaces static text `"`. Uses `svg-draw` + `data-anim-fill` (same pipeline as numerals). Contract: `tests/e2e/quote-draw.spec.ts`.             |
+| —   | Animation performance overhaul    | ✅ Done | 2026-06-19 | Reveal engine → one `IntersectionObserver` + CSS transitions (`registerReveals`); ScrollTriggers ~85 → ~21, `will-change` ~72 → ~7. Removed global `will-change` + `scroll-behavior:smooth`; throttled nav scroll; odometer skips redundant writes; deferred GSAP boot; `decoding="async"` + hero LCP preload. Contract: `tests/e2e/reveal.spec.ts`. Deferred to a separate task: Astro `<Image>` migration, GIF→video, font-weight trim. |
 
 Phase 1B onward follows the full rebuild methodology loop: understand → evaluate → **contract first** → go blind → rebuild → verify. See `REBUILD_METHODOLOGY.md`.
 
@@ -161,17 +166,20 @@ Phase 1B onward follows the full rebuild methodology loop: understand → evalua
 
 ## 8. Recommended next order of work
 
-Picking up Phase 1B from here:
+**START HERE next session → item 1 below (Pricing yearly count-up).** Everything above it is done and committed (`main`). Each item follows the full methodology loop (contract first, then build blind, then verify; `npm run test` must stay green).
 
-1. ~~Cover/reveal primitives~~ — **done**.
-2. ~~Featured numeral SVG draw-in~~ — **done** (DrawSVG via `NumeralGlyph.astro`).
-3. ~~Testimonials quote-mark watermark~~ — **done** (DrawSVG via `QuoteGlyph.astro`).
-4. **Pricing yearly count-up** — re-trigger `registerOdometer` on Alpine `billing` change.
-5. **Swiper migration for Testimonials + ProcessCarousel** — single library, replaces the Alpine carousels.
-6. **LightGallery v2 wiring for Portfolio + VideoStrip** — proper lightbox with prev/next, captions, lazy-load.
-7. **LogoCloud marquee** — CSS-keyframe approach first; Swiper autoplay if buyers ask for pause-on-hover.
-8. **Stats odometer string-swap** — wrap odometer in a small Alpine state machine so the final value can be a custom string.
-9. **Inner pages** — start with `about.html`, then `contact.html`, then services, then portfolio detail, then blog. Each one re-uses the existing Tier B sections.
+Done so far in Phase 1B: cover/reveal primitives, Featured numeral draw-in, Testimonials quote watermark, and the animation performance overhaul.
+
+Next, in order:
+
+1. **Pricing yearly count-up** — re-trigger `registerOdometer` on Alpine `billing` change (currently a snap fade). _← next up._
+2. **Swiper migration for Testimonials + ProcessCarousel** — single carousel library, replaces the two Alpine carousels (adds swipe + keyboard a11y).
+3. **LightGallery v2 wiring for Portfolio + VideoStrip** — proper lightbox with prev/next, captions, lazy-load.
+4. **LogoCloud marquee** — CSS-keyframe approach first; Swiper autoplay if buyers ask for pause-on-hover.
+5. **Stats odometer string-swap** — wrap odometer in a small Alpine state machine so the final value can be a custom string ("~1 Million+").
+6. **Inner pages** — start with `about.html`, then `contact.html`, then services, then portfolio detail, then blog. Each re-uses the existing Tier B sections.
+
+**Deferred performance follow-up (separate task, not blocking):** Astro `<Image>` migration (needs moving `public/img` → `src/assets` + a glob resolver, which touches the buyer-editable string-path data contract), Portfolio GIF → video/animated-webp, and font-weight trim in `fonts.css`. Pair the `<Image>` move with the GIF conversion. Rationale in the perf row of §7 and the commit `perf(animations): cut scroll jank`.
 
 Once Phase 1B is closed, the route is open to Phase 2 (Tier-1 WebGL hero effects, lazy-loaded per demo).
 

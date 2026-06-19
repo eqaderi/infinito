@@ -30,7 +30,7 @@ The legacy tree is a **specification of behavior and visuals, never a source of 
 
 ## 1.5 Implementation Progress (live)
 
-> Last updated: **2026-04-20**. The detailed Phase 1A handoff lives in [`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md).
+> Last updated: **2026-06-19**. The detailed, always-current handoff (what's built, where to start next) lives in [`rebuild/docs/PHASE_1A_STATUS.md`](rebuild/docs/PHASE_1A_STATUS.md) — read that first when picking the work back up.
 
 The new product lives under **`rebuild/`** and is built on **Astro + Tailwind + Alpine.js + GSAP 3** (the "Strong alternative" row from §5.1, promoted to primary). The legacy `Final_Files/`, `working_dir/`, and `Documentation/` trees are untouched and remain the design reference.
 
@@ -62,6 +62,9 @@ One Astro route (`/`) renders the full home page using the new component model.
 - ~~**Dependency majors update** (2026-06-18)~~ — **done**. Tailwind 3→4 (`@tailwindcss/vite`, CSS-first `@theme`), Astro 5→6, in-range bumps. Shipped as its own PR.
 - ~~Cover/reveal animations (`cover-d-r-img`, `cover-up`)~~ — **done** (2026-06-18). `clip-path` wipe replaces legacy overlay-div approach. `cover-transp` text line reveals still deferred (depends on line splitter).
 - ~~SVG draw-in for the giant Featured numerals~~ — **done** (2026-06-18). `NumeralGlyph.astro` + DrawSVG (`svg-draw` + `data-anim-fill`). Contract: `tests/e2e/svg-draw.spec.ts`.
+- ~~Testimonials quote-mark watermark~~ — **done** (2026-06-19). `QuoteGlyph.astro` + DrawSVG. Contract: `tests/e2e/quote-draw.spec.ts`.
+- ~~Animation performance overhaul~~ — **done** (2026-06-19). One-shot reveals moved to a single `IntersectionObserver` + CSS transitions; ScrollTriggers ~85 → ~21, `will-change` ~72 → ~7; nav scroll throttled; GSAP boot deferred. Same visuals. Contract: `tests/e2e/reveal.spec.ts`. Deferred follow-up: Astro `<Image>` migration + GIF→video + font trim.
+- **Next up: Pricing yearly count-up** (re-trigger `registerOdometer` on the billing toggle).
 - Real Swiper integration for Testimonials + ProcessCarousel (replace Alpine carousels).
 - LightGallery v2 wiring for Portfolio + VideoStrip (currently a vanilla iframe lightbox).
 - Marquee animation for the LogoCloud rows.
