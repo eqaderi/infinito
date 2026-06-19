@@ -39,16 +39,7 @@ const {
 } = Astro.props;
 ---
 
-<section
-  id="testimonials"
-  class="bg-paper-soft px-6 py-24 nav:px-12 nav:py-32"
-  x-data={`{
-    active: 0,
-    count: ${quotes.length},
-    next() { this.active = (this.active + 1) % this.count },
-    prev() { this.active = (this.active - 1 + this.count) % this.count }
-  }`}
->
+<section id="testimonials" class="bg-paper-soft px-6 py-24 nav:px-12 nav:py-32">
   <div class="mx-auto max-w-3xl">
     <header class="mb-12 text-center">
       <p
@@ -72,64 +63,85 @@ const {
         class="pointer-events-none absolute left-1/2 top-1/2 z-0 w-36 -translate-x-1/2 -translate-y-1/2 select-none opacity-40 nav:w-48"
       />
 
-      <div class="relative min-h-[180px]" data-anim="fade-up">
-        {
-          quotes.map((q, idx) => (
-            <blockquote
-              class="absolute inset-0 transition-opacity duration-500"
-              x-show={`active === ${idx}`}
-              x-transition.opacity.duration.500ms
-            >
-              <p class="font-display text-2xl leading-relaxed text-ink nav:text-3xl">
-                {q.quote}
-              </p>
-              <footer class="mt-6 font-ui text-xs uppercase tracking-[0.28em] text-ink-muted">
-                <span class="text-gradient">{q.author}</span> /{' '}
-                <cite class="not-italic">{q.role}</cite>
-              </footer>
-            </blockquote>
-          ))
-        }
-      </div>
-
-      {/* Controls */}
-      <div class="relative mt-10 flex items-center justify-center gap-6">
-        <button
-          type="button"
-          class="grid h-10 w-10 place-items-center rounded-full border border-paper-gray text-ink-muted transition-colors hover:border-ink hover:text-ink"
-          @click="prev()"
-          aria-label="Previous testimonial"
-        >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
-        <ul class="flex items-center gap-2">
+      <div class="swiper relative min-h-[180px]" data-testimonials data-anim="fade-up">
+        <div class="swiper-wrapper">
           {
-            quotes.map((_, idx) => (
-              <li>
-                <button
-                  type="button"
-                  class="h-2 rounded-full transition-all"
-                  :class={`active === ${idx} ? 'w-8 bg-gradient-accent' : 'w-2 bg-paper-gray hover:bg-ink-muted'`}
-                  @click={`active = ${idx}`}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
-              </li>
+            quotes.map((q) => (
+              <blockquote class="swiper-slide" data-quote>
+                <p class="font-display text-2xl leading-relaxed text-ink nav:text-3xl">
+                  {q.quote}
+                </p>
+                <footer class="mt-6 font-ui text-xs uppercase tracking-[0.28em] text-ink-muted">
+                  <span class="text-gradient">{q.author}</span> /{' '}
+                  <cite class="not-italic">{q.role}</cite>
+                </footer>
+              </blockquote>
             ))
           }
-        </ul>
-        <button
-          type="button"
-          class="grid h-10 w-10 place-items-center rounded-full border border-paper-gray text-ink-muted transition-colors hover:border-ink hover:text-ink"
-          @click="next()"
-          aria-label="Next testimonial"
-        >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
+        </div>
+
+        {/* Controls */}
+        <div class="relative mt-10 flex items-center justify-center gap-6">
+          <button
+            type="button"
+            data-nav="prev"
+            class="grid h-10 w-10 place-items-center rounded-full border border-paper-gray text-ink-muted transition-colors hover:border-ink hover:text-ink"
+            aria-label="Previous testimonial"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <div class="flex items-center gap-2" data-pagination></div>
+          <button
+            type="button"
+            data-nav="next"
+            class="grid h-10 w-10 place-items-center rounded-full border border-paper-gray text-ink-muted transition-colors hover:border-ink hover:text-ink"
+            aria-label="Next testimonial"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style is:global>
+  /* Before Swiper boots, the fade slides sit stacked in normal flow — show
+     only the first so there's no flash of all quotes at once. */
+  [data-testimonials]:not(.swiper-initialized) .swiper-slide:not(:first-child) {
+    display: none;
+  }
+
+  /* Gradient-pill bullets (Swiper Pagination renders these <button>s at runtime,
+     so they can't be reached by Astro's scoped styles). */
+  [data-testimonials] [data-pagination] {
+    line-height: 0;
+  }
+  [data-testimonials] .swiper-pagination-bullet {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--color-paper-gray);
+    cursor: pointer;
+    transition:
+      width 0.3s ease,
+      background 0.3s ease;
+  }
+  [data-testimonials] .swiper-pagination-bullet:hover {
+    background: var(--color-ink-muted);
+  }
+  [data-testimonials] .swiper-pagination-bullet-active {
+    width: 2rem;
+    background: linear-gradient(
+      90deg,
+      var(--accent-from),
+      var(--accent-to)
+    );
+  }
+</style>
