@@ -14,7 +14,7 @@ The codebase has two faces:
 - **Strong product identity** — exceptional animation breadth, a recognizable visual language (gradient text, illusional split images, masked covers, parallax video bands), and a richer-than-average inner-page set for an HTML template.
 - **Weak product engineering** — Bootstrap 3 grid, jQuery-coupled monolith, Grunt build, no design tokens, no module system, dormant code paths, scope bugs, copy/branding inconsistencies ("Infinoto", "Chanllenge"), CRLF noise, and a PHP mailer.
 
-**The product opportunity is clear:** rebuild as a **Creative Agency / Portfolio multipurpose HTML template** on **modern HTML + Tailwind CSS + GSAP 3 + Alpine.js**, preserving the **top 6–8 hero effects** as the marquee selling points, retiring the dead weight, and adding the polish (typography, copy, SEO, accessibility, performance) that the original lacks.
+**The product opportunity is clear:** rebuild as a **Creative Agency / Portfolio multipurpose HTML template** on **modern HTML + Tailwind CSS + GSAP 3 + Alpine.js**, preserving **all 13 hero demos** (the six ripples sub-variants consolidated into one demo with a palette switcher) with the Tier-1 effects as the marquee selling points, retiring the dead weight, and adding the polish (typography, copy, SEO, accessibility, performance) that the original lacks.
 
 **The animation system is the single largest commercial asset** of this template and must be treated as a first-class deliverable, not a side concern.
 
@@ -223,7 +223,7 @@ Strong ideas, dated execution. Keep the visual outcome, modernize the implementa
 
 **Build tooling:** **Vite** (replaces Grunt). PostCSS + Tailwind CLI for CSS. ESBuild for JS bundles.
 
-**Form handling:** Provide three documented options — **Formspree**, **Netlify Forms**, and a minimal `mailer.php` for buyers on legacy LAMP hosting. Default the demo to Formspree.
+**Form handling:** Default the demo to **Formspree**. The final package **bundles** a hardened `mailer.php` + `config.sample.php` for LAMP buyers (Phase 3 task); Netlify Forms and Web3Forms are documented alternatives. See `ENVATO_COMPLIANCE.md` §4.
 
 **Animation runtime:** **GSAP 3 + ScrollTrigger** (single library replaces ScrollMagic + TweenMax + TimelineMax + custom jQuery animation code). GSAP and all its plugins (incl. ScrollTrigger, SplitText, DrawSVG, MorphSVG) went 100% free in April 2025 — no Club/commercial license, redistribution on Envato is unencumbered.
 
@@ -404,6 +404,9 @@ Consolidate **5 icon packs** down to **one**:
 - SEO pass: per-page meta, sitemap, robots, OpenGraph
 - Copy pass: replace placeholder text, fix typos, consistent branding
 - Final visual QA against the legacy reference
+- Envato release gate: work through `ENVATO_COMPLIANCE.md` top to bottom (license ledger, asset audit, Licensing/ folder, previews, packaging)
+- RTL sweep + `dir="rtl"` smoke tests (decision: ship RTL — `ENVATO_COMPLIANCE.md` §5)
+- Bundle hardened `mailer.php` + config sample
 
 **Exit criteria:** Envato submission package ready.
 
@@ -453,6 +456,8 @@ Consolidate **5 icon packs** down to **one**:
 - **Form back-end default → Formspree**, with a graceful inline notice when `PUBLIC_FORMSPREE_ENDPOINT` is unset. Netlify / Web3Forms / hardened `mailer.php` documented as alternatives. (Was "Form back-end default".)
 - **GSAP licensing → non-issue.** GSAP and all plugins went 100% free in April 2025; nothing to license or budget for.
 - **Inner-page set → settled** as `about`, `contact`, `services-01..03`, `projects/*`, `blog`, `blog-3`, `blog-post-01..02`, `404`, `coming-soon`, `pricing` (Phase 1B backlog in `PHASE_1A_STATUS.md`). Revisit only if a new vertical is requested.
+- **RTL → yes, Phase 3** (logical utilities preferred in new code immediately; sweep + QA before advertising). See `ENVATO_COMPLIANCE.md` §5.
+- **Forms → Formspree demo default + bundled hardened `mailer.php`** in the sale package.
 
 ### Open questions for the product owner
 

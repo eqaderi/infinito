@@ -62,3 +62,7 @@ pids/
 # Astro (rebuild project)
 rebuild/.astro/
 rebuild/dist/
+
+# Test artifacts
+test-results/
+playwright-report/
