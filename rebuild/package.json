@@ -12,11 +12,13 @@
     "astro": "astro",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:perf": "lhci autorun"
   },
   "devDependencies": {
     "@astrojs/alpinejs": "^0.5.0",
     "@axe-core/playwright": "^4.11.3",
+    "@lhci/cli": "0.15.1",
     "@playwright/test": "^1.61.0",
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^6.4.8",

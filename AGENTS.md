@@ -8,18 +8,52 @@ Modernization of the **Infinito** legacy HTML template into an Envato product on
 
 **Rebuild methodology (non-negotiable):** every feature/function/visual is rebuilt **behavior-first and implementation-blind** — never ported. Understand what the legacy does → evaluate whether it's worth keeping → pin the behavior as a test contract (implementation-agnostic) → close the legacy source → rebuild from scratch with modern, minimal code → verify against the contract. Treat the legacy as a spec of behavior and visuals, never a source of code. Full loop in [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md).
 
+**The product contract (ordered):**
+
+1. **Fidelity** — every *visible* legacy effect ships (T1–T3 in the audit; T4 is dead/dormant code only). Consolidations (e.g. ripples ×6 → one demo + palette switcher) are fine when the rendered outcome is preserved. Dropping a visible behavior requires human sign-off, recorded in the audit.
+2. **Performance** — the budgets below pass in CI on every page. A beautiful effect over budget is a failed task: optimize it, don't ship it heavy, don't silently cut it.
+3. **License cleanliness** — nothing enters `package.json` or ships in `dist/` unless its license permits bundled commercial redistribution (MIT/BSD/ISC/Apache-2.0/OFL, or GSAP's free license). GPL, "free for personal use", and paid plugins are forbidden. Check the license BEFORE writing code that imports it; log every new dependency (name, version, license, gz size) in [`ENVATO_COMPLIANCE.md`](ENVATO_COMPLIANCE.md) §1.
+
+When these conflict, stop and ask the human. Never resolve a fidelity-vs-performance trade-off silently.
+
 ## How work is enforced (read before building)
 
 These docs are advisory; the gates below are not. Any change — regardless of which tool or human produced it — must clear them:
 
-1. **Follow the loop.** Before rebuilding any kept behavior, work the six steps in [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md): understand → evaluate → **contract first** → go blind → rebuild → verify.
+1. **Follow the loop.** Before rebuilding any kept behavior, work the steps in [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md): understand → evaluate → **capture the visual baseline** → **contract first** → go blind → rebuild → verify.
 2. **Definition of Done (every behavior-bearing change):**
    - [ ] A **test contract** exists for the behavior (Vitest for pure logic, Playwright for interaction, `@axe-core/playwright` for a11y). For a bug, the regression test is written first.
    - [ ] Built **implementation-blind** — no legacy code copied; new code is minimal and idiomatic (grug, below).
    - [ ] `prefers-reduced-motion` honored; keyboard-reachable; ARIA on icon-only controls.
-   - [ ] `npm run build` and `npm run test` are green.
-3. **CI is the merge gate.** GitHub Actions runs build + unit + e2e/a11y on every PR (`.github/workflows/ci.yml`). Red CI blocks merge — no exceptions.
-4. **The PR checklist** (`.github/pull_request_template.md`) is where you attest to the two things CI can't check for you: that a new behavior got a contract, and that the rebuild was done blind. Fill it honestly.
+   - [ ] `npm run build` and `npm run test` are green; **Lighthouse budgets pass** (`npm run test:perf`).
+   - [ ] For visual effects: side-by-side frames vs. the legacy baseline presented, **human signs off** — the agent never self-approves fidelity.
+3. **CI is the merge gate.** GitHub Actions runs build + unit + e2e/a11y + Lighthouse budgets on every PR (`.github/workflows/ci.yml`). Red CI blocks merge — no exceptions.
+4. **The PR checklist** (`.github/pull_request_template.md`) is where you attest to the things CI can't check: that a new behavior got a contract, that the rebuild was done blind, and that any visual change carries its baseline comparison.
+
+## Performance budgets (enforced by Lighthouse CI — `rebuild/lighthouserc.json`)
+
+| Metric | Budget |
+| --- | --- |
+| Lighthouse Performance (mobile emulation) | ≥ 90 every page |
+| LCP | ≤ 2.5 s |
+| CLS | < 0.1 |
+| TBT (INP proxy in lab) | ≤ 200 ms |
+| JS per standard page | ≤ 150 KB gz |
+| JS per WebGL demo page | ≤ 300 KB gz (hero module lazy-loaded; **no WebGL on first paint**) |
+| CSS per page | ≤ 90 KB gz |
+
+Never claim a performance improvement without a number from LHCI or a trace. Never optimize without a measurement.
+
+## AI discipline (your known failure modes, pre-empted)
+
+1. **Do not trust training data for library APIs.** Astro 6, Tailwind 4 (CSS-first `@theme`, no config file), Swiper 12, PhotoSwipe 5, GSAP 3.15, Pixi v8+, current Three.js — several are newer than your training data. Before first use of any API: read the installed package's types (`node_modules/*/dist/*.d.ts`) or bundled docs at the INSTALLED version; if uncertain, write a 10-line spike and run it. Never invent an option name.
+2. **Run everything you claim.** "Should work" is banned. Build it, run the test, capture the output. If you cannot execute something, say so and mark the task "needs human verification" — never mark it done.
+3. **Evidence-based done.** Before closing any task: re-read the acceptance criteria line by line, run the full suite, and record evidence (test output, LH score, screenshot path) in the PR. A task without evidence is not done.
+4. **Dependencies are gated.** Adding any dependency not already in `package.json` requires a human yes + a license row in `ENVATO_COMPLIANCE.md` §1. Pin exact versions (no `^`) when adding new deps.
+5. **Delete in the same change.** Replacing something means removing the old file in the same PR. `dist/` ships zero unused files.
+6. **No silent downgrades.** If the modern approach fails, implement the fallback at full fidelity or escalate — never quietly ship a worse effect.
+7. **Session ritual.** Start: read this file → `rebuild/docs/PHASE_1A_STATUS.md` → the current GitHub issue → state the session plan in one paragraph → verify env (`npm ci && npm run test:unit` green). End: run full CI locally → update the status doc → conventional commit → stop at a clean boundary, never mid-refactor.
+8. **Honesty over progress.** Reporting a blocker or a failed approach is success behavior. Papering over it with a plausible-looking stub is the worst thing you can do here.
 
 ## Commands (all run from `rebuild/`)
 
@@ -31,9 +65,10 @@ npm run preview    # Serve built output
 npm run test       # Run all tests (unit + e2e)
 npm run test:unit  # Vitest unit tests only
 npm run test:e2e   # Playwright E2E tests — previews rebuild/dist/, so run `npm run build` first
+npm run test:perf  # Lighthouse CI budget assertions against rebuild/dist/
 ```
 
-Test tooling is live. Vitest for pure-function unit contracts, Playwright + `@axe-core/playwright` for behavior and a11y contracts. Lighthouse CI (perf) and Playwright screenshot diffs (visual) are planned but not set up yet. See [`REBUILD_METHODOLOGY.md`](REBUILD_METHODOLOGY.md).
+Test tooling is live. Vitest for pure-function unit contracts, Playwright + `@axe-core/playwright` for behavior and a11y contracts, **Lighthouse CI for the §budgets**. Visual contracts use captured legacy baselines under `rebuild/docs/baseline/` (see `REBUILD_METHODOLOGY.md` step 3) diffed by eye + Playwright screenshots; a human signs off.
 
 ## Engineering principles — grug (simplicity-first)
 
@@ -93,6 +128,8 @@ Data-attribute driven — no class soup. Apply animations by adding `data-anim="
 
 Entry point: `mount()` in `animations.ts` — called once in `BaseLayout.astro`. When `prefers-reduced-motion` is set, all `[data-anim]` elements are immediately revealed, no GSAP runs.
 
+**WebGL/canvas lifecycle (Phase 2 rule):** every canvas hero must lazy-load via dynamic `import()` on approach (IntersectionObserver), pause when off-screen and on `visibilitychange`, cap `devicePixelRatio` at 2, expose `destroy()` that fully disposes GPU resources, and render a static poster fallback when WebGL is unavailable or reduced-motion is set. Idle CPU when off-screen must be ~0.
+
 ### Alpine.js usage
 
 Component-local interactivity only (nav drawer, search overlay, video lightbox, portfolio filter, process carousel, pricing toggle). State is scoped with `x-data` per component; no global store.
@@ -102,10 +139,11 @@ Component-local interactivity only (nav drawer, search overlay, video lightbox, 
 - **Custom `zIndex` scale:** `z-1`…`z-10` map to **100–1000**. Arbitrary values like `z-[55]` stack _below_ `z-10`. Use `z-[60]+` or extend the scale for modals/overlays.
 - **Custom breakpoints:** `xs` 480px, `sm` 768px, `nav` 856px (nav collapse), `md` 992px, `lg` 1200px, `xl` 1440px.
 - **Design tokens:** accent gradient (`--accent-from`/`--accent-to`/`--accent-text`) and all easing curves live in `global.css` as CSS custom props; theme swapping via `[data-theme="..."]` on `<html>`.
+- **RTL:** prefer logical utilities (`ms-*`/`me-*`, `start-*`/`end-*`, `ps-*`/`pe-*`) over physical (`ml-*`/`left-*`) in new code — RTL ships in Phase 3 (see `ENVATO_COMPLIANCE.md` §5) and logical-first now makes that sweep nearly free.
 
 ### Forms
 
-Contact and Subscribe submit to Formspree via `PUBLIC_FORMSPREE_ENDPOINT` env var (set in `rebuild/.env`). When unset, components render an inline buyer notice — no runtime error.
+Contact and Subscribe submit to Formspree via `PUBLIC_FORMSPREE_ENDPOINT` env var (set in `rebuild/.env`). When unset, components render an inline buyer notice — no runtime error. A hardened `mailer.php` ships in the final package for LAMP buyers (Phase 3 task; see `ENVATO_COMPLIANCE.md` §4) — Formspree stays the demo default.
 
 ## Where to look (docs router)
 
@@ -118,3 +156,4 @@ Live status changes per session and is **not** tracked here — read the right d
 | Strategy, phased roadmap, demo ranking, risks | `MODERNIZATION_PLAN.md` |
 | Per-effect inventory + chosen modern replacement | `ANIMATION_AUDIT.md` |
 | Legacy `index.html`, section by section | `rebuild/docs/index-section-map.md` |
+| Release gate: licensing ledger, packaging, previews, RTL, Envato checklist | `ENVATO_COMPLIANCE.md` |
