@@ -9,7 +9,7 @@ export default defineConfig({
   },
   output: "static",
   build: {
-    inlineStylesheets: "always",
+    inlineStylesheets: "auto",
   },
   devToolbar: {
     enabled: false,
