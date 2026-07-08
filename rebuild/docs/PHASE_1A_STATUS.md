@@ -1,7 +1,7 @@
 # Phase 1A — Status & Handoff
 
 > Vertical slice of `index.html` rebuilt on Astro + Tailwind + Alpine + GSAP.
-> Last updated: **2026-06-19** — Portfolio lightbox shipped (PhotoSwipe v5); Swiper carousel migration + Pricing yearly count-up already merged.
+> Last updated: **2026-07-08** — Above-the-fold hero un-gated for LCP (#43): CSS-driven intros, latin-only font subsets, `x-cloak` overlays, Playfair preload. Simulate perf 0.89→0.92; LCP budget calibration deferred to #79.
 
 This is the working memory for the rebuild. If you're picking it up after a break, read this first, then [`index-section-map.md`](./index-section-map.md) for the page reference, then [`MODERNIZATION_PLAN.md` §1.5](../../MODERNIZATION_PLAN.md#15-implementation-progress-live) for the high-level roadmap, then [`ANIMATION_AUDIT.md` §0](../../ANIMATION_AUDIT.md#0-implementation-status-phase-1a) for the per-primitive status.
 
@@ -74,7 +74,8 @@ A **single Astro route (`/`)** rendering the legacy `Final_Files/index.html` pag
 **Two engines, split by cost** (since the perf overhaul). The `data-anim="…"` markup API is unchanged; only what drives it differs:
 
 - **CSS + one shared `IntersectionObserver`** (`registerReveals`) handles the one-shot reveals: `slide-up`, `fade-up`, `fade-in`, `rotate-in`, `cover-up`. The observer flips `data-anim-shown` when an element scrolls in; CSS transitions (reusing the `--ease-out-*` tokens in `global.css`) do the motion on the compositor. `data-anim-delay` → `transition-delay`. No GSAP, no per-element ScrollTrigger.
-- **GSAP + ScrollTrigger**, kept only where it earns its weight: `registerParallaxBg`/`registerParallaxY` (scroll-scrubbed, with scoped `will-change: transform`), `registerCoverDR` (clip-path wipe + image scale settle), `registerOdometer` (count-up), `registerSvgDraw` (DrawSVG outline draw; opt-in `data-anim-fill` fades the fill in for filled glyphs — Featured numerals + Testimonials quote). `mountIntro` is the one-shot load intro (no scroll trigger).
+- **Pure CSS keyframes** for the one-shot load intros `intro-fade`/`intro-up`/`intro-down` (hero). These fire at parse (not gated behind the GSAP boot), so above-the-fold content paints at first paint — see #43. Stagger comes from an inline `--intro-delay`; `animation-fill-mode: both`. No JS (`mountIntro` was removed).
+- **GSAP + ScrollTrigger**, kept only where it earns its weight: `registerParallaxBg`/`registerParallaxY` (scroll-scrubbed, with scoped `will-change: transform`), `registerCoverDR` (clip-path wipe + image scale settle), `registerOdometer` (count-up), `registerSvgDraw` (DrawSVG outline draw; opt-in `data-anim-fill` fades the fill in for filled glyphs — Featured numerals + Testimonials quote).
 
 This cut ScrollTriggers ~85 → ~21 and persistent `will-change` layers ~72 → ~7 with no change to how anything looks (see the Phase 1B perf row). GSAP boot is deferred to `requestIdleCallback`.
 Deferred: `bars`, line-by-line splits, `cover-transp` text line reveals (depends on line splitter).
@@ -167,6 +168,7 @@ None built. Phase 2+ (the WebGL Tier-1 demos) is the next major chapter.
 | 4   | Pricing yearly count-up           | ✅ Done | 2026-06-19 | PR #5. GSAP count-up on toggle to yearly via a `pricing:billing` event → `registerPricingToggle`; reduced-motion snaps to final. Contract: `tests/e2e/pricing-toggle.spec.ts`. |
 | 5   | Swiper carousel migration         | ✅ Done | 2026-06-19 | PR #40 (GitHub #12/#13/#14). Testimonials + ProcessCarousel → Swiper; new `src/lib/carousels.ts` mounted from `BaseLayout`. Single carousel library. Contracts: `testimonials.spec.ts`, `process-carousel.spec.ts`. |
 | 6   | Portfolio lightbox                | ✅ Done | 2026-06-19 | GitHub #16. **PhotoSwipe v5** (MIT) in `src/lib/lightbox.ts`; runtime dimensions from thumbnail natural size, lazy core import, `fade` open, dialog `aria-label`. Contract: `portfolio-lightbox.spec.ts`. |
+| 43  | Un-gate above-the-fold hero (LCP) | 🟡 Content done; LCP budget → #79 | 2026-07-08 | GitHub #43. Hero intro (`intro-fade`/`intro-up`) moved off the GSAP `has-anim` opacity gate to **CSS keyframes that fire at parse** (`mountIntro` deleted); stagger via inline `--intro-delay`. `fonts.css` → `latin-*` subsets only (@font-face 77→14, `index.css` 118→58 KB). `x-cloak` on the nav drawer + search overlay (a pre-Alpine search-input placeholder was the phantom LCP element). Playfair-400 preload. (`inlineStylesheets: 'always'` was evaluated — ~150 ms FCP — but reverted: it didn't move LCP and zeroed the `stylesheet:size` LHCI assertion.) **Simulate LHCI:** perf 0.89→**0.92**, FCP 2405→2106 ms, LCP 3379→**3081 ms** (still >2500, kept `warn`). **Devtools throttling cross-check:** LCP **1647 ms**, perf **0.96** (observed paint 95 ms, SI 1956 ms). Residual LCP gap is Lantern over-modeling a text LCP ~1.1 s past visual completion — **budget/throttling recalibration handed to #79** (human-approved). Contract: `tests/e2e/hero-intro.spec.ts`. |
 
 Phase 1B onward follows the full rebuild methodology loop: understand → evaluate → **contract first** → go blind → rebuild → verify. See `REBUILD_METHODOLOGY.md`.
 

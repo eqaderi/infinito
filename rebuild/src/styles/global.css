@@ -145,6 +145,15 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Alpine visibility guard. Overlays (nav drawer, search) start hidden only via
+   an Alpine `:class` binding, so before Alpine boots they would paint full-
+   screen over the hero — which made a search-input placeholder the LCP element
+   (issue #43). `x-cloak` keeps them out of layout/paint until Alpine strips the
+   attribute on init. */
+[x-cloak] {
+  display: none !important;
+}
+
 body {
   @apply font-body text-ink bg-paper antialiased;
   text-rendering: optimizeLegibility;
@@ -182,7 +191,10 @@ html.has-anim [data-anim]:not([data-anim-shown]) {
 
 html.has-anim [data-anim="parallax-bg"]:not([data-anim-shown]),
 html.has-anim [data-anim="odometer"]:not([data-anim-shown]),
-html.has-anim [data-anim="svg-draw"]:not([data-anim-shown]) {
+html.has-anim [data-anim="svg-draw"]:not([data-anim-shown]),
+html.has-anim [data-anim="intro-fade"]:not([data-anim-shown]),
+html.has-anim [data-anim="intro-up"]:not([data-anim-shown]),
+html.has-anim [data-anim="intro-down"]:not([data-anim-shown]) {
   opacity: 1;
 }
 
@@ -240,6 +252,45 @@ html.has-anim [data-anim="cover-up"] {
 }
 html.has-anim [data-anim="cover-up"][data-anim-shown] {
   clip-path: inset(0% 0 0 0);
+}
+
+/* -------------------------------------------------------
+ * Above-the-fold intro entrances (CSS-driven, fire at parse)
+ *
+ * intro-fade / intro-up / intro-down are one-shot hero entrances. They must
+ * paint at first paint — NOT wait for the GSAP runtime — or they gate FCP and
+ * therefore LCP (the hero <h1> is the LCP element; issue #43). So they run as
+ * pure CSS animations under `has-anim`, which the inline boot adds
+ * synchronously, meaning they start advancing opacity from the first frame.
+ * Per-element stagger comes from an inline `--intro-delay`.
+ * animation-fill-mode: both holds the from-state through the delay (no opacity
+ * flash) and the end-state after. Reduced motion neutralises them via the guard
+ * below; no-JS users see them at rest (opacity:1 from the exception above).
+ * ------------------------------------------------------- */
+html.has-anim [data-anim="intro-fade"] {
+  animation: intro-fade 1.2s var(--ease-out-cubic) both;
+  animation-delay: var(--intro-delay, 0s);
+}
+html.has-anim [data-anim="intro-up"] {
+  animation: intro-up 1s var(--ease-out-cubic) both;
+  animation-delay: var(--intro-delay, 0s);
+}
+html.has-anim [data-anim="intro-down"] {
+  animation: intro-down 0.9s var(--ease-out-cubic) both;
+  animation-delay: var(--intro-delay, 0s);
+}
+
+@keyframes intro-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes intro-up {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes intro-down {
+  from { opacity: 0; transform: translateY(-28px); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* -------------------------------------------------------

@@ -1,26 +1,30 @@
 /* Self-hosted fonts via @fontsource.
- * We import only the weights we actually use to keep the bundle small.
- * Expand weights as components demand them.
+ * We import only the weights we actually use, and only the `latin` subset —
+ * the demo copy is English/Western-European, and latin covers those accents
+ * (é, ü, ñ, ç, …). The full imports ship every subset (cyrillic, greek,
+ * vietnamese, latin-ext), which added ~63 KB of unused @font-face rules to the
+ * render-blocking stylesheet and gated FCP/LCP (issue #43). Buyers needing
+ * latin-ext / other scripts swap the `latin-*` files for the unprefixed ones.
  */
 
 /* Roboto — body */
-@import '@fontsource/roboto/300.css';
-@import '@fontsource/roboto/400.css';
-@import '@fontsource/roboto/500.css';
-@import '@fontsource/roboto/700.css';
+@import '@fontsource/roboto/latin-300.css';
+@import '@fontsource/roboto/latin-400.css';
+@import '@fontsource/roboto/latin-500.css';
+@import '@fontsource/roboto/latin-700.css';
 
 /* Montserrat — UI / headings secondary */
-@import '@fontsource/montserrat/400.css';
-@import '@fontsource/montserrat/500.css';
-@import '@fontsource/montserrat/600.css';
-@import '@fontsource/montserrat/700.css';
+@import '@fontsource/montserrat/latin-400.css';
+@import '@fontsource/montserrat/latin-500.css';
+@import '@fontsource/montserrat/latin-600.css';
+@import '@fontsource/montserrat/latin-700.css';
 
 /* Playfair Display — display / serif headlines */
-@import '@fontsource/playfair-display/400.css';
-@import '@fontsource/playfair-display/700.css';
-@import '@fontsource/playfair-display/400-italic.css';
+@import '@fontsource/playfair-display/latin-400.css';
+@import '@fontsource/playfair-display/latin-700.css';
+@import '@fontsource/playfair-display/latin-400-italic.css';
 
 /* Josefin Sans — alternate display */
-@import '@fontsource/josefin-sans/300.css';
-@import '@fontsource/josefin-sans/400.css';
-@import '@fontsource/josefin-sans/700.css';
+@import '@fontsource/josefin-sans/latin-300.css';
+@import '@fontsource/josefin-sans/latin-400.css';
+@import '@fontsource/josefin-sans/latin-700.css';
