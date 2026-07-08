@@ -34,7 +34,7 @@ const {
       <h1
         class="font-display text-6xl leading-[0.95] nav:text-8xl lg:text-[10rem]"
         data-anim="intro-up"
-        data-anim-delay="0.2"
+        style="--intro-delay: 0.2s"
       >
         {title}
       </h1>
@@ -43,7 +43,7 @@ const {
       <p
         class="font-ui text-sm uppercase tracking-[0.4em] text-paper/85"
         data-anim="intro-up"
-        data-anim-delay="0.5"
+        style="--intro-delay: 0.5s"
       >
         {subtitle}
       </p>
@@ -55,7 +55,7 @@ const {
     href={scrollTarget}
     class="absolute bottom-10 left-1/2 z-[1] flex -translate-x-1/2 flex-col items-center gap-3 text-paper/70 transition-colors hover:text-paper"
     data-anim="intro-up"
-    data-anim-delay="0.9"
+    style="--intro-delay: 0.9s"
     aria-label="Scroll to next section"
   >
     <span class="font-ui text-[10px] uppercase tracking-[0.4em]">Scroll down</span>

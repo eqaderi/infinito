@@ -1,6 +1,11 @@
 ---
 import '../styles/fonts.css';
 import '../styles/global.css';
+// Preload the display webfont used by the hero <h1> (the LCP element). Without
+// it, the font sits three round-trips deep (HTML → CSS → font); the fallback
+// paints, then the swap re-lays-out the h1 and LCP updates to the swap time —
+// which is what held LCP ~3.2s under LHCI mobile throttling (issue #43).
+import playfair400 from '@fontsource/playfair-display/files/playfair-display-latin-400-normal.woff2';
 
 interface Props {
   title?: string;
@@ -29,6 +34,13 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={playfair400}
+      crossorigin="anonymous"
+    />
     {
       preloadImages.map((href) => (
         <link rel="preload" as="image" href={href} fetchpriority="high" />

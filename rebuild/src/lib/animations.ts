@@ -286,60 +286,6 @@ export function registerCoverDR(scope: ParentNode = document): void {
   });
 }
 
-/* ---------- intros (one-shot, no scroll) ---------- */
-
-export function mountIntro(scope: ParentNode = document): void {
-  const ups = scope.querySelectorAll<HTMLElement>('[data-anim="intro-up"]');
-  ups.forEach((el) => {
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { y: 36, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.0,
-        delay,
-        ease: "power3.out",
-        onStart: () => reveal(el),
-      },
-    );
-  });
-
-  const downs = scope.querySelectorAll<HTMLElement>('[data-anim="intro-down"]');
-  downs.forEach((el) => {
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { y: -28, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        delay,
-        ease: "power3.out",
-        onStart: () => reveal(el),
-      },
-    );
-  });
-
-  const fades = scope.querySelectorAll<HTMLElement>('[data-anim="intro-fade"]');
-  fades.forEach((el) => {
-    const delay = num(el, "data-anim-delay", 0);
-    gsap.fromTo(
-      el,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 1.2,
-        delay,
-        ease: "power1.out",
-        onStart: () => reveal(el),
-      },
-    );
-  });
-}
-
 /* ---------- entry point ---------- */
 
 export function mount(scope: ParentNode = document): void {
@@ -356,7 +302,6 @@ export function mount(scope: ParentNode = document): void {
     registered = true;
   }
 
-  mountIntro(scope);
   registerReveals(scope);
   registerParallaxBg(scope);
   registerParallaxY(scope);
