@@ -128,6 +128,8 @@ Data-attribute driven — no class soup. Apply animations by adding `data-anim="
 
 Entry point: `mount()` in `animations.ts` — called once in `BaseLayout.astro`. When `prefers-reduced-motion` is set, all `[data-anim]` elements are immediately revealed, no GSAP runs.
 
+**Above-the-fold rule (never gate first paint on JS — issue #43):** content that renders in the initial viewport is never hidden pending the GSAP runtime. The FOUC gate `html.has-anim [data-anim]:not([data-anim-shown]) { opacity: 0 }` is **below-the-fold only** — above-the-fold `[data-anim]` types are excepted back to `opacity: 1` in `global.css` and their entrance runs **CSS-first** (the `intro-*` keyframes fire at parse via `animation-fill-mode: both`, staggered by an inline `--intro-delay`). Any GSAP entrance on above-the-fold content must be visible-by-default (`gsap.from()`, never `gsap.to()` from a hidden start). WebGL heroes render their **poster in the served HTML**, not injected on boot. Rationale: the hero `<h1>` is the LCP element; JS-gating it under CPU throttle cost ~2.4 s of render delay and blew the LCP budget.
+
 **WebGL/canvas lifecycle (Phase 2 rule):** every canvas hero must lazy-load via dynamic `import()` on approach (IntersectionObserver), pause when off-screen and on `visibilitychange`, cap `devicePixelRatio` at 2, expose `destroy()` that fully disposes GPU resources, and render a static poster fallback when WebGL is unavailable or reduced-motion is set. Idle CPU when off-screen must be ~0.
 
 ### Alpine.js usage
