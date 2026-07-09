@@ -35,7 +35,7 @@ These docs are advisory; the gates below are not. Any change — regardless of w
 | Metric | Budget |
 | --- | --- |
 | Lighthouse Performance (mobile emulation) | ≥ 90 every page |
-| LCP | ≤ 2.5 s |
+| LCP | ≤ 2.5 s (real-throttle target; verified via `throttlingMethod: devtools`). LHCI enforces a **3400 ms** ceiling on the default `simulate` method, which over-models a text LCP ~1.1 s past visual completion — see `rebuild/lighthouserc.json` + issue #79. |
 | CLS | < 0.1 |
 | TBT (INP proxy in lab) | ≤ 200 ms |
 | JS per standard page | ≤ 150 KB gz |
