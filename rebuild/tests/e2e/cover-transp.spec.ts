@@ -82,6 +82,24 @@ test.describe("cover-transp — per-line text reveal", () => {
   });
 });
 
+test.describe("cover-transp — Team + Contact intro copy (issue #10)", () => {
+  // Legacy marks both intro paragraphs `slide-up2__lines cover-transp` — a
+  // per-line reveal. The rebuild previously animated them whole-block
+  // (`slide-up`), which never splits. Assert each section's intro paragraph is
+  // the per-line splitter, not the block reveal.
+  for (const section of ["team", "contact"]) {
+    test(`#${section} intro paragraph splits into lines`, async ({ page }) => {
+      await page.goto("/");
+      const para = page.locator(`#${section} p[data-anim="cover-transp"]`);
+      await expect(para).toHaveCount(1);
+      const lines = para.locator(".cover-transp__line");
+      // >1 line is what distinguishes the per-line reveal from the whole-block
+      // slide-up it replaces.
+      await expect.poll(() => lines.count()).toBeGreaterThan(1);
+    });
+  }
+});
+
 test.describe("cover-transp — re-split on resize", () => {
   test("resizing re-splits without stale wrappers and keeps lines settled", async ({
     page,
