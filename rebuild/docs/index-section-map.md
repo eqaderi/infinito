@@ -294,7 +294,8 @@ GSAP. Source of truth for primitive status: [`ANIMATION_AUDIT.md` §0](../../ANI
 | ----------------------------------------------- | ----------------- | -------------------------------------- | ---------------------------------------------------------------------- |
 | `slide-up-intro*` / `fade-up-intro*` / `fade-down-intro*` / `hero_img-intro*` | `intro-up` / `intro-down` / `intro-fade` | `mountIntro()`     | One-shot GSAP timeline at load, no scroll trigger.                     |
 | `slide-up` / `slide-up__lines`                  | `slide-up`        | `registerReveals()`                    | opacity 0→1 + y translate; `data-anim-delay` → `transition-delay`.     |
-| `slide-up2` / `slide-up2__lines`                | `slide-up`        | `registerReveals()`                    | same, with delay. Per-line split still deferred (needs SplitText).     |
+| `slide-up2`                                     | `slide-up`        | `registerReveals()`                    | same, with delay.                                                      |
+| `slide-up2__lines` / `fade-up__text__lines` + `cover-transp` | `cover-transp` | `registerCoverTransp()` | SplitText per-line masked wipe-up on scroll (#9).                      |
 | `fade-up` / `fade-up__el`                       | `fade-up`         | `registerReveals()`                    | opacity + y.                                                           |
 | `fade-in` / `fade-in__el`                       | `fade-in`         | `registerReveals()`                    | opacity only.                                                          |
 | `rotate-in` / `rotate-in__el`                   | `rotate-in`       | `registerReveals()`                    | scale + opacity.                                                       |

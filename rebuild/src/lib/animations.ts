@@ -13,6 +13,7 @@
  *   <div data-anim="parallax-bg" data-anim-strength="0.4">…</div>
  *   <div data-anim="odometer" data-anim-end="9235">9235</div>
  *   <svg data-anim="svg-draw">…</svg>
+ *   <p data-anim="cover-transp" data-anim-delay="0.3">…</p>
  *
  * Intro (one-shot, fires on load — no scroll trigger):
  *   <div data-anim="intro-up" data-anim-delay="0.3">…</div>
@@ -26,6 +27,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { SplitText } from "gsap/SplitText";
 
 let registered = false;
 let mounted = false;
@@ -286,6 +288,57 @@ export function registerCoverDR(scope: ParentNode = document): void {
   });
 }
 
+/* ---------- per-line text reveal ---------- */
+
+/* `cover-transp` — the legacy `slide-up2__lines cover-transp` effect: text is
+ * split into lines, each line wipes up from inside its own clip mask, staggered
+ * top→bottom on scroll into view. Motion spec (from Final_Files/js/scripts.js
+ * cover_animation `.slide-up2`): content starts 100% below its mask, 0.6s per
+ * line, 0.1s stagger, power3.out. See docs/baseline/cover-transp/.
+ *
+ * SplitText `mask:"lines"` gives each line an overflow-clip wrapper — that IS
+ * the transparent cover. autoSplit + an animation returned from onSplit means
+ * GSAP re-splits and rebuilds the reveal on resize / late font load, so line
+ * wraps never go stale. */
+export function registerCoverTransp(scope: ParentNode = document): void {
+  const els = scope.querySelectorAll<HTMLElement>(
+    '[data-anim="cover-transp"]',
+  );
+  els.forEach((el) => {
+    const delay = num(el, "data-anim-delay", 0);
+    SplitText.create(el, {
+      type: "lines",
+      mask: "lines",
+      // Default <div> wrappers (block-level) are required: yPercent transforms
+      // no-op on inline <span>s, which would break the wipe. The divs are
+      // injected client-side, so the source <p> markup stays valid.
+      linesClass: "cover-transp__line",
+      // Leave the split spans natively in the a11y tree: aria:"auto" would put
+      // an aria-label on the <p>, which is a prohibited attribute there.
+      aria: "none",
+      autoSplit: true,
+      onSplit: (self) => {
+        const tween = gsap.from(self.lines, {
+          yPercent: 100,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.1,
+          delay,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+        });
+        // Reveal only after the from-state is set, so the gated paragraph
+        // never flashes its full text before the lines are clipped.
+        reveal(el);
+        return tween;
+      },
+    });
+  });
+}
+
 /* ---------- entry point ---------- */
 
 export function mount(scope: ParentNode = document): void {
@@ -298,7 +351,7 @@ export function mount(scope: ParentNode = document): void {
   }
 
   if (!registered) {
-    gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+    gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, SplitText);
     registered = true;
   }
 
@@ -306,6 +359,7 @@ export function mount(scope: ParentNode = document): void {
   registerParallaxBg(scope);
   registerParallaxY(scope);
   registerCoverDR(scope);
+  registerCoverTransp(scope);
   registerOdometer(scope);
   registerSvgDraw(scope);
   registerPricingToggle(scope);
