@@ -11,11 +11,12 @@ import { test, expect, type Locator } from "@playwright/test";
  * Pre-reveal the line is pushed a full line-height below the mask (clipped,
  * invisible); once revealed it settles flush with the mask top. */
 
-// Offset of the first line below its mask's top edge, in px.
-const firstLineOffset = (para: Locator) =>
+// Offset of the nth line below its mask's top edge, in px. Pre-reveal a line
+// is pushed a full line-height below its mask (clipped); settled it is ~0.
+const lineOffset = (para: Locator, nth: number) =>
   para
     .locator(".cover-transp__line")
-    .first()
+    .nth(nth)
     .evaluate((line) => {
       const mask = line.parentElement as HTMLElement;
       return (
@@ -24,33 +25,59 @@ const firstLineOffset = (para: Locator) =>
     });
 
 test.describe("cover-transp — per-line text reveal", () => {
-  test("lines start clipped below their mask and wipe up on scroll", async ({
+  test("multi-line copy wipes up line-by-line, staggered top→bottom", async ({
     page,
   }) => {
     await page.goto("/");
 
-    // Deepest instance is safely below the fold at load, so it stays gated.
+    // Deepest instance is safely below the fold at load; it is a long,
+    // multi-line paragraph so the per-line stagger is observable.
     const para = page.locator('[data-anim="cover-transp"]').last();
-    await expect(para).toHaveAttribute("data-anim-shown", "");
+    const lines = para.locator(".cover-transp__line");
 
-    // Split into per-line wrappers, each held clipped below its mask.
-    await expect
-      .poll(() => para.locator(".cover-transp__line").count())
-      .toBeGreaterThan(0);
-    expect(await firstLineOffset(para)).toBeGreaterThan(5);
+    // Split into MORE THAN ONE line — this is what distinguishes the per-line
+    // reveal from the whole-block slide-up it replaces (which never splits).
+    await expect.poll(() => lines.count()).toBeGreaterThan(1);
+    const last = (await lines.count()) - 1;
 
+    // All lines start clipped below their masks.
+    expect(await lineOffset(para, 0)).toBeGreaterThan(5);
+    expect(await lineOffset(para, last)).toBeGreaterThan(5);
+
+    // Reveal, sampling the whole wipe in-page at frame cadence (no per-sample
+    // round-trip, so the short window is never missed). During a top→bottom
+    // stagger the last line lags the first, so their offsets diverge mid-wipe;
+    // a zero-stagger (whole-block) reveal keeps every line in lockstep and the
+    // peak spread stays ~0.
     await para.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1500);
+    const peakSpread = await para.evaluate((p) => {
+      const ls = p.querySelectorAll<HTMLElement>(".cover-transp__line");
+      const off = (el: HTMLElement) =>
+        el.getBoundingClientRect().top -
+        (el.parentElement as HTMLElement).getBoundingClientRect().top;
+      const first = ls[0];
+      const lastEl = ls[ls.length - 1];
+      return new Promise<number>((resolve) => {
+        let max = 0;
+        const t0 = performance.now();
+        const tick = () => {
+          max = Math.max(max, off(lastEl) - off(first));
+          if (performance.now() - t0 < 1800) requestAnimationFrame(tick);
+          else resolve(max);
+        };
+        tick();
+      });
+    });
+    expect(peakSpread).toBeGreaterThan(3);
 
-    // Every line has wiped up to rest — flush with its mask, fully visible.
-    expect(await firstLineOffset(para)).toBeLessThan(2);
-    const notShown = await para
-      .locator(".cover-transp__line")
-      .evaluateAll(
-        (els) =>
-          els.filter((el) => parseFloat(getComputedStyle(el).opacity) < 0.99)
-            .length,
-      );
+    // Everything settles flush and fully visible.
+    expect(await lineOffset(para, 0)).toBeLessThan(2);
+    expect(await lineOffset(para, last)).toBeLessThan(2);
+    const notShown = await lines.evaluateAll(
+      (els) =>
+        els.filter((el) => parseFloat(getComputedStyle(el).opacity) < 0.99)
+          .length,
+    );
     expect(notShown).toBe(0);
   });
 });
@@ -84,7 +111,7 @@ test.describe("cover-transp — re-split on resize", () => {
       expect(wrappers).toBe(lines * 2);
 
       // Reveal survives the re-split: lines end flush with their mask.
-      expect(await firstLineOffset(para)).toBeLessThan(2);
+      expect(await lineOffset(para, 0)).toBeLessThan(2);
     }
   });
 });
@@ -100,5 +127,7 @@ test.describe("cover-transp — reduced motion", () => {
     await expect(para).toHaveAttribute("data-anim-shown", "");
     await expect(para).toBeVisible();
     await expect(para).not.toBeEmpty();
+    // The splitter is skipped entirely — no line wrappers injected.
+    await expect(para.locator(".cover-transp__line")).toHaveCount(0);
   });
 });
