@@ -1,7 +1,33 @@
 ---
-/* Phase 1A: simple fade-out overlay on window.load.
- * Phase 1B will replace this with the legacy SVG draw-in
- * intro using GSAP. */
+/* Phase 1B: the "infinito" wordmark draws itself in on load (legacy §6.1
+ * SVG draw-on intro) instead of snapping, then the overlay fades to reveal
+ * the page.
+ *
+ * Wordmark geometry is the Infinito logotype outline, lifted as a visual
+ * asset from Final_Files/index.html (viewBox 500x500, cropped here to the
+ * glyph band).
+ *
+ * The draw is **CSS-first** (stroke-dashoffset outline + fill-opacity fade,
+ * `pathLength="100"` normalises the dash math per glyph). No GSAP: this is an
+ * above-the-fold overlay, and gating it on the JS runtime regresses LCP and
+ * violates the above-the-fold rule (AGENTS.md, #43/#48). `ANIMATION_AUDIT.md`
+ * §6.1 lists CSS dasharray as the sanctioned alternative to DrawSVG here. The
+ * animation only runs under `html.has-anim` (set pre-paint when JS + motion
+ * are on), so reduced-motion / no-JS show the solid wordmark immediately. The
+ * script just holds the overlay until the draw finishes AND the window has
+ * loaded, then fades out. */
+
+// I N F I N I T O — one path per glyph, in draw order (left → right).
+const WORDMARK: string[] = [
+  "M 26.401 207.984 L 26.401 292.016 L 9.087 292.016 L 9.087 207.984 L 26.401 207.984 Z",
+  "M 111.599 207.984 L 111.599 292.016 L 94.285 292.016 L 60.58 236.726 L 60.58 292.016 L 43.266 292.016 L 43.266 207.984 L 60.58 207.984 L 94.343 263.39 L 94.343 207.984 L 111.599 207.984 Z",
+  "M 178.098 243.709 L 178.098 257.676 L 144.855 257.676 L 144.855 292.016 L 127.541 292.016 L 127.541 207.984 L 182.254 207.984 L 182.254 222.009 L 144.855 222.009 L 144.855 243.709 L 178.098 243.709 Z",
+  "M 211.527 207.984 L 211.527 292.016 L 194.213 292.016 L 194.213 207.984 L 211.527 207.984 Z",
+  "M 296.726 207.984 L 296.726 292.016 L 279.412 292.016 L 245.707 236.726 L 245.707 292.016 L 228.393 292.016 L 228.393 207.984 L 245.707 207.984 L 279.469 263.39 L 279.469 207.984 L 296.726 207.984 Z",
+  "M 331.078 207.984 L 331.078 292.016 L 313.764 292.016 L 313.764 207.984 L 331.078 207.984 Z",
+  "M 411.198 207.984 L 411.198 222.009 L 385.457 222.009 L 385.457 292.016 L 368.143 292.016 L 368.143 222.009 L 342.749 222.009 L 342.749 207.984 L 411.198 207.984 Z",
+  "M 490.2 248.107 L 490.2 251.813 L 490.2 251.813 Q 490.2 264.072 485.867 273.309 L 485.867 273.309 L 485.867 273.309 Q 481.533 282.546 473.465 287.563 L 473.465 287.563 L 473.465 287.563 Q 465.398 292.581 454.963 292.581 L 454.963 292.581 L 454.963 292.581 Q 444.643 292.581 436.547 287.62 L 436.547 287.62 L 436.547 287.62 Q 428.451 282.66 424.003 273.451 L 424.003 273.451 L 424.003 273.451 Q 419.556 264.243 419.499 252.27 L 419.499 252.27 L 419.499 248.164 L 419.499 248.164 Q 419.499 235.906 423.918 226.583 L 423.918 226.583 L 423.918 226.583 Q 428.336 217.261 436.404 212.272 L 436.404 212.272 L 436.404 212.272 Q 444.472 207.283 454.849 207.283 L 454.849 207.283 L 454.849 207.283 Q 465.227 207.283 473.294 212.272 L 473.294 212.272 L 473.294 212.272 Q 481.362 217.261 485.781 226.583 L 485.781 226.583 L 485.781 226.583 Q 490.2 235.906 490.2 248.107 L 490.2 248.107 Z M 472.867 252.099 L 472.867 248.05 L 472.867 248.05 Q 472.867 234.993 468.191 228.208 L 468.191 228.208 L 468.191 228.208 Q 463.516 221.423 454.849 221.423 L 454.849 221.423 L 454.849 221.423 Q 446.24 221.423 441.564 228.123 L 441.564 228.123 L 441.564 228.123 Q 436.889 234.822 436.832 247.765 L 436.832 247.765 L 436.832 251.813 L 436.832 251.813 Q 436.832 264.528 441.507 271.541 L 441.507 271.541 L 441.507 271.541 Q 446.183 278.554 454.963 278.554 L 454.963 278.554 L 454.963 278.554 Q 463.573 278.554 468.191 271.798 L 468.191 271.798 L 468.191 271.798 Q 472.81 265.041 472.867 252.099 L 472.867 252.099 Z",
+];
 ---
 
 <div
@@ -9,9 +35,9 @@
   class="fixed inset-0 z-50 grid place-items-center bg-paper transition-opacity duration-500 ease-out"
   data-loading-screen
 >
-  <div class="flex flex-col items-center gap-6">
+  <div class="flex flex-col items-center gap-7">
     <svg
-      class="h-16 w-32 animate-pulse text-ink"
+      class="h-14 w-28 animate-pulse text-ink"
       viewBox="0 0 187.3 93.7"
       fill="none"
       stroke="currentColor"
@@ -22,11 +48,55 @@
         d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z"
       ></path>
     </svg>
-    <span class="font-ui text-xs uppercase tracking-[0.4em] text-ink-muted">
-      infinito
-    </span>
+    <svg
+      class="h-8 w-auto text-ink"
+      viewBox="0 195 500 110"
+      role="img"
+      aria-label="infinito"
+      data-loader-word
+    >
+      {
+        WORDMARK.map((d, i) => (
+          <path
+            d={d}
+            pathLength="100"
+            vector-effect="non-scaling-stroke"
+            class="fill-ink stroke-ink [stroke-width:1.5px]"
+            style={`--i:${i}`}
+          />
+        ))
+      }
+    </svg>
   </div>
 </div>
+
+<style>
+  /* CSS-first draw: only under html.has-anim (JS + motion, set pre-paint in
+     <head>) does each glyph draw its outline then fade its fill in. The `both`
+     fill-mode holds the from-state through the per-glyph stagger delay, so
+     there is no flash. Reduced-motion / no-JS never add has-anim → the solid
+     default (fill-opacity 1, no dash) shows immediately. */
+  @keyframes loader-glyph {
+    from {
+      stroke-dashoffset: 100;
+      fill-opacity: 0;
+    }
+    55% {
+      stroke-dashoffset: 0;
+      fill-opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+      fill-opacity: 1;
+    }
+  }
+
+  html.has-anim #loading-screen [data-loader-word] path {
+    stroke-dasharray: 100;
+    animation: loader-glyph 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
+    animation-delay: calc(var(--i, 0) * 0.12s);
+  }
+</style>
 
 <script>
   const screen = document.querySelector<HTMLElement>('[data-loading-screen]');
@@ -38,12 +108,32 @@
         screen.style.display = 'none';
       }, 600);
     };
-    if (document.readyState === 'complete') {
-      window.setTimeout(hide, 200);
-    } else {
-      window.addEventListener('load', () => window.setTimeout(hide, 200), {
-        once: true,
+
+    const loaded = () =>
+      document.readyState === 'complete'
+        ? Promise.resolve()
+        : new Promise<void>((r) =>
+            window.addEventListener('load', () => r(), { once: true }),
+          );
+
+    // The CSS draw runs only under has-anim. When it does, hold the overlay
+    // until the last (most-delayed) glyph finishes; otherwise there is no draw
+    // to wait for. A timeout guards against a missing animationend.
+    const animated = document.documentElement.classList.contains('has-anim');
+    const paths = screen.querySelectorAll<SVGPathElement>(
+      '[data-loader-word] path',
+    );
+
+    const drawn = () => {
+      if (!animated || paths.length === 0) return Promise.resolve();
+      const last = paths[paths.length - 1];
+      return new Promise<void>((resolve) => {
+        const finish = () => resolve();
+        last.addEventListener('animationend', finish, { once: true });
+        window.setTimeout(finish, 3000);
       });
-    }
+    };
+
+    Promise.all([loaded(), drawn()]).then(() => window.setTimeout(hide, 200));
   }
 </script>
